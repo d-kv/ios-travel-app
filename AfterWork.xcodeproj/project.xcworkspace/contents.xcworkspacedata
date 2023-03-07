@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/evgeny/Projects/Tinkoff Travel/IOS/AfterWork.xcodeproj">
    </FileRef>
 </Workspace>

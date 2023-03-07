@@ -15,7 +15,6 @@
 		5CEA164E29B0EC8300F89006 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA164D29B0EC8300F89006 /* LoginViewController.swift */; };
 		5CEA165529B0ED1300F89006 /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA165429B0ED1300F89006 /* MainViewPresenter.swift */; };
 		5CEA165729B0ED1F00F89006 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA165629B0ED1F00F89006 /* MainViewController.swift */; };
-		5CEA165929B0ED2F00F89006 /* MainViewStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CEA165829B0ED2F00F89006 /* MainViewStoryboard.storyboard */; };
 		5CEA166129B0ED7B00F89006 /* SettingsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA166029B0ED7B00F89006 /* SettingsViewPresenter.swift */; };
 		5CEA166329B0ED8F00F89006 /* MapViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA166229B0ED8F00F89006 /* MapViewPresenter.swift */; };
 		5CEA166529B0ED9800F89006 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA166429B0ED9800F89006 /* MapViewController.swift */; };
@@ -26,8 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5C5A38B829B1EF4100BD0BEB /* Tinkoff Travel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tinkoff Travel.entitlements"; sourceTree = "<group>"; };
-		5C79C04A29A2CC0E00106F20 /* Tinkoff Travel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tinkoff Travel.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C79C04A29A2CC0E00106F20 /* AfterWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AfterWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C79C04D29A2CC0E00106F20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C79C04F29A2CC0E00106F20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5C79C05629A2CC0E00106F20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -37,7 +35,6 @@
 		5CEA164D29B0EC8300F89006 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5CEA165429B0ED1300F89006 /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
 		5CEA165629B0ED1F00F89006 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		5CEA165829B0ED2F00F89006 /* MainViewStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainViewStoryboard.storyboard; sourceTree = "<group>"; };
 		5CEA166029B0ED7B00F89006 /* SettingsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewPresenter.swift; sourceTree = "<group>"; };
 		5CEA166229B0ED8F00F89006 /* MapViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewPresenter.swift; sourceTree = "<group>"; };
 		5CEA166429B0ED9800F89006 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -61,7 +58,7 @@
 		5C79C04129A2CC0E00106F20 = {
 			isa = PBXGroup;
 			children = (
-				5C79C04C29A2CC0E00106F20 /* Tinkoff Travel */,
+				5C79C04C29A2CC0E00106F20 /* AfterWork */,
 				5C79C04B29A2CC0E00106F20 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,15 +66,14 @@
 		5C79C04B29A2CC0E00106F20 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5C79C04A29A2CC0E00106F20 /* Tinkoff Travel.app */,
+				5C79C04A29A2CC0E00106F20 /* AfterWork.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5C79C04C29A2CC0E00106F20 /* Tinkoff Travel */ = {
+		5C79C04C29A2CC0E00106F20 /* AfterWork */ = {
 			isa = PBXGroup;
 			children = (
-				5C5A38B829B1EF4100BD0BEB /* Tinkoff Travel.entitlements */,
 				5CEA165329B0ECF800F89006 /* Settings */,
 				5CEA165229B0ECC300F89006 /* Map */,
 				5CEA165129B0ECAF00F89006 /* Main */,
@@ -89,7 +85,7 @@
 				5C79C05829A2CC0E00106F20 /* LaunchScreen.storyboard */,
 				5C79C05B29A2CC0E00106F20 /* Info.plist */,
 			);
-			path = "Tinkoff Travel";
+			path = AfterWork;
 			sourceTree = "<group>";
 		};
 		5CEA164829B0EC3900F89006 /* Login */ = {
@@ -106,7 +102,6 @@
 			children = (
 				5CEA165429B0ED1300F89006 /* MainViewPresenter.swift */,
 				5CEA165629B0ED1F00F89006 /* MainViewController.swift */,
-				5CEA165829B0ED2F00F89006 /* MainViewStoryboard.storyboard */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -134,9 +129,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5C79C04929A2CC0E00106F20 /* Tinkoff Travel */ = {
+		5C79C04929A2CC0E00106F20 /* AfterWork */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5C79C05E29A2CC0E00106F20 /* Build configuration list for PBXNativeTarget "Tinkoff Travel" */;
+			buildConfigurationList = 5C79C05E29A2CC0E00106F20 /* Build configuration list for PBXNativeTarget "AfterWork" */;
 			buildPhases = (
 				5C79C04629A2CC0E00106F20 /* Sources */,
 				5C79C04729A2CC0E00106F20 /* Frameworks */,
@@ -146,9 +141,9 @@
 			);
 			dependencies = (
 			);
-			name = "Tinkoff Travel";
+			name = AfterWork;
 			productName = "Tinkoff Travel";
-			productReference = 5C79C04A29A2CC0E00106F20 /* Tinkoff Travel.app */;
+			productReference = 5C79C04A29A2CC0E00106F20 /* AfterWork.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -166,7 +161,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5C79C04529A2CC0E00106F20 /* Build configuration list for PBXProject "Tinkoff Travel" */;
+			buildConfigurationList = 5C79C04529A2CC0E00106F20 /* Build configuration list for PBXProject "AfterWork" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -179,7 +174,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5C79C04929A2CC0E00106F20 /* Tinkoff Travel */,
+				5C79C04929A2CC0E00106F20 /* AfterWork */,
 			);
 		};
 /* End PBXProject section */
@@ -189,7 +184,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CEA165929B0ED2F00F89006 /* MainViewStoryboard.storyboard in Resources */,
 				5C79C05A29A2CC0E00106F20 /* LaunchScreen.storyboard in Resources */,
 				5C79C05729A2CC0E00106F20 /* Assets.xcassets in Resources */,
 				5CEA166729B0EDA500F89006 /* MapViewStoryboard.storyboard in Resources */,
@@ -351,12 +345,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Tinkoff Travel/Tinkoff Travel.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J2QUT68557;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Tinkoff Travel/Info.plist";
+				INFOPLIST_FILE = AfterWork/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AfterWork;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -384,12 +377,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Tinkoff Travel/Tinkoff Travel.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J2QUT68557;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Tinkoff Travel/Info.plist";
+				INFOPLIST_FILE = AfterWork/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AfterWork;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -403,6 +396,7 @@
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.parcode.AfterWork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -415,7 +409,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5C79C04529A2CC0E00106F20 /* Build configuration list for PBXProject "Tinkoff Travel" */ = {
+		5C79C04529A2CC0E00106F20 /* Build configuration list for PBXProject "AfterWork" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5C79C05C29A2CC0E00106F20 /* Debug */,
@@ -424,7 +418,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5C79C05E29A2CC0E00106F20 /* Build configuration list for PBXNativeTarget "Tinkoff Travel" */ = {
+		5C79C05E29A2CC0E00106F20 /* Build configuration list for PBXNativeTarget "AfterWork" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5C79C05F29A2CC0E00106F20 /* Debug */,
