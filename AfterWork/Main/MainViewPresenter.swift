@@ -12,10 +12,6 @@ import UIKit
 protocol MainViewPresenterDelegate: AnyObject {
     func mainViewPresenter(_ reposViewModel: MainViewPresenter,
                             isLoading: Bool)
-    func mainViewPresenter(_ reposViewModel: MainViewPresenter,
-                            didReceiveRepos repos: [MainViewPresenter])
-    func mainViewPresenter(_ reposViewModel: MainViewPresenter,
-                            didSelectId id: Int)
 }
 
 
@@ -26,5 +22,11 @@ final class MainViewPresenter {
         delegate?.mainViewPresenter(self, isLoading: true)
     }
     
-    
+    static func openSettings() {
+        let settingsViewController = SettingsViewController()
+        //mainViewController.modalPresentationStyle = .popover
+        
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        sceneDelegate.window!.rootViewController?.present(settingsViewController, animated: true)
+    }
 }

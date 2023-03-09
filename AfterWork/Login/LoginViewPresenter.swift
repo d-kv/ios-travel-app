@@ -14,11 +14,6 @@ import TinkoffID
 protocol LoginViewPresenterDelegate: AnyObject {
     func loginViewPresenter(_ reposViewModel: LoginViewPresenter,
                             isLoading: Bool)
-    //func loginViewPresenter(isLoading: Bool)
-//    func loginViewPresenter(_ reposViewModel: LoginViewPresenter,
-//                            didReceiveRepos repos: [LoginViewPresenter])
-//    func loginViewPresenter(_ reposViewModel: LoginViewPresenter,
-//                            didSelectId id: Int)
 }
 
 // MARK: - Main methods and Class
@@ -27,22 +22,13 @@ class LoginViewPresenter {
 
     weak var delegate: LoginViewPresenterDelegate?
     
-    let clientId = ""
+    let clientId = "tid_afterwork-mb"
     let callbackUrl = "afterwork://"
     
-    func ready() {
-        //delegate?.loginViewPresenter(isLoading: true)
-    }
-    
     var credentials: TinkoffTokenPayload! = nil
+    static var tinkoffId: ITinkoffID! = nil
     
-    @objc func authButtonClicked() {
-        //delegate?.loginViewPresenter(self, isLoading: true)
-        
-        //authTIDdebug()
-        authTID()
-        
-    }
+    @objc func authButtonClicked() { authTID() }
     
     private func goToMain() {
         let mainViewController = MainViewController()
@@ -53,8 +39,6 @@ class LoginViewPresenter {
     }
     
     // MARK: - Tinkoff ID Auth
-    
-    static var tinkoffId: ITinkoffID! = nil
     
     func authTID() {
         
@@ -77,27 +61,7 @@ class LoginViewPresenter {
     // MARK: - Tinkoff ID Debug
     
     static var debugTinkoffId: ITinkoffID!
-    
-    
-    func authTIDdebug() {
-        //let callbackUrl: String = "afterwork://good"
-
-        // Конфигурация для отладки
-        
-//        debugTinkoffId.startTinkoffAuth { result in
-//            do {
-//                let payload = try result.get()
-//                print("Access token obtained: \(payload.accessToken)")
-//                
-//            } catch {
-//                print("ZHOPA", error)
-//            }
-//        }
-        
-        //debugTinkoffId.handleCallbackUrl(URL(string: "afterwork://good?result=success")!)
-        LoginViewPresenter.debugTinkoffId.startTinkoffAuth(handleSignInResult(_:))
-        
-    }
+    func authTIDdebug() { LoginViewPresenter.debugTinkoffId.startTinkoffAuth(handleSignInResult(_:)) }
     
     // MARK: - Tinkoff ID CallBack handler
     

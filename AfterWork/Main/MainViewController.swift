@@ -10,7 +10,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    let userImage = UIImageView(image: UIImage(named: "userImage"))
+    let userImage = UIButton()
     let userName = UITextView()
     let searchBar = UISearchBar()
     
@@ -25,6 +25,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        userImage.setImage(UIImage(named: "userImage"), for: .normal)
+        userImage.addTarget(self, action: #selector(userImageTap), for: .touchUpInside)
+        
+        
         userName.text = "Евгений,\nкуда отправимся?"
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
@@ -36,6 +40,7 @@ class MainViewController: UIViewController {
         userName.isEditable = false
         userName.sizeToFit()
         userName.isScrollEnabled = false
+        userName.isSelectable = false
         
         searchBar.placeholder = "Британский паб"
         searchBar.barTintColor = .clear
@@ -66,7 +71,7 @@ class MainViewController: UIViewController {
         checkAllButton.setTitleColor(.black, for: .normal)
         checkAllButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 26)
         
-        //mem()
+        mem()
         
         setUpConstraints()
     }
@@ -90,6 +95,10 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         view.backgroundColor = .black
+    }
+    
+    @objc func userImageTap() {
+        MainViewPresenter.openSettings()
     }
     
     // MARK: - Contraints
@@ -216,6 +225,7 @@ class MainViewController: UIViewController {
         bigText.sizeToFit()
         bigText.isScrollEnabled = false
         bigText.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.6)
+        bigText.isSelectable = false
         
         smallText.text = "Для быстрого перекуса"
         smallText.contentInsetAdjustmentBehavior = .automatic
@@ -229,6 +239,7 @@ class MainViewController: UIViewController {
         smallText.sizeToFit()
         smallText.isScrollEnabled = false
         smallText.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.6)
+        smallText.isSelectable = false
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
         let bigTextConstraints = [
@@ -283,6 +294,7 @@ class MainViewController: UIViewController {
         bigText.isEditable = false
         bigText.sizeToFit()
         bigText.isScrollEnabled = false
+        bigText.isSelectable = false
         
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
@@ -323,6 +335,7 @@ class MainViewController: UIViewController {
         bigText.isEditable = false
         bigText.sizeToFit()
         bigText.isScrollEnabled = false
+        bigText.isSelectable = false
         
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
@@ -363,6 +376,7 @@ class MainViewController: UIViewController {
         bigText.isEditable = false
         bigText.sizeToFit()
         bigText.isScrollEnabled = false
+        bigText.isSelectable = false
         
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
@@ -405,6 +419,7 @@ class MainViewController: UIViewController {
         bigText.sizeToFit()
         bigText.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.8)
         bigText.isScrollEnabled = false
+        bigText.isSelectable = false
         
         smallText.text = "Может, это именно то что нужно"
         smallText.contentInsetAdjustmentBehavior = .automatic
@@ -418,6 +433,7 @@ class MainViewController: UIViewController {
         smallText.sizeToFit()
         smallText.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.8)
         smallText.isScrollEnabled = false
+        smallText.isSelectable = false
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
         let bigTextConstraints = [
