@@ -114,18 +114,11 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: LoginViewPresenterDelegate {
     func loginViewPresenter(_ reposViewModel: LoginViewPresenter, isLoading: Bool) {
-//        if isLoading { self.view.showBlurLoader() }
-//        else { self.view.removeBluerLoader() }
+        if isLoading { self.view.showBlurLoader() }
+        else { self.view.removeBluerLoader() }
         
         print(isLoading, "kaka")
         
-        //print("HUY")
     }
     
-//    func loginViewPresenter(isLoading: Bool) {
-//        if isLoading { self.view.showBlurLoader() }
-//        else { self.view.removeBluerLoader() }
-//        
-//        print("HUY")
-//    }
 }

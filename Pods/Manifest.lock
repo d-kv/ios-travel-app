@@ -1,0 +1,16 @@
+PODS:
+  - TinkoffID (1.2.0)
+
+DEPENDENCIES:
+  - TinkoffID
+
+SPEC REPOS:
+  trunk:
+    - TinkoffID
+
+SPEC CHECKSUMS:
+  TinkoffID: 65defd4b4ceabbd8a6c00563d90204c9e60fd75a
+
+PODFILE CHECKSUM: ff4d46d98daec0597e7d58f81fd76d13bee43659
+
+COCOAPODS: 1.11.3

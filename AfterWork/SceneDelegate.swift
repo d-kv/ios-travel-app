@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TinkoffID
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,9 +20,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = LoginViewController()
+        window?.rootViewController = MainViewController()
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .dark        
+    }
+    
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+        if let url = URLContexts.first?.url {
+            //print(url)
+            if LoginViewPresenter.tinkoffId.isTinkoffAuthAvailable { LoginViewPresenter.tinkoffId.handleCallbackUrl(url) }
+            
+            else { LoginViewPresenter.debugTinkoffId.handleCallbackUrl(url) }
+        }
     }
 }
 
