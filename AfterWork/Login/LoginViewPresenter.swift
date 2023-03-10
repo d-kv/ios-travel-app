@@ -32,10 +32,11 @@ class LoginViewPresenter {
     
     private func goToMain() {
         let mainViewController = MainViewController()
-        mainViewController.modalPresentationStyle = .currentContext
+        mainViewController.modalPresentationStyle = .fullScreen
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
+        sceneDelegate.window!.rootViewController?.dismiss(animated: true)
     }
     
     // MARK: - Tinkoff ID Auth
@@ -68,6 +69,7 @@ class LoginViewPresenter {
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         delegate?.loginViewPresenter(self, isLoading: false)
         goToMain()
+        print("Gone!")
         do {
             credentials = try result.get()
             

@@ -25,9 +25,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
+        
         userImage.setImage(UIImage(named: "userImage"), for: .normal)
         userImage.addTarget(self, action: #selector(userImageTap), for: .touchUpInside)
-        
         
         userName.text = "Евгений,\nкуда отправимся?"
         userName.contentInsetAdjustmentBehavior = .automatic
@@ -70,8 +71,9 @@ class MainViewController: UIViewController {
         checkAllButton.layer.cornerRadius = 23
         checkAllButton.setTitleColor(.black, for: .normal)
         checkAllButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 26)
+        checkAllButton.addTarget(self, action: #selector(checkAllButtonTap), for: .touchUpInside)
         
-        mem()
+        //mem()
         
         setUpConstraints()
     }
@@ -99,6 +101,10 @@ class MainViewController: UIViewController {
     
     @objc func userImageTap() {
         MainViewPresenter.openSettings()
+    }
+    
+    @objc func checkAllButtonTap() {
+        MainViewPresenter.goToMap()
     }
     
     // MARK: - Contraints

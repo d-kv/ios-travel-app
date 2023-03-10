@@ -6,3 +6,24 @@
 //
 
 import Foundation
+import UIKit
+
+protocol SettingsViewPresenterDelegate: AnyObject {
+    func settingsViewPresenter(isLoading: Bool)
+}
+
+final class SettingsViewPresenter {
+    
+    static func signOut() {
+        
+        DispatchQueue.main.async {
+            let loginViewController = LoginViewController()
+            loginViewController.modalPresentationStyle = .fullScreen
+            
+            let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+            sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+            sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
+        }
+    }
+    
+}
