@@ -22,7 +22,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         let location = locations.last! as CLLocation
         
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.11, longitudeDelta: 0.11))
         
         if setRegionFlag {
             mapView.setRegion(region, animated: false)
@@ -33,6 +33,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.delegate = self
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -58,19 +60,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
 //        img?.ciImage?.transformed(by: <#T##CGAffineTransform#>)
         
         
+        
         let artwork = Artwork(
               title: "King David Kalakaua",
               locationName: "Waikiki Gateway Park",
               discipline: "Sculpture",
               coordinate: CLLocationCoordinate2D(latitude: 56.2965039, longitude: 43.9360589),
               image: UIImage(named: "markerTop")
+              
         )
+    
+        
         mapView.addAnnotation(artwork)
         mapView.showsUserLocation = true
 
         
         setUpConstraints()
     }
+    
     
     func setUpConstraints() {
         
@@ -100,18 +107,54 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     @objc func backButtonTap() {
         MapViewPresenter.goToMain()
     }
-    
 }
 
 private extension MKMapView {
-  func centerToLocation(
+    func centerToLocation(
     _ location: CLLocation,
     regionRadius: CLLocationDistance = 1000
-  ) {
+    ) {
     let coordinateRegion = MKCoordinateRegion(
-      center: location.coordinate,
-      latitudinalMeters: regionRadius,
-      longitudinalMeters: regionRadius)
-    setRegion(coordinateRegion, animated: true)
-  }
+        center: location.coordinate,
+        latitudinalMeters: regionRadius,
+        longitudinalMeters: regionRadius)
+        setRegion(coordinateRegion, animated: true)
+    }
+}
+
+extension MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, annotationView view: ArtworkView,
+        calloutAccessoryControlTapped control: UIControl) {
+            guard let artwork = view.annotation as? Artwork else {
+                return
+            }
+
+            let launchOptions = [
+                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
+            ]
+        
+            artwork.mapItem?.openInMaps(launchOptions: launchOptions)
+            print("ZHOPA")
+        }
+}
+
+extension MapViewController: MKMapViewDelegate {
+
+   func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+       print("calloutAccessoryControlTapped")
+       let launchOptions = [
+           MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+         ]
+       
+       guard let artwork = view.annotation as? Artwork else {
+           return
+         }
+       artwork.mapItem?.openInMaps(launchOptions: launchOptions)
+    
+   }
+
+   func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
+      print("didSelectAnnotationTapped")
+   }
 }

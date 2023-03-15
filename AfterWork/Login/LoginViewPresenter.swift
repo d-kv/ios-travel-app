@@ -14,6 +14,7 @@ import TinkoffID
 protocol LoginViewPresenterDelegate: AnyObject {
     func loginViewPresenter(_ reposViewModel: LoginViewPresenter,
                             isLoading: Bool)
+    func TinkoffIDResolver(status: StatusCodes) // 0 - waiting; 1 - auth process; 2 - success login; 3 - login canceled; 4 - login failed; 5 - some mistake
 }
 
 // MARK: - Main methods and Class
@@ -21,14 +22,17 @@ protocol LoginViewPresenterDelegate: AnyObject {
 class LoginViewPresenter {
 
     weak var delegate: LoginViewPresenterDelegate?
+        
+    let container = AppDelegate.container
+
     
-    let clientId = "tid_afterwork-mb"
-    let callbackUrl = "afterwork://"
-    
-    var credentials: TinkoffTokenPayload! = nil
-    static var tinkoffId: ITinkoffID! = nil
-    
-    @objc func authButtonClicked() { authTID() }
+    @objc func authButtonClicked() {
+        delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
+        
+        let authService = container.resolve(AuthService.self)!
+        authService.TinkoffIDAuth(handler: handleSignInResult)
+        
+    }
     
     private func goToMain() {
         let mainViewController = MainViewController()
@@ -39,46 +43,36 @@ class LoginViewPresenter {
         sceneDelegate.window!.rootViewController?.dismiss(animated: true)
     }
     
-    // MARK: - Tinkoff ID Auth
+    // MARK: - Auth handler
     
-    func authTID() {
-        
-        let factory = TinkoffIDFactory(clientId: clientId, callbackUrl: callbackUrl)
-        LoginViewPresenter.tinkoffId = factory.build()
-        
-        if LoginViewPresenter.tinkoffId.isTinkoffAuthAvailable {
-            LoginViewPresenter.tinkoffId.startTinkoffAuth(handleSignInResult(_:))
-        } else {
-            let configuration = DebugConfiguration(canRefreshTokens: true, canLogout: true)
-
-            let factory: ITinkoffIDFactory = DebugTinkoffIDFactory(callbackUrl: callbackUrl, configuration: configuration)
-
-            LoginViewPresenter.debugTinkoffId = factory.build()
-            LoginViewPresenter.debugTinkoffId.startTinkoffAuth(handleSignInResult(_:))
-        }
-    }
-    
-    
-    // MARK: - Tinkoff ID Debug
-    
-    static var debugTinkoffId: ITinkoffID!
-    func authTIDdebug() { LoginViewPresenter.debugTinkoffId.startTinkoffAuth(handleSignInResult(_:)) }
-    
-    // MARK: - Tinkoff ID CallBack handler
+    private var credentials: TinkoffTokenPayload!
     
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
-        delegate?.loginViewPresenter(self, isLoading: false)
-        goToMain()
-        print("Gone!")
         do {
             credentials = try result.get()
-            
-            print("Her", credentials as Any, credentials.accessToken)
+            delegate?.TinkoffIDResolver(status: StatusCodes.waiting)
         } catch TinkoffAuthError.cancelledByUser {
-            print("❌ Auth process cancelled by a user")
+            delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
+        } catch TinkoffAuthError.failedToLaunchApp {
+            delegate?.TinkoffIDResolver(status: StatusCodes.failedToLaunch)
+        } catch TinkoffAuthError.failedToObtainToken {
+            delegate?.TinkoffIDResolver(status: StatusCodes.failedToObtainToken)
+        } catch TinkoffAuthError.unavailable {
+            delegate?.TinkoffIDResolver(status: StatusCodes.unavailable)
         } catch {
+            delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
             print("❌ \(error)")
         }
-        print("Zhopa", result)
     }
+}
+
+enum StatusCodes {
+    case waiting
+    case proceed
+    case failedToLaunch
+    case cancelledByUser
+    case unavailable
+    case failedToObtainToken
+    case failedToRefreshCredentials
+    case unknownError
 }

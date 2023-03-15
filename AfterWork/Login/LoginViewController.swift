@@ -110,9 +110,63 @@ class LoginViewController: UIViewController {
         NSLayoutConstraint.activate(constraintsArray)
     }
     
+    func showAlert(text: String!) {
+        let alert = UIAlertController(title: "Что-то не так...", message: text, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ок", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 extension LoginViewController: LoginViewPresenterDelegate {
+    func TinkoffIDResolver(status: StatusCodes) {
+//        switch status {
+//            case 0: //0 - waiting
+//                self.view.removeBluerLoader()
+//            case 1: //1 - auth process
+//                self.view.showBlurLoader()
+//            case 2: //2 - success login;
+//                self.view.showBlurLoader()
+//            case 3: //3 - login canceled
+//                self.view.removeBluerLoader()
+//                showAlert(text: "Вы отменили авторизацию")
+//            case 4: //4 - login failed
+//                self.view.removeBluerLoader()
+//                showAlert(text: "Авторизация не получилась")
+//            case 5:
+//                self.view.removeBluerLoader()
+//            default:  //5 - some mistake
+//                self.view.removeBluerLoader()
+//                showAlert(text: "Произошла неизвестная ошибка")
+//        }\
+        switch status {
+            
+        case .waiting:
+            self.view.removeBluerLoader()
+        case .proceed:
+            self.view.showBlurLoader()
+        case .failedToLaunch:
+            self.view.removeBluerLoader()
+            showAlert(text: "Невозможно открыть приложение Tinkoff")
+        case .cancelledByUser:
+            self.view.removeBluerLoader()
+            showAlert(text: "Вход отменен")
+        case .unavailable:
+            self.view.removeBluerLoader()
+            showAlert(text: "В данный момент невозможно выполнить вход")
+        case .failedToObtainToken:
+            self.view.removeBluerLoader()
+            showAlert(text: "Произошла неизвестная ошибка (Токен)")
+        case .failedToRefreshCredentials:
+            self.view.removeBluerLoader()
+            showAlert(text: "Произошла неизвестная ошибка (Обновление)")
+        case .unknownError:
+            showAlert(text: "Произошла неизвестная ошибка (Токен)")
+            self.view.removeBluerLoader()
+        }
+    
+    }
+    
     func loginViewPresenter(_ reposViewModel: LoginViewPresenter, isLoading: Bool) {
         if isLoading { self.view.showBlurLoader() }
         else { self.view.removeBluerLoader() }
@@ -122,3 +176,4 @@ extension LoginViewController: LoginViewPresenterDelegate {
     }
     
 }
+

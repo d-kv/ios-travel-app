@@ -37,28 +37,28 @@ class SettingsViewController: UIViewController {
         userName.isScrollEnabled = false
         userName.isSelectable = false
         
-        achievementsView.backgroundColor = .black
+        achievementsView.backgroundColor = UIColor(named: "LightGrayColor")
         achievementsView.layer.cornerRadius = 23
         addTo_achievementsView()
         
         signOutButton.setTitle("Выйти из аккаунта", for: .normal)
-        signOutButton.backgroundColor = .red
-        signOutButton.layer.cornerRadius = 23
-        signOutButton.setTitleColor(.black, for: .normal)
-        signOutButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 24)
+        signOutButton.backgroundColor = UIColor(named: "LightGrayColor")
+        signOutButton.layer.cornerRadius = 15
+        signOutButton.setTitleColor(.red, for: .normal)
+        signOutButton.titleLabel?.font = UIFont(name: "Helvetica Neue Medium", size: 20)
         signOutButton.addTarget(self, action: #selector(signOutTap), for: .touchUpInside)
         
         resetRecommendButton.setTitle("Cбросить рекомендации", for: .normal)
-        resetRecommendButton.backgroundColor = UIColor(named: "YellowColor")
-        resetRecommendButton.layer.cornerRadius = 23
-        resetRecommendButton.setTitleColor(.black, for: .normal)
-        resetRecommendButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 24)
+        resetRecommendButton.backgroundColor = UIColor(named: "LightGrayColor")
+        resetRecommendButton.layer.cornerRadius = 15
+        resetRecommendButton.setTitleColor(.white, for: .normal)
+        resetRecommendButton.titleLabel?.font = UIFont(name: "Helvetica Neue Medium", size: 20)
         
         adminButton.setTitle("Админ-панель", for: .normal)
-        adminButton.backgroundColor = .black
-        adminButton.layer.cornerRadius = 23
-        adminButton.setTitleColor(UIColor(named: "YellowColor"), for: .normal)
-        adminButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 26)
+        adminButton.backgroundColor = UIColor(named: "LightGrayColor")
+        adminButton.layer.cornerRadius = 15
+        adminButton.setTitleColor(.tintColor, for: .normal)
+        adminButton.titleLabel?.font = UIFont(name: "Helvetica Neue Medium", size: 20)
         
         setUpConstraints()
     }
@@ -103,7 +103,7 @@ class SettingsViewController: UIViewController {
             signOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -35),
             signOutButton.leftAnchor.constraint(equalTo: achievementsView.leftAnchor),
             signOutButton.rightAnchor.constraint(equalTo: achievementsView.rightAnchor),
-            signOutButton.heightAnchor.constraint(equalToConstant: 70)
+            signOutButton.heightAnchor.constraint(equalToConstant: 50)
         ]
         
         resetRecommendButton.translatesAutoresizingMaskIntoConstraints = false
@@ -111,7 +111,7 @@ class SettingsViewController: UIViewController {
             resetRecommendButton.bottomAnchor.constraint(equalTo: signOutButton.topAnchor, constant: -20),
             resetRecommendButton.leftAnchor.constraint(equalTo: achievementsView.leftAnchor),
             resetRecommendButton.rightAnchor.constraint(equalTo: achievementsView.rightAnchor),
-            resetRecommendButton.heightAnchor.constraint(equalToConstant: 70)
+            resetRecommendButton.heightAnchor.constraint(equalToConstant: 50)
         ]
         
         adminButton.translatesAutoresizingMaskIntoConstraints = false
@@ -119,7 +119,7 @@ class SettingsViewController: UIViewController {
             adminButton.bottomAnchor.constraint(equalTo: resetRecommendButton.topAnchor, constant: -20),
             adminButton.leftAnchor.constraint(equalTo: achievementsView.leftAnchor),
             adminButton.rightAnchor.constraint(equalTo: achievementsView.rightAnchor),
-            adminButton.heightAnchor.constraint(equalToConstant: 70)
+            adminButton.heightAnchor.constraint(equalToConstant: 50)
         ]
         
         view.addSubview(userImage)
@@ -153,7 +153,10 @@ class SettingsViewController: UIViewController {
     
     func addTo_achievementsView() {
         let textView = UITextView()
-        let firstImage = UIImageView(image: UIImage(named: "bottleImage"))
+        let firstImage = UIButton()
+        
+        firstImage.setImage(UIImage(named: "bottleImage"), for: .normal)
+        firstImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         
         textView.text = "Достижения"
         textView.contentInsetAdjustmentBehavior = .automatic
@@ -188,6 +191,12 @@ class SettingsViewController: UIViewController {
         
         achievementsView.addSubview(firstImage)
         NSLayoutConstraint.activate(firstImageConstraints)
+    }
+    
+    @objc func achievementTap() {
+        let alert = UIAlertController(title: "Хороший отдых", message: "Из-за трясущихся рук не в состоянии тыкнуть на нужную кнопку", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default))
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

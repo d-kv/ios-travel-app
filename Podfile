@@ -5,8 +5,8 @@ target 'AfterWork' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'TinkoffID'
-  
-
+  pod 'DependencyInjection'  
+  pod 'Swinject'
   # Pods for AfterWork
 
 end
