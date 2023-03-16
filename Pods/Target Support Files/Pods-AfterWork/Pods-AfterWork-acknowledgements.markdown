@@ -1,11 +1,11 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## DependencyInjection
+## Shuffle-iOS
 
 MIT License
 
-Copyright (c) 2020 Sebastian Pickl
+Copyright (c) 2019 Mac Gallagher
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -176,12 +176,12 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/DependencyInjection/DependencyInjection.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Shuffle-iOS/Shuffle_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TinkoffID/TinkoffID.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/DependencyInjection/DependencyInjection.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Shuffle-iOS/Shuffle_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TinkoffID/TinkoffID.framework"
 fi

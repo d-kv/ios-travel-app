@@ -48,9 +48,7 @@ class AuthService {
         
         if AuthService.tinkoffId.isTinkoffAuthAvailable {
             AuthService.tinkoffId.startTinkoffAuth(handler)
-            print("PROC")
         } else {
-            print("DEBUG")
             AuthService.debugTinkoffId.startTinkoffAuth(handler)
         }
     }

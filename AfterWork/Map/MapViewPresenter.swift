@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 final class MapViewPresenter {
     
@@ -18,6 +19,10 @@ final class MapViewPresenter {
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.dismiss(animated: true)
         //sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
+        
+    }
+    
+    static func calculateDistance() {
         
     }
     

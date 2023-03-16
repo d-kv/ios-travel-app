@@ -170,9 +170,6 @@ extension LoginViewController: LoginViewPresenterDelegate {
     func loginViewPresenter(_ reposViewModel: LoginViewPresenter, isLoading: Bool) {
         if isLoading { self.view.showBlurLoader() }
         else { self.view.removeBluerLoader() }
-        
-        print(isLoading, "kaka")
-        
     }
     
 }

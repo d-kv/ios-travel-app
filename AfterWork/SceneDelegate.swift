@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = LoginViewController()
+        window?.rootViewController = MainViewController()
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .dark        
     }
@@ -32,10 +32,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         //let authService = AppDelegate.container.resolve(AuthService.self)!
-        AuthService.tinkoffId.handleCallbackUrl(firstUrl)
-        AuthService.debugTinkoffId.handleCallbackUrl(firstUrl)
-        
-        print(firstUrl.absoluteString)
+        if AuthService.tinkoffId.isTinkoffAuthAvailable {
+            _ = AuthService.tinkoffId.handleCallbackUrl(firstUrl)
+        } else {
+            _ = AuthService.debugTinkoffId.handleCallbackUrl(firstUrl)
+        }
+        NSLog(firstUrl.absoluteString, 1)
+        //print(firstUrl.absoluteString)
     }
     
     

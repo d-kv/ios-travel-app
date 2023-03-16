@@ -61,7 +61,7 @@ class LoginViewPresenter {
             delegate?.TinkoffIDResolver(status: StatusCodes.unavailable)
         } catch {
             delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
-            print("❌ \(error)")
+            NSLog("AuthError", 1)
         }
     }
 }

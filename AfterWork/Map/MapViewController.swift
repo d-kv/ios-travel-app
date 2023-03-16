@@ -56,25 +56,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
           forAnnotationViewWithReuseIdentifier:
             MKMapViewDefaultAnnotationViewReuseIdentifier)
         
-//        let img = UIImage(named: "markerTop")
-//        img?.ciImage?.transformed(by: <#T##CGAffineTransform#>)
-        
-        
-        
         let artwork = Artwork(
-              title: "King David Kalakaua",
-              locationName: "Waikiki Gateway Park",
-              discipline: "Sculpture",
-              coordinate: CLLocationCoordinate2D(latitude: 56.2965039, longitude: 43.9360589),
-              image: UIImage(named: "markerTop")
-              
+            title: "King David Kalakaua",
+            locationName: "Waikiki Gateway Park",
+            discipline: "Sculpture",
+            coordinate: CLLocationCoordinate2D(latitude: 56.2965039, longitude: 43.9360589),
+            image: UIImage(named: "markerTop")
         )
     
-        
         mapView.addAnnotation(artwork)
         mapView.showsUserLocation = true
-
-        
+                
         setUpConstraints()
     }
     
@@ -135,14 +127,13 @@ extension MKMapViewDelegate {
             ]
         
             artwork.mapItem?.openInMaps(launchOptions: launchOptions)
-            print("ZHOPA")
         }
 }
 
 extension MapViewController: MKMapViewDelegate {
 
    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-       print("calloutAccessoryControlTapped")
+       //print("calloutAccessoryControlTapped")
        let launchOptions = [
            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
          ]
@@ -155,6 +146,6 @@ extension MapViewController: MKMapViewDelegate {
    }
 
    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
-      print("didSelectAnnotationTapped")
+      //print("didSelectAnnotationTapped")
    }
 }

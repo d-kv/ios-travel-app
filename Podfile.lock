@@ -1,24 +1,24 @@
 PODS:
-  - DependencyInjection (2.0.2)
+  - Shuffle-iOS (0.5.0)
   - Swinject (2.8.3)
   - TinkoffID (1.2.0)
 
 DEPENDENCIES:
-  - DependencyInjection
+  - Shuffle-iOS
   - Swinject
   - TinkoffID
 
 SPEC REPOS:
   trunk:
-    - DependencyInjection
+    - Shuffle-iOS
     - Swinject
     - TinkoffID
 
 SPEC CHECKSUMS:
-  DependencyInjection: 49b0bcf0dff64054826d897d3431a1984de9edba
+  Shuffle-iOS: ff33658fb1e5eebd6a4724c156473e63754be9cb
   Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
   TinkoffID: 65defd4b4ceabbd8a6c00563d90204c9e60fd75a
 
-PODFILE CHECKSUM: 24f8251d224e3d7048ae4937cd160fa7dd9f7b43
+PODFILE CHECKSUM: 2acdbf55b2c1df99b9178a7696f5355e7507f628
 
 COCOAPODS: 1.11.3

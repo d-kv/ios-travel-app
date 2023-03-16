@@ -66,6 +66,11 @@ class MainViewController: UIViewController {
         personalRecommend.layer.cornerRadius = 23
         addto_personalRecommend()
         
+        personalRecommend.isUserInteractionEnabled = true
+        let gesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        gesture.numberOfTapsRequired = 1
+        personalRecommend.addGestureRecognizer(gesture)
+        
         checkAllButton.setTitle("Посмотреть все", for: .normal)
         checkAllButton.backgroundColor = UIColor(named: "YellowColor")
         checkAllButton.layer.cornerRadius = 23
@@ -105,6 +110,10 @@ class MainViewController: UIViewController {
     
     @objc func checkAllButtonTap() {
         MainViewPresenter.goToMap()
+    }
+    
+    @objc func recomendButtonTap() {
+        MainViewPresenter.goToCards()
     }
     
     // MARK: - Contraints

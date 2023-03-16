@@ -39,4 +39,13 @@ final class MainViewPresenter {
         //sceneDelegate.window!.rootViewController?.dismiss(animated: true)
         sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
     }
+    
+    static func goToCards() {
+        let mapViewController = CardsViewController()
+        mapViewController.modalPresentationStyle = .fullScreen
+        
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        //sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+        sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
+    }
 }

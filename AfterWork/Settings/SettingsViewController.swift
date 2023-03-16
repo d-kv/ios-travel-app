@@ -17,13 +17,14 @@ class SettingsViewController: UIViewController {
     
     let achievementsView = UIView()
     
-    let signOutButton = UIButton()
-    let resetRecommendButton = UIButton()
-    let adminButton = UIButton()
+    let signOutButton = AppDelegate.container.resolve(InterfaceExt.self)!.lightGreyButton(title: "Выйти из аккаунта")
+    
+    let resetRecommendButton = AppDelegate.container.resolve(InterfaceExt.self)!.lightGreyButton(title: "Сбросить рекомендации")
+    let adminButton = AppDelegate.container.resolve(InterfaceExt.self)!.lightGreyButton(title: "Админ-панель")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         userName.text = "Парфененков Евгений"
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
@@ -41,24 +42,9 @@ class SettingsViewController: UIViewController {
         achievementsView.layer.cornerRadius = 23
         addTo_achievementsView()
         
-        signOutButton.setTitle("Выйти из аккаунта", for: .normal)
-        signOutButton.backgroundColor = UIColor(named: "LightGrayColor")
-        signOutButton.layer.cornerRadius = 15
         signOutButton.setTitleColor(.red, for: .normal)
-        signOutButton.titleLabel?.font = UIFont(name: "Helvetica Neue Medium", size: 20)
+    
         signOutButton.addTarget(self, action: #selector(signOutTap), for: .touchUpInside)
-        
-        resetRecommendButton.setTitle("Cбросить рекомендации", for: .normal)
-        resetRecommendButton.backgroundColor = UIColor(named: "LightGrayColor")
-        resetRecommendButton.layer.cornerRadius = 15
-        resetRecommendButton.setTitleColor(.white, for: .normal)
-        resetRecommendButton.titleLabel?.font = UIFont(name: "Helvetica Neue Medium", size: 20)
-        
-        adminButton.setTitle("Админ-панель", for: .normal)
-        adminButton.backgroundColor = UIColor(named: "LightGrayColor")
-        adminButton.layer.cornerRadius = 15
-        adminButton.setTitleColor(.tintColor, for: .normal)
-        adminButton.titleLabel?.font = UIFont(name: "Helvetica Neue Medium", size: 20)
         
         setUpConstraints()
     }

@@ -1,6 +1,0 @@
-framework module DependencyInjection {
-  umbrella header "DependencyInjection-umbrella.h"
-
-  export *
-  module * { export * }
-}

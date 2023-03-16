@@ -14,7 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static let container: Container = {
         let container = Container()
+        
         container.register(AuthService.self) { _ in return AuthService() }
+        container.register(InterfaceExt.self) { _ in return InterfaceExt() }
+        container.register(MapViewController.self) { _ in return MapViewController() }
+        
         return container
     }()
     
