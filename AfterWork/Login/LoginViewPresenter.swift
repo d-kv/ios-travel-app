@@ -28,10 +28,7 @@ class LoginViewPresenter {
     
     @objc func authButtonClicked() {
         delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
-        
-        let authService = container.resolve(AuthService.self)!
-        authService.TinkoffIDAuth(handler: handleSignInResult)
-        
+        container.resolve(AuthService.self)?.TinkoffIDAuth(handler: handleSignInResult)
     }
     
     private func goToMain() {

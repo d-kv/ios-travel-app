@@ -7,8 +7,8 @@ target 'AfterWork' do
   pod 'TinkoffID'  
   pod 'Swinject'
   pod 'Shuffle-iOS'
-#  pod 'AfterWorkAPI', :git => 
-#'https://github.com/ruslanSorokin/afterwork-api.git', :branch => 
+#  pod 'AfterWorkAPI', :git =>
+#'https://github.com/ruslanSorokin/afterwork-api.git', :branch =>
 #'feat/add-swift-version'
   # Pods for AfterWork
 

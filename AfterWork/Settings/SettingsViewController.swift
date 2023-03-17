@@ -14,9 +14,9 @@ class SettingsViewController: UIViewController {
     
     let userImage = UIImageView(image: UIImage(named: "userImage"))
     let userName = UITextView()
-    
+            
     let achievementsView = UIView()
-    
+            
     let signOutButton = AppDelegate.container.resolve(InterfaceExt.self)!.lightGreyButton(title: "Выйти из аккаунта")
     
     let resetRecommendButton = AppDelegate.container.resolve(InterfaceExt.self)!.lightGreyButton(title: "Сбросить рекомендации")
@@ -24,6 +24,7 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
                 
         userName.text = "Парфененков Евгений"
         userName.contentInsetAdjustmentBehavior = .automatic

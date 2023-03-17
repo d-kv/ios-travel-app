@@ -9,21 +9,26 @@ import Foundation
 import UIKit
 import MapKit
 
+protocol MapViewPresenterDelegate: AnyObject {
+    func switchedPoint(target: Artwork, isSwitched: Bool)
+}
+
+
 final class MapViewPresenter {
     
+    weak var delegate: MapViewPresenterDelegate?
+    
     static func goToMain() {
-        
-        let mainViewController = MainViewController()
-        //mainViewController.modalPresentationStyle = .fullScreen
-        
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.dismiss(animated: true)
         //sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
         
     }
     
-    static func calculateDistance() {
+    func calculateDistance(mapView: MKMapView) {
         
+        delegate?.switchedPoint(target: mapView.annotations[0] as! Artwork, isSwitched: true)
+        NSLog("Target1", 1)
     }
     
 }
