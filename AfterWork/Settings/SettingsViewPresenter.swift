@@ -17,7 +17,7 @@ final class SettingsViewPresenter {
     static func signOut() {
         
         DispatchQueue.main.async {
-            let loginViewController = LoginViewController()
+            let loginViewController = DI.container.resolve(LoginViewController.self)!
             loginViewController.modalPresentationStyle = .fullScreen
             
             let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate

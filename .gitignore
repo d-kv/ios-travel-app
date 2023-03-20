@@ -6,6 +6,8 @@ Objective-C.gitignore & Swift.gitignore
 ## User settings
 ./xcuserdata
 .xcuserstate
+./Pods
+
 ## compatibility with Xcode 8 and earlier (ignoring not required starting 
 Xcode 9)
 *.xcscmblueprint
@@ -101,3 +103,5 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+Pods-AfterWork.xcscheme
+TinkoffID.xcscheme

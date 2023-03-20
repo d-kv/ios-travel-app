@@ -27,6 +27,31 @@ class MainViewController: UIViewController {
         
         self.hideKeyboardWhenTappedAround()
         
+        creation()
+        setUpConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        view.backgroundColor = .black
+    }
+    
+    @objc func userImageTap() {
+        MainViewPresenter.openSettings()
+    }
+    
+    @objc func checkAllButtonTap() {
+        MainViewPresenter.goToMap()
+    }
+    
+    @objc func recomendButtonTap() {
+        MainViewPresenter.goToCards()
+    }
+    
+    // MARK: - Contraints
+    
+    func creation() {
         userImage.setImage(UIImage(named: "userImage"), for: .normal)
         userImage.addTarget(self, action: #selector(userImageTap), for: .touchUpInside)
         
@@ -77,46 +102,7 @@ class MainViewController: UIViewController {
         checkAllButton.setTitleColor(.black, for: .normal)
         checkAllButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 26)
         checkAllButton.addTarget(self, action: #selector(checkAllButtonTap), for: .touchUpInside)
-        
-        //mem()
-        
-        setUpConstraints()
     }
-    
-    func mem() {
-        bigRecommend.backgroundColor = .brown
-        bigRecommend.layer.cornerRadius = 0
-        centerRecommend.backgroundColor = .red
-        centerRecommend.layer.cornerRadius = 0
-        leftRecommend.backgroundColor = .yellow
-        leftRecommend.layer.cornerRadius = 0
-        rightRecommend.backgroundColor = .green
-        rightRecommend.layer.cornerRadius = 0
-        personalRecommend.backgroundColor = .blue
-        personalRecommend.layer.cornerRadius = 0
-        checkAllButton.backgroundColor = .white
-        checkAllButton.layer.cornerRadius = 0
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        view.backgroundColor = .black
-    }
-    
-    @objc func userImageTap() {
-        MainViewPresenter.openSettings()
-    }
-    
-    @objc func checkAllButtonTap() {
-        MainViewPresenter.goToMap()
-    }
-    
-    @objc func recomendButtonTap() {
-        MainViewPresenter.goToCards()
-    }
-    
-    // MARK: - Contraints
     
     func setUpConstraints() {
         

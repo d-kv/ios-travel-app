@@ -8,24 +8,40 @@
 import Foundation
 import UIKit
 
+let interfaceExt = DI.container.resolve(InterfaceExt.self)!
+
 class SettingsViewController: UIViewController {
-    
+        
     // MARK: - Creation Views
     
     let userImage = UIImageView(image: UIImage(named: "userImage"))
     let userName = UITextView()
             
     let achievementsView = UIView()
-            
-    let signOutButton = AppDelegate.container.resolve(InterfaceExt.self)!.lightGreyButton(title: "Выйти из аккаунта")
     
-    let resetRecommendButton = AppDelegate.container.resolve(InterfaceExt.self)!.lightGreyButton(title: "Сбросить рекомендации")
-    let adminButton = AppDelegate.container.resolve(InterfaceExt.self)!.lightGreyButton(title: "Админ-панель")
+    let signOutButton = interfaceExt.lightGreyButton(title: "Выйти из аккаунта", color: UIColor(named: "LightGrayColor")!)
+    
+    let resetRecommendButton = interfaceExt.lightGreyButton(title: "Сбросить рекомендации", color: UIColor(named: "LightGrayColor")!)
+    let adminButton = interfaceExt.lightGreyButton(title: "Админ-панель", color: UIColor(named: "LightGrayColor")!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
                 
+        create()
+        setUpConstraints()
+    }
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        view.backgroundColor = UIColor(named: "GreyColor")
+    }
+    
+    // MARK: - Constraints
+    
+    func create() {
         userName.text = "Парфененков Евгений"
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
@@ -44,21 +60,8 @@ class SettingsViewController: UIViewController {
         addTo_achievementsView()
         
         signOutButton.setTitleColor(.red, for: .normal)
-    
         signOutButton.addTarget(self, action: #selector(signOutTap), for: .touchUpInside)
-        
-        setUpConstraints()
     }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        view.backgroundColor = UIColor(named: "GreyColor")
-    }
-    
-    // MARK: - Constraints
     
     func setUpConstraints() {
         
