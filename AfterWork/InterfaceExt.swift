@@ -10,12 +10,12 @@ import UIKit
 
 class InterfaceExt {
     
-    func lightGreyButton(title: String) -> UIButton {
+    func lightGreyButton(title: String, color: UIColor) -> UIButton {
         
         let button = UIButton()
         
         button.setTitle(title, for: .normal)
-        button.backgroundColor = UIColor(named: "LightGrayColor")
+        button.backgroundColor = color
         button.layer.cornerRadius = 15
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "Helvetica Neue Medium", size: 20)
