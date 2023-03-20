@@ -23,7 +23,7 @@ class LoginViewPresenter {
 
     weak var delegate: LoginViewPresenterDelegate?
         
-    let container = AppDelegate.container
+    let container = DI.container
 
     
     @objc func authButtonClicked() {
@@ -32,7 +32,8 @@ class LoginViewPresenter {
     }
     
     private func goToMain() {
-        let mainViewController = MainViewController()
+        let mainViewController = container.resolve(MainViewController.self)!
+        
         mainViewController.modalPresentationStyle = .fullScreen
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate

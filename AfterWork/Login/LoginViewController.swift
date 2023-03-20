@@ -11,8 +11,8 @@ import UIKit
 class LoginViewController: UIViewController {
     let logos = UIImageView(image: UIImage(named: "TINHSE"))
     let enterButton = UIButton()
-    let bigText = UITextView(frame: CGRect(x: 20.0, y: 90.0, width: 250.0, height: 100.0))
-    let smallText = UITextView(frame: CGRect(x: 20.0, y: 90.0, width: 250.0, height: 100.0))
+    let bigText = UITextView()
+    let smallText = UITextView()
     let loginViewPresenter:LoginViewPresenter = LoginViewPresenter()
     
     override func viewDidLoad() {
@@ -20,6 +20,21 @@ class LoginViewController: UIViewController {
         
         self.loginViewPresenter.delegate = self
         
+        creation()
+        constraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        view.backgroundColor = UIColor(named: "GreyColor")
+    }
+    
+    @objc func authButtonClicked() {
+        loginViewPresenter.authButtonClicked()
+    }
+    
+    func creation() {
         bigText.text = "Вход с помощью Tinkoff ID"
         bigText.contentInsetAdjustmentBehavior = .automatic
         bigText.center = self.view.center
@@ -44,22 +59,9 @@ class LoginViewController: UIViewController {
         
         enterButton.setImage(UIImage(named: "TINIDbutton"), for: .normal)
         enterButton.addTarget(self, action: #selector(authButtonClicked), for: .touchUpInside)
-        
-        constraints()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        view.backgroundColor = UIColor(named: "GreyColor")
-    }
-    
-    @objc func authButtonClicked() {
-        loginViewPresenter.authButtonClicked()
     }
     
     func constraints() {
-        
         logos.translatesAutoresizingMaskIntoConstraints = false
         let logosConstraints = [
             logos.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),

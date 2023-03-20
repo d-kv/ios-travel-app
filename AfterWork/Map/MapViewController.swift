@@ -26,7 +26,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var anotherStart: CLLocationCoordinate2D!
     var anotherEnd: CLLocationCoordinate2D!
     
-    static var targetPoint: Artwork!
+    var targetPoint: Artwork!
         
     var setRegionFlag = true
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -36,7 +36,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.11, longitudeDelta: 0.11))
         
-        if setRegionFlag && MapViewController.targetPoint == nil {
+        if setRegionFlag && targetPoint == nil {
             mapView.setRegion(region, animated: false)
             setRegionFlag = !setRegionFlag
         }
@@ -94,10 +94,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             image: UIImage(named: "markerTop")
         )
         
-        if MapViewController.targetPoint != nil {
-            mapView.addAnnotation(MapViewController.targetPoint)
+        if targetPoint != nil {
+            mapView.addAnnotation(targetPoint)
             
-            let a = MapViewController.targetPoint.coordinate
+            let a = targetPoint.coordinate
             let b = mapView.userLocation.coordinate
             let apoint = MKMapPoint(a)
             let bpoint = MKMapPoint(b)
@@ -167,7 +167,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     @objc func taxiButtonTap() {
         let start = mapView.userLocation.coordinate
-        let end = MapViewController.targetPoint.coordinate
+        let end = targetPoint.coordinate
         let defaultWebsiteURL = URL(string: "https://3.redirect.appmetrica.yandex.com/route?start-lat=" + String(start.latitude) + "&start-lon=" + String(start.longitude) + "&end-lat=" + String(end.latitude) + "&end-lon=" + String(end.longitude) + "&level=50&appmetrica_tracking_id=1178268795219780156")!
         
         UIApplication.shared.open(defaultWebsiteURL)
@@ -177,7 +177,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let launchOptions = [
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
         ]
-        MapViewController.targetPoint.mapItem?.openInMaps(launchOptions: launchOptions)
+        targetPoint.mapItem?.openInMaps(launchOptions: launchOptions)
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
