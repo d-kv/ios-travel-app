@@ -48,6 +48,7 @@ class LoginViewPresenter {
         do {
             credentials = try result.get()
             delegate?.TinkoffIDResolver(status: StatusCodes.waiting)
+            goToMain()
         } catch TinkoffAuthError.cancelledByUser {
             delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
         } catch TinkoffAuthError.failedToLaunchApp {
