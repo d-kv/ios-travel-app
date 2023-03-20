@@ -20,13 +20,32 @@ final class MainViewPresenter {
     
     func ready() {
         delegate?.mainViewPresenter(self, isLoading: true)
+
     }
     
     static func openSettings() {
         let settingsViewController = SettingsViewController()
-        //mainViewController.modalPresentationStyle = .popover
+        //settingsViewController.modalPresentationStyle = .fullScreen
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(settingsViewController, animated: true)
+    }
+    
+    static func goToMap() {
+        let mapViewController = MapViewController()
+        mapViewController.modalPresentationStyle = .fullScreen
+        
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        //sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+        sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
+    }
+    
+    static func goToCards() {
+        let mapViewController = CardsViewController()
+        mapViewController.modalPresentationStyle = .fullScreen
+        
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        //sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+        sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
     }
 }

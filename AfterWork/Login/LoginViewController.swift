@@ -110,15 +110,47 @@ class LoginViewController: UIViewController {
         NSLayoutConstraint.activate(constraintsArray)
     }
     
-}
-
-extension LoginViewController: LoginViewPresenterDelegate {
-    func loginViewPresenter(_ reposViewModel: LoginViewPresenter, isLoading: Bool) {
-        if isLoading { self.view.showBlurLoader() }
-        else { self.view.removeBluerLoader() }
-        
-        print(isLoading, "kaka")
-        
+    func showAlert(text: String!) {
+        let alert = UIAlertController(title: "Что-то не так...", message: text, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ок", style: .default))
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
+
+extension LoginViewController: LoginViewPresenterDelegate {
+    func TinkoffIDResolver(status: StatusCodes) {
+        switch status {
+        case .waiting:
+            self.view.removeBluerLoader()
+        case .proceed:
+            self.view.showBlurLoader()
+        case .failedToLaunch:
+            self.view.removeBluerLoader()
+            showAlert(text: "Невозможно открыть приложение Tinkoff")
+        case .cancelledByUser:
+            self.view.removeBluerLoader()
+            showAlert(text: "Вход отменен")
+        case .unavailable:
+            self.view.removeBluerLoader()
+            showAlert(text: "В данный момент невозможно выполнить вход")
+        case .failedToObtainToken:
+            self.view.removeBluerLoader()
+            showAlert(text: "Произошла неизвестная ошибка (Токен)")
+        case .failedToRefreshCredentials:
+            self.view.removeBluerLoader()
+            showAlert(text: "Произошла неизвестная ошибка (Обновление)")
+        case .unknownError:
+            showAlert(text: "Произошла неизвестная ошибка (Токен)")
+            self.view.removeBluerLoader()
+        }
+
+    }
+    
+    func loginViewPresenter(_ reposViewModel: LoginViewPresenter, isLoading: Bool) {
+        if isLoading { self.view.showBlurLoader() }
+        else { self.view.removeBluerLoader() }
+    }
+    
+}
+

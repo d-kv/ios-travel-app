@@ -25,9 +25,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
+        
         userImage.setImage(UIImage(named: "userImage"), for: .normal)
         userImage.addTarget(self, action: #selector(userImageTap), for: .touchUpInside)
-        
         
         userName.text = "Евгений,\nкуда отправимся?"
         userName.contentInsetAdjustmentBehavior = .automatic
@@ -65,13 +66,19 @@ class MainViewController: UIViewController {
         personalRecommend.layer.cornerRadius = 23
         addto_personalRecommend()
         
+        personalRecommend.isUserInteractionEnabled = true
+        let gesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        gesture.numberOfTapsRequired = 1
+        personalRecommend.addGestureRecognizer(gesture)
+        
         checkAllButton.setTitle("Посмотреть все", for: .normal)
         checkAllButton.backgroundColor = UIColor(named: "YellowColor")
         checkAllButton.layer.cornerRadius = 23
         checkAllButton.setTitleColor(.black, for: .normal)
         checkAllButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 26)
+        checkAllButton.addTarget(self, action: #selector(checkAllButtonTap), for: .touchUpInside)
         
-        mem()
+        //mem()
         
         setUpConstraints()
     }
@@ -99,6 +106,14 @@ class MainViewController: UIViewController {
     
     @objc func userImageTap() {
         MainViewPresenter.openSettings()
+    }
+    
+    @objc func checkAllButtonTap() {
+        MainViewPresenter.goToMap()
+    }
+    
+    @objc func recomendButtonTap() {
+        MainViewPresenter.goToCards()
     }
     
     // MARK: - Contraints

@@ -1,12 +1,15 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '16.0'
+  platform :ios, '15.0'
 
 target 'AfterWork' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'TinkoffID'
-  
-
+  pod 'TinkoffID'  
+  pod 'Swinject'
+  pod 'Shuffle-iOS'
+#  pod 'AfterWorkAPI', :git =>
+#'https://github.com/ruslanSorokin/afterwork-api.git', :branch =>
+#'feat/add-swift-version'
   # Pods for AfterWork
 
 end

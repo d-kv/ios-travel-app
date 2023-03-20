@@ -7,26 +7,24 @@
 
 import UIKit
 import TinkoffID
+import Swinject
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
-    }
+    static let container: Container = {
+        let container = Container()
+        
+        container.register(AuthService.self) { _ in return AuthService() }
+        container.register(InterfaceExt.self) { _ in return InterfaceExt() }
+        container.register(MapViewController.self) { _ in return MapViewController() }
+        
+        return container
+    }()
     
-//    func application(_ app: UIApplication,
-//                     open url: URL,
-//                     options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-//        let loginViewPresenter: LoginViewPresenter = LoginViewPresenter()
+//    func application(_ application: UIApplication, open url: URL, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        // Override point for customization after application launch.
 //        
-//        
-//        print("ZHOPA", url)
-//        return loginViewPresenter.tinkoffId.handleCallbackUrl(url)
+//        AppDelegate.container.resolve(AuthService.self)!.tinkoffId.handleCallbackUrl(url)
 //    }
-    
-    // MARK: UISceneSession Lifecycle
-    
-    
 }

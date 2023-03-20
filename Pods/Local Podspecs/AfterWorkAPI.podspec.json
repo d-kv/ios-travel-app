@@ -1,0 +1,27 @@
+{
+  "name": "AfterWorkAPI",
+  "platforms": {
+    "ios": "12.0",
+    "tvos": "12.0",
+    "osx": "10.13"
+  },
+  "summary": "Api for AfterWork",
+  "version": "0.1.0",
+  "authors": {
+    "Ruslan Sorokin": "strawberryladder@gmail.com"
+  },
+  "homepage": "https://github.com/ruslanSorokin/afterwork-api",
+  "source": {
+    "git": "https://github.com/ruslanSorokin/afterwork-api.git",
+    "tag": "v0.1.0"
+  },
+  "swift_versions": "5.7",
+  "source_files": "gen/swift/**/*.{swift}",
+  "dependencies": {
+    "gRPC-Swift": [
+      "~> 1.8"
+    ]
+  },
+  "requires_arc": true,
+  "swift_version": "5.7"
+}
