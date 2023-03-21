@@ -14,3 +14,9 @@ repos:
     hooks:
       - id: typos
         args: []
+
+  - repo: https://github.com/nicklockwood/SwiftFormat
+    rev: 0.51.2
+    hooks:
+      - id: swiftformat
+        args: []
