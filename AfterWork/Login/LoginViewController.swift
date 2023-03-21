@@ -35,17 +35,6 @@ class LoginViewController: UIViewController {
     }
     
     func creation() {
-//        bigText.text = "Вход с помощью Tinkoff ID"
-//        bigText.contentInsetAdjustmentBehavior = .automatic
-//        bigText.center = self.view.center
-//        bigText.textAlignment = NSTextAlignment.justified
-//        bigText.textColor = .white
-//        bigText.backgroundColor = .clear
-//        bigText.font = UIFont(name: "Helvetica Neue Bold", size: 30)
-//        bigText.adjustsFontForContentSizeCategory = false
-//        bigText.isEditable = false
-//        bigText.sizeToFit()
-        
         enterButton.setImage(UIImage(named: "TINIDbutton"), for: .normal)
         enterButton.addTarget(self, action: #selector(authButtonClicked), for: .touchUpInside)
     }

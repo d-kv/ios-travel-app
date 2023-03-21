@@ -22,15 +22,19 @@ class MainViewController: UIViewController {
     
     let checkAllButton = UIButton()
     
+    let mainViewPresenter = DI.shared.getMainViewPresenter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.hideKeyboardWhenTappedAround()
         
+        self.mainViewPresenter.delegate = self
+                
         creation()
         setUpConstraints()
         
-        MainViewPresenter.loadData()
+        mainViewPresenter.enteredApp()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,15 +44,15 @@ class MainViewController: UIViewController {
     }
     
     @objc func userImageTap() {
-        MainViewPresenter.openSettings()
+        mainViewPresenter.openSettings()
     }
     
     @objc func checkAllButtonTap() {
-        MainViewPresenter.goToMap()
+        mainViewPresenter.goToMap()
     }
     
     @objc func recomendButtonTap() {
-        MainViewPresenter.goToCards()
+        mainViewPresenter.goToCards()
     }
     
     // MARK: - Contraints
@@ -377,4 +381,11 @@ class MainViewController: UIViewController {
         NSLayoutConstraint.activate(constraintsArray)
     }
     
+}
+
+extension MainViewController: MainViewPresenterDelegate {
+    func mainViewPresenter(_ reposViewModel: MainViewPresenter, isLoading: Bool) {
+        if isLoading { view.showBlurLoader() }
+        else { view.removeBluerLoader() }
+    }
 }

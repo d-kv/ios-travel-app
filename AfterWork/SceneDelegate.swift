@@ -16,9 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = MainViewController()
+        
+        if UserDefaults.standard.string(forKey: "idToken") != nil { window?.rootViewController = DI.shared.getMainViewController() }
+        else { window?.rootViewController = DI.shared.getLoginViewController() }
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .dark        
     }

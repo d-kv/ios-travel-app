@@ -120,8 +120,8 @@
 				5C79C05629A2CC0E00106F20 /* Assets.xcassets */,
 				5C79C05829A2CC0E00106F20 /* LaunchScreen.storyboard */,
 				5C79C05B29A2CC0E00106F20 /* Info.plist */,
-				5C8B0BAD29C1C98D0045F7BD /* Localizable.strings */,
 				5CE3C32F29CA0C1F00EA2590 /* Keys.plist */,
+				5C8B0BAD29C1C98D0045F7BD /* Localizable.strings */,
 			);
 			path = AfterWork;
 			sourceTree = "<group>";

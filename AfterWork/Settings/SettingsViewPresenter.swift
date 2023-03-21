@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import TinkoffID
 
 protocol SettingsViewPresenterDelegate: AnyObject {
     func settingsViewPresenter(isLoading: Bool)
@@ -14,15 +15,33 @@ protocol SettingsViewPresenterDelegate: AnyObject {
 
 final class SettingsViewPresenter {
     
-    static func signOut() {
-        DispatchQueue.main.async {
-            let loginViewController = DI.shared.getLoginViewController()
-            loginViewController.modalPresentationStyle = .fullScreen
+    let preferences = UserDefaults.standard
+    
+    func signOut() {
+        
+        DI.shared.getAuthSerivce().logOut(accessToken: preferences.string(forKey: "accessToken")!, handler: handleSignOut)
+    }
+    
+    private func handleSignOut(_ result: Result<Void, Error>) {
+        do {
+            _ = try result.get()
             
-            let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
-            sceneDelegate.window!.rootViewController?.dismiss(animated: true)
-            sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
+            preferences.removeObject(forKey: "accessToken")
+            preferences.removeObject(forKey: "refreshToken")
+            preferences.removeObject(forKey: "idToken")
+            
+            DispatchQueue.main.async {
+                
+                let loginViewController = DI.shared.getLoginViewController()
+                loginViewController.modalPresentationStyle = .fullScreen
+                
+                let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+                sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+                sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
 
+            }
+        } catch {
+            print("HUY", error)
         }
     }
     

@@ -48,9 +48,7 @@ class AuthService {
         
         return factory.build()
     }()
-    
-    //static var credentials: TinkoffTokenPayload!
-    
+        
     func TinkoffIDAuth(handler: @escaping SignInCompletion) {
         
         if AuthService.tinkoffId.isTinkoffAuthAvailable {
@@ -59,4 +57,23 @@ class AuthService {
             AuthService.debugTinkoffId.startTinkoffAuth(handler)
         }
     }
+    
+    func refreshToken(refreshToken: String, handler: @escaping SignInCompletion) {
+        
+        if AuthService.tinkoffId.isTinkoffAuthAvailable {
+            AuthService.tinkoffId.obtainTokenPayload(using: refreshToken, handler)
+        } else {
+            AuthService.debugTinkoffId.obtainTokenPayload(using: refreshToken, handler)
+        }
+        print("HUY3")
+    }
+    
+    func logOut(accessToken: String, handler: @escaping SignOutCompletion) {
+        if AuthService.tinkoffId.isTinkoffAuthAvailable {
+            AuthService.tinkoffId.signOut(with: accessToken, tokenTypeHint: .access, completion: handler)
+        } else {
+            AuthService.debugTinkoffId.signOut(with: accessToken, tokenTypeHint: .access, completion: handler)
+        }
+    }
+    
 }

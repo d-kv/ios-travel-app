@@ -132,7 +132,7 @@ class SettingsViewController: UIViewController {
         
         let alert = UIAlertController(title: "Подтверждение", message: "Выйти из приложения?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { action in
-            SettingsViewPresenter.signOut()
+            DI.shared.getSettingsViewPresenter().signOut()
         }))
         alert.addAction(UIAlertAction(title: "Нет", style: .default))
         self.present(alert, animated: true, completion: nil)

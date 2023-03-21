@@ -11,11 +11,13 @@ import Swinject
 //let interfaceExt = DI.container.resolve(InterfaceExt.self)!
 
 protocol DIProtocol {
-    // static var container: Container { get }
     func getAuthSerivce() -> AuthService
     func getInterfaceExt() -> InterfaceExt
     
     func getMainViewController() -> MainViewController
+    func getMainViewPresenter() -> MainViewPresenter
+    
+    
     func getLoginViewController() -> LoginViewController
     func getSettingsViewController() -> SettingsViewController
     func getMapViewController_Cards() -> MapViewController
@@ -35,7 +37,10 @@ class DI: DIProtocol {
     func getMapViewController_Cards() -> MapViewController { return container.resolve(MapViewController.self, name: "Cards")!}
     func getMapViewController_Map() -> MapViewController { return container.resolve(MapViewController.self, name: "Map")!}
     func getCardsViewController() -> CardsViewController { return container.resolve(CardsViewController.self)!}
+    
+    func getMainViewPresenter() -> MainViewPresenter { return container.resolve(MainViewPresenter.self)!}
     func getCardsViewPresenter() -> CardsViewPresenter { return container.resolve(CardsViewPresenter.self)!}
+    func getSettingsViewPresenter() -> SettingsViewPresenter { return container.resolve(SettingsViewPresenter.self)!}
     
     static let shared = DI()
     
@@ -52,7 +57,10 @@ class DI: DIProtocol {
         container.register(MapViewController.self, name: "Map") { _ in return MapViewController() }
         container.register(CardsViewController.self) { _ in return CardsViewController() }
 
+        container.register(MainViewPresenter.self) { _ in return MainViewPresenter() }
         container.register(CardsViewPresenter.self) { _ in return CardsViewPresenter() }
+        container.register(SettingsViewPresenter.self) { _ in return SettingsViewPresenter() }
+        
 
         return container
     }()
