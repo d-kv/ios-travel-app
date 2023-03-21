@@ -11,7 +11,7 @@ import MapKit
 
 class CardsViewPresenter {
     
-    let controller = DI.container.resolve(CardsViewController.self)!
+    private let controller = DI.container.resolve(CardsViewController.self)!
     
     func goToMain() {
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
@@ -28,5 +28,8 @@ class CardsViewPresenter {
                 locationManager.startUpdatingLocation()
             }
         })
+        
     }
+    
+    static func getCards() -> Array<Array<Any>>? { return DI.poiData.placesList }
 }

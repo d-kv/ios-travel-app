@@ -19,7 +19,13 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     
     let endText = UITextView()
     
-    func numberOfCards(in cardStack: Shuffle_iOS.SwipeCardStack) -> Int { return cards.count }
+    var cards: Array<Array<Any>> = CardsViewPresenter.getCards()!
+    
+    func numberOfCards(in cardStack: Shuffle_iOS.SwipeCardStack) -> Int {
+    
+        return cards.count - 1
+        
+    }
     
     // MARK: - Delegations
     
@@ -34,21 +40,27 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     
     func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
         if direction == .right  && index != 0 {
-            self.dismiss(animated: true)
             
+            self.dismiss(animated: true)
+                        
             let mapViewController = DI.container.resolve(MapViewController.self, name: "Cards")!
             let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
             sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
-                        
+            
+            
             let artwork = Artwork(
-                title: "King David Kalakaua",
+                title: cards[index + 1][2] as? String,
                 locationName: "Waikiki Gateway Park",
-                discipline: "Sculpture",
-                coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][6] as! CLLocationDegrees, longitude: cards[index + 1][7] as! CLLocationDegrees), //cards[0][6]
+                discipline: cards[index + 1][1] as? String,
+                coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
                 image: UIImage(named: "markerTop")
             )
             
             mapViewController.targetPoint = artwork
+        }
+        if index + 4 == cards.count {
+            print("ZHOPA")
+            cardStack.swipe(.left, animated: true)
         }
     }
     
@@ -56,10 +68,10 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         mapView.removeAnnotations(mapView.annotations)
         
         let artwork = Artwork(
-            title: "King David Kalakaua",
+            title: cards[index + 1][2] as? String,
             locationName: "Waikiki Gateway Park",
-            discipline: "Sculpture",
-            coordinate: CLLocationCoordinate2D(latitude: cards[index][6] as! CLLocationDegrees, longitude: cards[index][7] as! CLLocationDegrees), //cards[0][6]
+            discipline: cards[index + 1][1] as? String,
+            coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
             image: UIImage(named: "markerTop")
         )
         
@@ -77,7 +89,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     func card(fromData data: [Any]) -> SwipeCard {
         let card = SwipeCard()
     
-        let content = DI.container.resolve(InterfaceExt.self)!.basicCard(type: data[0] as! String, title: data[1] as! String, description: data[2] as! String, workHours: data[3] as! String, bill: data[4] as! Int, isRecommended: data[5] as! Bool)
+        let content = DI.container.resolve(InterfaceExt.self)!.basicCard(type: data[1] as! String, title: data[2] as! String, description: data[6] as! String, workHours: data[10] as! String, bill: data[8] as! Int, isRecommended: data[7] as! Bool)
         
         card.swipeDirections = [.left, .right]
         card.content = content
@@ -95,17 +107,6 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         return card
     }
     
-    
-    let cards = [
-        ["Инструкция", "Что это такое?", "Смахнешь влево - получишь карточки, смахнешь вправо - отдохни на браво. А карточки с подсветкой - наши избранные, имей ввиду", "текст", 4, false, 56.2965039, 44.9360589],
-        ["Пиццерия", "Papa Jhones", "Третья крупнейшая сеть пиццерий в мире после Pizza Hut и Domino's Pizza, на конец 2018 года сеть Papa John's включала 5303 пиццерии, из них 645 были собственными, остальные работали по франчайзингу", "Ежедневно с 12:00 - 00:00", 4, false, 56.2965039, 44.9360589],
-        ["Пиццерия", "Papa Jhones", "Третья крупнейшая сеть пиццерий в мире после Pizza Hut и Domino's Pizza, на конец 2018 года сеть Papa John's включала 5303 пиццерии, из них 645 были собственными, остальные работали по франчайзингу", "Ежедневно с 12:00 - 00:00", 4, false, 55.2965039, 43.9360589],
-        ["Пиццерия", "Papa Jhones", "Третья крупнейшая сеть пиццерий в мире после Pizza Hut и Domino's Pizza, на конец 2018 года сеть Papa John's включала 5303 пиццерии, из них 645 были собственными, остальные работали по франчайзингу", "Ежедневно с 12:00 - 00:00", 4, false, 54.2965039, 45.9360589],
-        ["Пиццерия", "Papa Jhones", "Третья крупнейшая сеть пиццерий в мире после Pizza Hut и Domino's Pizza, на конец 2018 года сеть Papa John's включала 5303 пиццерии, из них 645 были собственными, остальные работали по франчайзингу", "Ежедневно с 12:00 - 00:00", 4, false, 53.2965039, 47.9360589],
-        ["Пиццерия", "Papa Jhones", "Третья крупнейшая сеть пиццерий в мире после Pizza Hut и Domino's Pizza, на конец 2018 года сеть Papa John's включала 5303 пиццерии, из них 645 были собственными, остальные работали по франчайзингу", "Ежедневно с 12:00 - 00:00", 4, false, 52.2965039, 50.9360589],
-        ["Пиццерия", "Papa Jhones", "Третья крупнейшая сеть пиццерий в мире после Pizza Hut и Domino's Pizza, на конец 2018 года сеть Papa John's включала 5303 пиццерии, из них 645 были собственными, остальные работали по франчайзингу", "Ежедневно с 12:00 - 00:00", 4, false, 51.2965039, 30.9360589],
-    ]
-    
     // MARK: - Main
     
     override func viewDidLoad() {
@@ -115,16 +116,17 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         cardStack.delegate = self
         view.backgroundColor = .black
         
-        
         create()
         setUpContstraints()
-        setUpLocationManager()
         
+        setUpLocationManager()
         DI.container.resolve(CardsViewPresenter.self)?.setUpLocation(locationManager: locationManager)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+            
+        //cards = DI.container.resolve(CardsViewPresenter.self)!.getCards()
     }
     
     // MARK: - View

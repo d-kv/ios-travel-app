@@ -15,7 +15,6 @@ protocol SettingsViewPresenterDelegate: AnyObject {
 final class SettingsViewPresenter {
     
     static func signOut() {
-        
         DispatchQueue.main.async {
             let loginViewController = DI.container.resolve(LoginViewController.self)!
             loginViewController.modalPresentationStyle = .fullScreen
@@ -23,6 +22,9 @@ final class SettingsViewPresenter {
             let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
             sceneDelegate.window!.rootViewController?.dismiss(animated: true)
             sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
+            
+            let huy = [1, 2, "12"]
+            print("ZHOPA", type(of: huy))
         }
     }
     

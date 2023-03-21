@@ -20,7 +20,6 @@ final class MainViewPresenter {
     
     func ready() {
         delegate?.mainViewPresenter(self, isLoading: true)
-
     }
     
     static func openSettings() {
@@ -48,4 +47,6 @@ final class MainViewPresenter {
         //sceneDelegate.window!.rootViewController?.dismiss(animated: true)
         sceneDelegate.window!.rootViewController?.present(cardsViewController, animated: true)
     }
+    
+    static func loadData() { DataLoader.loadData() }
 }

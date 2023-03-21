@@ -21,7 +21,6 @@ class AuthService {
             callbackUrl: callbackUrl
         )
         
-        //handleCallback(url: handle_url)
         
         return factory.build()
     }()

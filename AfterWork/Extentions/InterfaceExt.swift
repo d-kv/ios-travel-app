@@ -282,7 +282,7 @@ class InterfaceExt {
         
         for _ in stride(from: 0, to: 5 - price, by: 1) {
             let image = UIImageView(image: UIImage(named: "rubleImage"))
-            image.tintColor = .white
+            image.tintColor = UIColor(named: "LightGrayColor")
             
             image.translatesAutoresizingMaskIntoConstraints = false
             let imageConstraints = [

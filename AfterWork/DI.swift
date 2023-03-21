@@ -28,5 +28,6 @@ class DI {
         return container
     }()
     
-    
+    static var poiData: PoiData = PoiData.init()
+    static let userData: UserData = UserData.init()
 }

@@ -48,7 +48,7 @@ class LoginViewPresenter {
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             credentials = try result.get()
-            delegate?.TinkoffIDResolver(status: StatusCodes.waiting)
+            delegate?.TinkoffIDResolver(status: StatusCodes.waiting)            
             goToMain()
         } catch TinkoffAuthError.cancelledByUser {
             delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)

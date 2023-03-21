@@ -29,6 +29,8 @@ class MainViewController: UIViewController {
         
         creation()
         setUpConstraints()
+        
+        MainViewPresenter.loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,9 +94,27 @@ class MainViewController: UIViewController {
         addto_personalRecommend()
         
         personalRecommend.isUserInteractionEnabled = true
-        let gesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
-        gesture.numberOfTapsRequired = 1
-        personalRecommend.addGestureRecognizer(gesture)
+        bigRecommend.isUserInteractionEnabled = true
+        leftRecommend.isUserInteractionEnabled = true
+        centerRecommend.isUserInteractionEnabled = true
+        rightRecommend.isUserInteractionEnabled = true
+        
+        let gesturePersonal:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        gesturePersonal.numberOfTapsRequired = 1
+        let gestureBig:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        gestureBig.numberOfTapsRequired = 1
+        let gestureLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        gestureLeft.numberOfTapsRequired = 1
+        let gestureCenter:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        gestureCenter.numberOfTapsRequired = 1
+        let gestureRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        gestureRight.numberOfTapsRequired = 1
+        
+        personalRecommend.addGestureRecognizer(gesturePersonal)
+        bigRecommend.addGestureRecognizer(gestureBig)
+        leftRecommend.addGestureRecognizer(gestureLeft)
+        centerRecommend.addGestureRecognizer(gestureCenter)
+        rightRecommend.addGestureRecognizer(gestureRight)
         
         checkAllButton.setTitle("Посмотреть все", for: .normal)
         checkAllButton.backgroundColor = UIColor(named: "YellowColor")
