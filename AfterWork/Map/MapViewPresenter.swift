@@ -31,4 +31,38 @@ final class MapViewPresenter {
         NSLog("Target1", 1)
     }
     
+    static func setUpLocation(locationManager: CLLocationManager) {
+        DispatchQueue.background(background: {
+            if (CLLocationManager.locationServicesEnabled()) {
+                
+                locationManager.requestAlwaysAuthorization()
+                locationManager.startUpdatingLocation()
+            }
+        })
+    }
+    
+    static func setUpPoints(mapView: MKMapView) {
+        
+        for i in DI.poiData.placesList! {
+            var image = UIImage(named: "marker")
+            if i[7] as! Bool {
+                image = UIImage(named: "markerTop")
+            }
+            
+            let artwork = Artwork(
+                title: i[2] as? String,
+                locationName: i[1] as? String,
+                discipline: i[1] as? String,
+                coordinate: CLLocationCoordinate2D(latitude: i[4] as! CLLocationDegrees, longitude: i[5] as! CLLocationDegrees),
+                image: image
+            )
+            
+            if !(i[1] as! String).isEqual("Инструкция") {
+                mapView.addAnnotation(artwork)
+            }
+            
+        }
+        
+    }
+    
 }

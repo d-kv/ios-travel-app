@@ -56,13 +56,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
-        DispatchQueue.background(background: { [self] in
-            if (CLLocationManager.locationServicesEnabled()) {
-                
-                locationManager.requestAlwaysAuthorization()
-                locationManager.startUpdatingLocation()
-            }
-        })
+        MapViewPresenter.setUpLocation(locationManager: locationManager)
         
         backButton.setImage(UIImage(named: "backArrow"), for: .normal)
         backButton.addTarget(self, action: #selector(backButtonTap), for: .touchUpInside)
@@ -86,16 +80,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
           forAnnotationViewWithReuseIdentifier:
             MKMapViewDefaultAnnotationViewReuseIdentifier)
         
-        let artwork = Artwork(
-            title: "King David Kalakaua",
-            locationName: "Waikiki Gateway Park",
-            discipline: "Sculpture",
-            coordinate: CLLocationCoordinate2D(latitude: 56.2965039, longitude: 43.9360589),
-            image: UIImage(named: "markerTop")
-        )
+//        let artwork = Artwork(
+//            title: "King David Kalakaua",
+//            locationName: "Waikiki Gateway Park",
+//            discipline: "Sculpture",
+//            coordinate: CLLocationCoordinate2D(latitude: 56.2965039, longitude: 43.9360589),
+//            image: UIImage(named: "markerTop")
+//        )
         
         if targetPoint != nil {
-            mapView.addAnnotation(targetPoint)
             
             let a = targetPoint.coordinate
             let b = mapView.userLocation.coordinate
@@ -104,7 +97,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             mapView.centerToLocation(CLLocation(latitude: a.latitude, longitude: a.longitude), regionRadius: CLLocationDistance(10000))
         } else {
-            mapView.addAnnotation(artwork)
+            //mapView.addAnnotation(artwork)
+            MapViewPresenter.setUpPoints(mapView: mapView)
             taxiButton.isHidden = true
             wayButton.isHidden = true
         }
