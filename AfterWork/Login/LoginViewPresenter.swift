@@ -23,6 +23,8 @@ class LoginViewPresenter {
 
     weak var delegate: LoginViewPresenterDelegate?
     
+    let preferences = UserDefaults.standard
+    
     @objc func authButtonClicked() {
         delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
         DI.shared.getAuthSerivce().TinkoffIDAuth(handler: handleSignInResult)
@@ -45,8 +47,13 @@ class LoginViewPresenter {
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             credentials = try result.get()
+            
+            preferences.set(credentials.idToken, forKey: "idToken")
+            preferences.set(credentials.accessToken, forKey: "accessToken")
+            preferences.set(credentials.refreshToken, forKey: "refreshToken")
+            
             delegate?.TinkoffIDResolver(status: StatusCodes.waiting)            
-            goToMain()
+            goToMain()            
         } catch TinkoffAuthError.cancelledByUser {
             delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
         } catch TinkoffAuthError.failedToLaunchApp {
@@ -57,7 +64,6 @@ class LoginViewPresenter {
             delegate?.TinkoffIDResolver(status: StatusCodes.unavailable)
         } catch {
             delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
-            NSLog("AuthError", 1)
         }
     }
 }

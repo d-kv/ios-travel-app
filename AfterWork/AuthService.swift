@@ -12,15 +12,23 @@ class AuthService {
     
     
     static var tinkoffId: ITinkoffID = {
-        let clientId = "tid_afterwork-mb"
-        let callbackUrl = "afterwork://"
+        
+        var clientId = ""
+        var callbackUrl = ""
+        
+        var keys = NSDictionary()
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)!
+            
+            clientId = keys["CLIENT_ID"] as! String
+            callbackUrl = keys["CALLBACK_URI"] as! String
+        }
         
         
         let factory = TinkoffIDFactory(
             clientId: clientId,
             callbackUrl: callbackUrl
         )
-        
         
         return factory.build()
     }()
