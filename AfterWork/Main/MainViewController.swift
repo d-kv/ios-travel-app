@@ -45,11 +45,11 @@ class MainViewController: UIViewController {
         MainViewPresenter.goToMap()
     }
     
-    @objc func recomendButtonTap() {
+    @objc func recommendButtonTap() {
         MainViewPresenter.goToCards()
     }
     
-    // MARK: - Contraints
+    // MARK: - Constraints
     
     func creation() {
         userImage.setImage(UIImage(named: "userImage"), for: .normal)
@@ -92,7 +92,7 @@ class MainViewController: UIViewController {
         addto_personalRecommend()
         
         personalRecommend.isUserInteractionEnabled = true
-        let gesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recommendButtonTap))
         gesture.numberOfTapsRequired = 1
         personalRecommend.addGestureRecognizer(gesture)
         
