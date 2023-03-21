@@ -106,3 +106,7 @@ fastlane/test_output
 iOSInjectionProject/
 Pods-AfterWork.xcscheme
 TinkoffID.xcscheme
+
+AfterWork/Keys.plist
+
+AfterWork.xcworkspace/xcuserdata/evgeny.xcuserdatad/UserInterfaceState.xcuserstate
