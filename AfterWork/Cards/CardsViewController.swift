@@ -43,7 +43,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             
             self.dismiss(animated: true)
                         
-            let mapViewController = DI.container.resolve(MapViewController.self, name: "Cards")!
+            let mapViewController = DI.shared.getMapViewController_Cards()
             let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
             sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
             
@@ -83,29 +83,10 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         let bpoint = MKMapPoint(b)
         
         mapView.setVisibleMapRect(MKMapRect(x: min(apoint.x, bpoint.x), y: min(apoint.y, bpoint.y), width: abs(apoint.x - bpoint.x), height: abs(apoint.y - bpoint.y)), edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20), animated: true)
-        return card(fromData: cards[index])
+        return DI.shared.getInterfaceExt().card(fromData: cards[index])
     }
     
-    func card(fromData data: [Any]) -> SwipeCard {
-        let card = SwipeCard()
     
-        let content = DI.container.resolve(InterfaceExt.self)!.basicCard(type: data[1] as! String, title: data[2] as! String, description: data[6] as! String, workHours: data[10] as! String, bill: data[8] as! Int, isRecommended: data[7] as! Bool)
-        
-        card.swipeDirections = [.left, .right]
-        card.content = content
-          
-        let leftOverlay = UIView()
-        leftOverlay.layer.cornerRadius = 23
-        leftOverlay.backgroundColor = .red
-        
-        let rightOverlay = UIView()
-        rightOverlay.layer.cornerRadius = 23
-        rightOverlay.backgroundColor = UIColor(named: "YellowColor")
-                
-        card.setOverlays([.left: leftOverlay, .right: rightOverlay])
-          
-        return card
-    }
     
     // MARK: - Main
     
@@ -120,13 +101,12 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         setUpContstraints()
         
         setUpLocationManager()
-        DI.container.resolve(CardsViewPresenter.self)?.setUpLocation(locationManager: locationManager)
+        DI.shared.getCardsViewPresenter().setUpLocation(locationManager: locationManager)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
             
-        //cards = DI.container.resolve(CardsViewPresenter.self)!.getCards()
     }
     
     // MARK: - View
@@ -200,7 +180,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     }
     
     @objc func backButtonTap() {
-        DI.container.resolve(CardsViewPresenter.self)!.goToMain()
+        DI.shared.getCardsViewPresenter().goToMain()
     }
     
     // MARK: - Map and location

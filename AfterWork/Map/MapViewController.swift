@@ -9,17 +9,18 @@ import Foundation
 import UIKit
 import MapKit
 
+//let interfaceExt = DI.container.resolve(InterfaceExt.self)!
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     // MARK: - Main
     
     let mapViewPresenter: MapViewPresenter = MapViewPresenter()
-    
+        
     let backButton = UIButton()
     let mapView = MKMapView()
     
-    let taxiButton = UIButton()
-    let wayButton = UIButton()
+    let taxiButton = DI.shared.getInterfaceExt().standardButton(title: "Такси", backgroundColor: UIColor(named: "YellowColor")!, cornerRadius: 15, titleColor: UIColor(named: "GreyColor")!, font: .systemFont(ofSize: 16))
+    let wayButton = DI.shared.getInterfaceExt().standardButton(title: "Маршрут", backgroundColor: UIColor(named: "LightGrayColor")!, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 16))
     
     var locationManager: CLLocationManager!
     
@@ -59,20 +60,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         MapViewPresenter.setUpLocation(locationManager: locationManager)
         
         backButton.setImage(UIImage(named: "backArrow"), for: .normal)
+        
         backButton.addTarget(self, action: #selector(backButtonTap), for: .touchUpInside)
-        
-        taxiButton.setTitle("Такси", for: .normal)
-        taxiButton.backgroundColor = UIColor(named: "YellowColor")
-        taxiButton.layer.cornerRadius = 15
-        taxiButton.setTitleColor(UIColor(named: "GreyColor"), for: .normal)
-        taxiButton.titleLabel!.font = UIFont(name: "Helvetica Neue Regular", size: 50)
         taxiButton.addTarget(self, action: #selector(taxiButtonTap), for: .touchUpInside)
-        
-        wayButton.setTitle("Маршрут", for: .normal)
-        wayButton.backgroundColor = UIColor(named: "LightGrayColor")
-        wayButton.layer.cornerRadius = 15
-        wayButton.setTitleColor(.white, for: .normal)
-        wayButton.titleLabel!.font = UIFont(name: "Helvetica Neue Regular", size: 50)
         wayButton.addTarget(self, action: #selector(wayButtonTap), for: .touchUpInside)
 
         mapView.register(

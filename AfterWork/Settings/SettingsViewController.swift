@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-let interfaceExt = DI.container.resolve(InterfaceExt.self)!
+
 
 class SettingsViewController: UIViewController {
         
@@ -19,10 +19,10 @@ class SettingsViewController: UIViewController {
             
     let achievementsView = UIView()
     
-    let signOutButton = interfaceExt.lightGreyButton(title: "Выйти из аккаунта", color: UIColor(named: "LightGrayColor")!)
+    let signOutButton = DI.shared.getInterfaceExt().lightGreyButton(title: "Выйти из аккаунта", color: UIColor(named: "LightGrayColor")!)
     
-    let resetRecommendButton = interfaceExt.lightGreyButton(title: "Сбросить рекомендации", color: UIColor(named: "LightGrayColor")!)
-    let adminButton = interfaceExt.lightGreyButton(title: "Админ-панель", color: UIColor(named: "LightGrayColor")!)
+    let resetRecommendButton = DI.shared.getInterfaceExt().lightGreyButton(title: "Сбросить рекомендации", color: UIColor(named: "LightGrayColor")!)
+    let adminButton = DI.shared.getInterfaceExt().lightGreyButton(title: "Админ-панель", color: UIColor(named: "LightGrayColor")!)
     
     override func viewDidLoad() {
         super.viewDidLoad()

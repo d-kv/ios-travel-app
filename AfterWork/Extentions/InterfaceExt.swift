@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Shuffle_iOS
 
 class InterfaceExt {
     
@@ -23,26 +24,93 @@ class InterfaceExt {
         return button
     }
     
+    func standardButton(title: String, backgroundColor: UIColor, cornerRadius: CGFloat, titleColor: UIColor, font: UIFont) -> UIButton {
+        let button = UIButton()
+        
+        button.setTitle(title, for: .normal)
+        button.backgroundColor = backgroundColor
+        button.layer.cornerRadius = cornerRadius
+        button.setTitleColor(titleColor, for: .normal)
+        button.titleLabel!.font = font
+        
+        return button
+    }
+    
+    func standardTextView(text: String, textColor: UIColor, font: UIFont) -> UITextView {
+        let textView = UITextView()
+        
+        textView.text = text
+        textView.contentInsetAdjustmentBehavior = .automatic
+        //textView.center = view.center
+        textView.textAlignment = NSTextAlignment.justified
+        textView.textColor = textColor
+        textView.backgroundColor = .clear
+        textView.font = font
+        textView.adjustsFontForContentSizeCategory = true
+        textView.isEditable = false
+        textView.sizeToFit()
+        
+        return textView
+    }
+    
+    func frameTextView(text: String, font: UIFont, lineHeightMultiple: CGFloat) -> UITextView {
+        let textView = UITextView()
+        
+        textView.text = text
+        textView.contentInsetAdjustmentBehavior = .automatic
+        textView.textAlignment = NSTextAlignment.justified
+        textView.textColor = .white
+        textView.backgroundColor = .clear
+        textView.font = font
+        textView.adjustsFontForContentSizeCategory = false
+        textView.isEditable = false
+        textView.sizeToFit()
+        textView.isScrollEnabled = false
+        textView.isSelectable = false
+        if lineHeightMultiple != 0 { textView.setLineSpacing(lineSpacing: 1, lineHeightMultiple: lineHeightMultiple) }
+        
+        return textView
+    }
+    
+    func card(fromData data: [Any]) -> SwipeCard {
+        let card = SwipeCard()
+    
+        let content = DI.shared.getInterfaceExt().basicCard(type: data[1] as! String, title: data[2] as! String, description: data[6] as! String, workHours: data[10] as! String, bill: data[8] as! Int, isRecommended: data[7] as! Bool)
+        
+        card.swipeDirections = [.left, .right]
+        card.content = content
+          
+        let leftOverlay = UIView()
+        leftOverlay.layer.cornerRadius = 23
+        leftOverlay.backgroundColor = .red
+        
+        let rightOverlay = UIView()
+        rightOverlay.layer.cornerRadius = 23
+        rightOverlay.backgroundColor = UIColor(named: "YellowColor")
+                
+        card.setOverlays([.left: leftOverlay, .right: rightOverlay])
+          
+        return card
+    }
+    
     func basicCard(type: String, title: String, description: String, workHours: String, bill: Int, isRecommended: Bool) -> UIView {
         
         let view = UIView()
         
-        let typeText = UITextView()
-        let nameText = UITextView()
-        let descriptionText = UITextView()
+        let typeText = self.frameTextView(text: type, font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0.5)
+        let nameText = self.frameTextView(text: title, font: UIFont(name: "Helvetica Neue Condensed Black", size: 36)!, lineHeightMultiple: 0.7)
+        let descriptionText = self.frameTextView(text: description, font: UIFont(name: "Helvetica Neue Medium", size: 14)!, lineHeightMultiple: 0)
         
         let viewRectangle = UIView()
         let hideRectangle = UIView()
         
-        let workHouseTitle = UITextView()
-        let workHouseText = UITextView()
+        let workHouseTitle = self.frameTextView(text: "Часы работы", font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
+        let workHouseText = self.frameTextView(text: workHours, font: UIFont(name: "Helvetica Neue Medium", size: 14)!, lineHeightMultiple: 0.5)
         
-        let billTitle = UITextView()
+        let billTitle = self.frameTextView(text: "Средний чек", font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
         let billPrice = worstPrice(price: bill)
         
         if isRecommended {
-            //view.layer.borderWidth = 1
-            //view.layer.borderColor = UIColor(named: "YellowColor")?.cgColor
             
             view.layer.shadowColor = UIColor(named: "YellowColor")?.cgColor
             //view.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -50,97 +118,13 @@ class InterfaceExt {
             view.layer.shadowRadius = 10.0
         }
         
-        typeText.text = type
-        typeText.contentInsetAdjustmentBehavior = .automatic
-        typeText.center = view.center
-        typeText.textAlignment = NSTextAlignment.justified
-        typeText.textColor = .white
-        typeText.backgroundColor = .clear
-        typeText.font = UIFont(name: "Helvetica Neue Bold", size: 16)
-        typeText.adjustsFontForContentSizeCategory = false
-        typeText.isEditable = false
-        typeText.sizeToFit()
-        typeText.isScrollEnabled = false
-        typeText.isSelectable = false
-        typeText.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 0.5)
-        
-        nameText.text = title
-        nameText.contentInsetAdjustmentBehavior = .automatic
-        nameText.center = view.center
-        nameText.textAlignment = NSTextAlignment.justified
-        nameText.textColor = .white
-        nameText.backgroundColor = .clear
-        nameText.font = UIFont(name: "Helvetica Neue Condensed Black", size: 36)
-        nameText.adjustsFontForContentSizeCategory = false
-        nameText.isEditable = false
-        nameText.sizeToFit()
-        nameText.isScrollEnabled = false
-        nameText.isSelectable = false
-        nameText.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 0.7)
-        
-        descriptionText.text = description
-        descriptionText.contentInsetAdjustmentBehavior = .automatic
-        descriptionText.center = view.center
         descriptionText.textAlignment = NSTextAlignment.right
-        descriptionText.textColor = .white
-        descriptionText.backgroundColor = .clear
-        descriptionText.font = UIFont(name: "Helvetica Neue Medium", size: 14)
-        descriptionText.isEditable = false
-        descriptionText.sizeToFit()
-        descriptionText.isScrollEnabled = false
-        descriptionText.isSelectable = false
-        descriptionText.adjustsFontForContentSizeCategory = true
         
         viewRectangle.layer.borderWidth = 2
         viewRectangle.layer.borderColor = UIColor.white.cgColor
         
         hideRectangle.layer.borderWidth = 2
         hideRectangle.layer.borderColor = UIColor(named: "GreyColor")!.cgColor
-        
-        workHouseTitle.text = "Часы работы"
-        workHouseTitle.contentInsetAdjustmentBehavior = .automatic
-        workHouseTitle.center = view.center
-        workHouseTitle.textAlignment = NSTextAlignment.justified
-        workHouseTitle.textColor = .white
-        workHouseTitle.backgroundColor = .clear
-        workHouseTitle.font = UIFont(name: "Helvetica Neue Bold", size: 28)
-        workHouseTitle.adjustsFontForContentSizeCategory = false
-        workHouseTitle.isEditable = false
-        workHouseTitle.sizeToFit()
-        workHouseTitle.isScrollEnabled = false
-        workHouseTitle.isSelectable = false
-        workHouseTitle.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.6)
-        
-        workHouseText.text = workHours
-        workHouseText.contentInsetAdjustmentBehavior = .automatic
-        workHouseText.center = view.center
-        workHouseText.textAlignment = NSTextAlignment.justified
-        workHouseText.textColor = .white
-        workHouseText.backgroundColor = .clear
-        workHouseText.font = UIFont(name: "Helvetica Neue Medium", size: 14)
-        workHouseText.adjustsFontForContentSizeCategory = false
-        workHouseText.isEditable = false
-        workHouseText.sizeToFit()
-        workHouseText.isScrollEnabled = false
-        workHouseText.isSelectable = false
-        workHouseText.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 0.5)
-        
-        billTitle.text = "Средний чек"
-        billTitle.contentInsetAdjustmentBehavior = .automatic
-        billTitle.center = view.center
-        billTitle.textAlignment = NSTextAlignment.justified
-        billTitle.textColor = .white
-        billTitle.backgroundColor = .clear
-        billTitle.font = UIFont(name: "Helvetica Neue Bold", size: 28)
-        billTitle.adjustsFontForContentSizeCategory = false
-        billTitle.isEditable = false
-        billTitle.sizeToFit()
-        billTitle.isScrollEnabled = false
-        billTitle.isSelectable = false
-        billTitle.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.6)
-        
-//        billPrice.layer.backgroundColor = UIColor.white.cgColor
-//        billPrice.backgroundColor = .white
                 
         typeText.translatesAutoresizingMaskIntoConstraints = false
         let typeTextConstraints = [
@@ -180,9 +164,6 @@ class InterfaceExt {
             descriptionText.leftAnchor.constraint(equalTo: viewRectangle.leftAnchor, constant: -15),
             descriptionText.rightAnchor.constraint(equalTo: viewRectangle.rightAnchor),
             descriptionText.bottomAnchor.constraint(equalTo: viewRectangle.bottomAnchor, constant: -10)
-            //descriptionText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //descriptionText.widthAnchor.constraint(equalToConstant: 300),
-            //descriptionText.heightAnchor.constraint(equalToConstant: 100)
         ]
         
         workHouseTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -218,31 +199,17 @@ class InterfaceExt {
         ]
         
         view.addSubview(typeText)
-        NSLayoutConstraint.activate(typeTextConstraints)
-        
         view.addSubview(nameText)
-        NSLayoutConstraint.activate(nameTextConstraints)
-        
         view.addSubview(viewRectangle)
-        NSLayoutConstraint.activate(viewRectangleConstraints)
-        
         view.addSubview(hideRectangle)
-        NSLayoutConstraint.activate(hideRectangleConstraints)
-        
         view.addSubview(descriptionText)
-        NSLayoutConstraint.activate(descriptionTextConstraints)
-        
         view.addSubview(workHouseTitle)
-        NSLayoutConstraint.activate(workHouseTitleConstraints)
-        
         view.addSubview(workHouseText)
-        NSLayoutConstraint.activate(workHouseTextConstraints)
-        
         view.addSubview(billTitle)
-        NSLayoutConstraint.activate(billTitleConstraints)
-        
         view.addSubview(billPrice)
-        NSLayoutConstraint.activate(billPriceConstraints)
+        
+        let constraintsArray = [typeTextConstraints, nameTextConstraints, viewRectangleConstraints, hideRectangleConstraints, descriptionTextConstraints, workHouseTitleConstraints, workHouseTextConstraints, billTitleConstraints, billPriceConstraints].flatMap{$0}
+        NSLayoutConstraint.activate(constraintsArray)
         
         if typeText.text == "Инструкция" {
             workHouseTitle.isHidden = true

@@ -11,8 +11,8 @@ import UIKit
 class LoginViewController: UIViewController {
     let logos = UIImageView(image: UIImage(named: "TINHSE"))
     let enterButton = UIButton()
-    let bigText = UITextView()
-    let smallText = UITextView()
+    let bigText = DI.shared.getInterfaceExt().standardTextView(text: "Вход с помощью Tinkoff ID", textColor: .white, font: .boldSystemFont(ofSize: 30))
+    let smallText = DI.shared.getInterfaceExt().standardTextView(text: "Вход доступен только для сотрудников", textColor: .gray, font: .systemFont(ofSize: 12))
     let loginViewPresenter:LoginViewPresenter = LoginViewPresenter()
     
     override func viewDidLoad() {
@@ -35,27 +35,16 @@ class LoginViewController: UIViewController {
     }
     
     func creation() {
-        bigText.text = "Вход с помощью Tinkoff ID"
-        bigText.contentInsetAdjustmentBehavior = .automatic
-        bigText.center = self.view.center
-        bigText.textAlignment = NSTextAlignment.justified
-        bigText.textColor = .white
-        bigText.backgroundColor = .clear
-        bigText.font = UIFont(name: "Helvetica Neue Bold", size: 30)
-        bigText.adjustsFontForContentSizeCategory = false
-        bigText.isEditable = false
-        bigText.sizeToFit()
-        
-        smallText.text = "Вход доступен только для сотрудников"
-        smallText.contentInsetAdjustmentBehavior = .automatic
-        smallText.center = self.view.center
-        smallText.textAlignment = NSTextAlignment.justified
-        smallText.textColor = .gray
-        smallText.backgroundColor = .clear
-        smallText.font = UIFont(name: "Helvetica Neue Regular", size: 12)
-        smallText.adjustsFontForContentSizeCategory = false
-        smallText.isEditable = false
-        smallText.sizeToFit()
+//        bigText.text = "Вход с помощью Tinkoff ID"
+//        bigText.contentInsetAdjustmentBehavior = .automatic
+//        bigText.center = self.view.center
+//        bigText.textAlignment = NSTextAlignment.justified
+//        bigText.textColor = .white
+//        bigText.backgroundColor = .clear
+//        bigText.font = UIFont(name: "Helvetica Neue Bold", size: 30)
+//        bigText.adjustsFontForContentSizeCategory = false
+//        bigText.isEditable = false
+//        bigText.sizeToFit()
         
         enterButton.setImage(UIImage(named: "TINIDbutton"), for: .normal)
         enterButton.addTarget(self, action: #selector(authButtonClicked), for: .touchUpInside)

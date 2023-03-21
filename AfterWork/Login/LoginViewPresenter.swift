@@ -22,17 +22,14 @@ protocol LoginViewPresenterDelegate: AnyObject {
 class LoginViewPresenter {
 
     weak var delegate: LoginViewPresenterDelegate?
-        
-    let container = DI.container
-
     
     @objc func authButtonClicked() {
         delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
-        container.resolve(AuthService.self)?.TinkoffIDAuth(handler: handleSignInResult)
+        DI.shared.getAuthSerivce().TinkoffIDAuth(handler: handleSignInResult)
     }
     
     private func goToMain() {
-        let mainViewController = container.resolve(MainViewController.self)!
+        let mainViewController = DI.shared.getMainViewController()
         
         mainViewController.modalPresentationStyle = .fullScreen
         

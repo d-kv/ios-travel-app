@@ -11,11 +11,14 @@ import MapKit
 
 class CardsViewPresenter {
     
-    private let controller = DI.container.resolve(CardsViewController.self)!
+    private let controller = DI.shared.getCardsViewController()
+
     
     func goToMain() {
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+        
+        self.controller.dismiss(animated: true)
     }
     
     

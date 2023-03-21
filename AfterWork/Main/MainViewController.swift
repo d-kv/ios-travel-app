@@ -120,7 +120,7 @@ class MainViewController: UIViewController {
         checkAllButton.backgroundColor = UIColor(named: "YellowColor")
         checkAllButton.layer.cornerRadius = 23
         checkAllButton.setTitleColor(.black, for: .normal)
-        checkAllButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 26)
+        checkAllButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 22)
         checkAllButton.addTarget(self, action: #selector(checkAllButtonTap), for: .touchUpInside)
     }
     
@@ -129,7 +129,6 @@ class MainViewController: UIViewController {
         userImage.translatesAutoresizingMaskIntoConstraints = false
         let userImageConstraints = [
             userImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-            //userImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             userImage.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             userImage.widthAnchor.constraint(equalToConstant: 70),
             userImage.heightAnchor.constraint(equalToConstant: 70)
@@ -157,15 +156,12 @@ class MainViewController: UIViewController {
             bigRecommend.leftAnchor.constraint(equalTo: searchBar.leftAnchor, constant: 10),
             bigRecommend.rightAnchor.constraint(equalTo: searchBar.rightAnchor, constant: -10),
             bigRecommend.heightAnchor.constraint(equalToConstant: 110),
-            //bigRecommend.widthAnchor.constraint(equalTo: view.widthAnchor)
         ]
         
         centerRecommend.translatesAutoresizingMaskIntoConstraints = false
         let centerRecommendConstraints = [
             centerRecommend.topAnchor.constraint(equalTo: bigRecommend.bottomAnchor, constant: 20),
             centerRecommend.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //centerRecommend.leftAnchor.constraint(equalTo: leftRecommend.rightAnchor, constant: 10),
-            //centerRecommend.rightAnchor.constraint(equalTo: searchBar.rightAnchor, constant: 0),
             centerRecommend.heightAnchor.constraint(equalToConstant: 110),
             centerRecommend.widthAnchor.constraint(equalToConstant: 110)
         ]
@@ -173,21 +169,17 @@ class MainViewController: UIViewController {
         leftRecommend.translatesAutoresizingMaskIntoConstraints = false
         let leftRecommendConstraints = [
             leftRecommend.topAnchor.constraint(equalTo: bigRecommend.bottomAnchor, constant: 20),
-            //leftRecommend.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             leftRecommend.leftAnchor.constraint(equalTo: searchBar.leftAnchor, constant: 10),
             leftRecommend.rightAnchor.constraint(equalTo: centerRecommend.leftAnchor, constant: -20),
             leftRecommend.heightAnchor.constraint(equalToConstant: 110),
-            //bigRecommend.widthAnchor.constraint(equalTo: view.widthAnchor)
         ]
         
         rightRecommend.translatesAutoresizingMaskIntoConstraints = false
         let rightRecommendConstraints = [
             rightRecommend.topAnchor.constraint(equalTo: bigRecommend.bottomAnchor, constant: 20),
-            //leftRecommend.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             rightRecommend.leftAnchor.constraint(equalTo: centerRecommend.rightAnchor, constant: 20),
             rightRecommend.rightAnchor.constraint(equalTo: searchBar.rightAnchor, constant: -10),
             rightRecommend.heightAnchor.constraint(equalToConstant: 110),
-            //bigRecommend.widthAnchor.constraint(equalTo: view.widthAnchor)
         ]
         
         personalRecommend.translatesAutoresizingMaskIntoConstraints = false
@@ -197,7 +189,6 @@ class MainViewController: UIViewController {
             personalRecommend.leftAnchor.constraint(equalTo: searchBar.leftAnchor, constant: 10),
             personalRecommend.rightAnchor.constraint(equalTo: searchBar.rightAnchor, constant: -10),
             personalRecommend.heightAnchor.constraint(equalToConstant: 200),
-            //bigRecommend.widthAnchor.constraint(equalTo: view.widthAnchor)
         ]
         
         checkAllButton.translatesAutoresizingMaskIntoConstraints = false
@@ -207,7 +198,6 @@ class MainViewController: UIViewController {
             checkAllButton.leftAnchor.constraint(equalTo: searchBar.leftAnchor, constant: 10),
             checkAllButton.rightAnchor.constraint(equalTo: searchBar.rightAnchor, constant: -10),
             checkAllButton.heightAnchor.constraint(equalToConstant: 70),
-            //bigRecommend.widthAnchor.constraint(equalTo: view.widthAnchor)
         ]
         
         view.addSubview(userImage)
@@ -230,42 +220,13 @@ class MainViewController: UIViewController {
     // MARK: - Content on Custom Views
     
     func addto_bigRecommend() {
-        let bigText = UITextView()
-        let smallText = UITextView()
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Кафе", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
+        let smallText = DI.shared.getInterfaceExt().frameTextView(text: "Для быстрого перекуса", font: .systemFont(ofSize: 14), lineHeightMultiple: 0.6)
         let imageView = UIImageView(image: UIImage(named: "cupImage"))
-        
-        bigText.text = "Кафе"
-        bigText.contentInsetAdjustmentBehavior = .automatic
-        bigText.center = self.view.center
-        bigText.textAlignment = NSTextAlignment.justified
-        bigText.textColor = .white
-        bigText.backgroundColor = .clear
-        bigText.font = UIFont(name: "Helvetica Neue Bold", size: 30)
-        bigText.adjustsFontForContentSizeCategory = false
-        bigText.isEditable = false
-        bigText.sizeToFit()
-        bigText.isScrollEnabled = false
-        bigText.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.6)
-        bigText.isSelectable = false
-        
-        smallText.text = "Для быстрого перекуса"
-        smallText.contentInsetAdjustmentBehavior = .automatic
-        smallText.center = self.view.center
-        smallText.textAlignment = NSTextAlignment.justified
-        smallText.textColor = .white
-        smallText.backgroundColor = .clear
-        smallText.font = UIFont(name: "Helvetica Neue Medium", size: 14)
-        smallText.adjustsFontForContentSizeCategory = false
-        smallText.isEditable = false
-        smallText.sizeToFit()
-        smallText.isScrollEnabled = false
-        smallText.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.6)
-        smallText.isSelectable = false
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
         let bigTextConstraints = [
             bigText.topAnchor.constraint(equalTo: bigRecommend.topAnchor, constant: 15),
-            //bigText.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             bigText.leftAnchor.constraint(equalTo: bigRecommend.leftAnchor, constant: 10),
             bigText.widthAnchor.constraint(equalToConstant: 100),
             bigText.heightAnchor.constraint(equalToConstant: 30)
@@ -273,8 +234,7 @@ class MainViewController: UIViewController {
         
         smallText.translatesAutoresizingMaskIntoConstraints = false
         let smallTextConstraints = [
-            smallText.topAnchor.constraint(equalTo: bigText.bottomAnchor),
-            //bigText.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            smallText.topAnchor.constraint(equalTo: bigText.bottomAnchor, constant: -5),
             smallText.leftAnchor.constraint(equalTo: bigRecommend.leftAnchor, constant: 10),
             smallText.widthAnchor.constraint(equalToConstant: 400),
             smallText.heightAnchor.constraint(equalToConstant: 20)
@@ -285,38 +245,20 @@ class MainViewController: UIViewController {
             imageView.topAnchor.constraint(equalTo: bigRecommend.topAnchor, constant: 15),
             imageView.bottomAnchor.constraint(equalTo: bigRecommend.bottomAnchor, constant: -15),
             imageView.rightAnchor.constraint(equalTo: bigRecommend.rightAnchor, constant: -20),
-            //bigText.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 80),
-            //imageView.heightAnchor.constraint(equalToConstant: 80)
         ]
         
         bigRecommend.addSubview(bigText)
-        NSLayoutConstraint.activate(bigTextConstraints)
-        
         bigRecommend.addSubview(smallText)
-        NSLayoutConstraint.activate(smallTextConstraints)
-        
         bigRecommend.addSubview(imageView)
-        NSLayoutConstraint.activate(imageViewConstraints)
+        
+        let constraintsArray = [bigTextConstraints, smallTextConstraints, imageViewConstraints].flatMap{$0}
+        NSLayoutConstraint.activate(constraintsArray)
     }
     
     func addto_centerRecommend() {
-        let bigText = UITextView()
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Отель", font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
         let imageView = UIImageView(image: UIImage(named: "hotelImage"))
-        
-        bigText.text = "Отель"
-        bigText.contentInsetAdjustmentBehavior = .automatic
-        bigText.center = self.view.center
-        bigText.textAlignment = NSTextAlignment.justified
-        bigText.textColor = .white
-        bigText.backgroundColor = .clear
-        bigText.font = UIFont(name: "Helvetica Neue Bold", size: 17)
-        bigText.adjustsFontForContentSizeCategory = false
-        bigText.isEditable = false
-        bigText.sizeToFit()
-        bigText.isScrollEnabled = false
-        bigText.isSelectable = false
-        
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
         let bigTextConstraints = [
@@ -335,29 +277,15 @@ class MainViewController: UIViewController {
         ]
         
         centerRecommend.addSubview(bigText)
-        NSLayoutConstraint.activate(bigTextConstraints)
-        
         centerRecommend.addSubview(imageView)
-        NSLayoutConstraint.activate(imageViewConstraints)
+        
+        let constraintsArray = [bigTextConstraints, imageViewConstraints].flatMap{$0}
+        NSLayoutConstraint.activate(constraintsArray)
     }
     
     func addto_leftRecommend() {
-        let bigText = UITextView()
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Ресторан", font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
         let imageView = UIImageView(image: UIImage(named: "restaurantImage"))
-        
-        bigText.text = "Ресторан"
-        bigText.contentInsetAdjustmentBehavior = .automatic
-        bigText.center = self.view.center
-        bigText.textAlignment = NSTextAlignment.justified
-        bigText.textColor = .white
-        bigText.backgroundColor = .clear
-        bigText.font = UIFont(name: "Helvetica Neue Bold", size: 17)
-        bigText.adjustsFontForContentSizeCategory = false
-        bigText.isEditable = false
-        bigText.sizeToFit()
-        bigText.isScrollEnabled = false
-        bigText.isSelectable = false
-        
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
         let bigTextConstraints = [
@@ -376,29 +304,15 @@ class MainViewController: UIViewController {
         ]
         
         leftRecommend.addSubview(bigText)
-        NSLayoutConstraint.activate(bigTextConstraints)
-        
         leftRecommend.addSubview(imageView)
-        NSLayoutConstraint.activate(imageViewConstraints)
+        
+        let constraintsArray = [bigTextConstraints, imageViewConstraints].flatMap{$0}
+        NSLayoutConstraint.activate(constraintsArray)
     }
     
     func addto_rightRecommend() {
-        let bigText = UITextView()
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Культура", font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
         let imageView = UIImageView(image: UIImage(named: "cultureImage"))
-        
-        bigText.text = "Культура"
-        bigText.contentInsetAdjustmentBehavior = .automatic
-        bigText.center = self.view.center
-        bigText.textAlignment = NSTextAlignment.justified
-        bigText.textColor = .white
-        bigText.backgroundColor = .clear
-        bigText.font = UIFont(name: "Helvetica Neue Bold", size: 17)
-        bigText.adjustsFontForContentSizeCategory = false
-        bigText.isEditable = false
-        bigText.sizeToFit()
-        bigText.isScrollEnabled = false
-        bigText.isSelectable = false
-        
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
         let bigTextConstraints = [
@@ -417,56 +331,28 @@ class MainViewController: UIViewController {
         ]
         
         rightRecommend.addSubview(bigText)
-        NSLayoutConstraint.activate(bigTextConstraints)
-        
         rightRecommend.addSubview(imageView)
-        NSLayoutConstraint.activate(imageViewConstraints)
+        
+        let constraintsArray = [bigTextConstraints, imageViewConstraints].flatMap{$0}
+        NSLayoutConstraint.activate(constraintsArray)
     }
     
     func addto_personalRecommend() {
-        let bigText = UITextView()
-        let smallText = UITextView()
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Персональные рекомендации", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.8)
+        let smallText = DI.shared.getInterfaceExt().frameTextView(text: "Может, это именно то что нужно", font: .systemFont(ofSize: 14), lineHeightMultiple: 0.8)
         let imageView = UIImageView(image: UIImage(named: "multiArrowsImage"))
-        
-        bigText.text = "Персональные рекомендации"
-        bigText.contentInsetAdjustmentBehavior = .automatic
-        bigText.center = self.view.center
-        bigText.textAlignment = NSTextAlignment.justified
-        bigText.textColor = .white
-        bigText.backgroundColor = .clear
-        bigText.font = UIFont(name: "Helvetica Neue Bold", size: 32)
-        bigText.adjustsFontForContentSizeCategory = false
-        bigText.isEditable = false
-        bigText.sizeToFit()
-        bigText.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.8)
-        bigText.isScrollEnabled = false
-        bigText.isSelectable = false
-        
-        smallText.text = "Может, это именно то что нужно"
-        smallText.contentInsetAdjustmentBehavior = .automatic
-        smallText.center = self.view.center
-        smallText.textAlignment = NSTextAlignment.justified
-        smallText.textColor = .white
-        smallText.backgroundColor = .clear
-        smallText.font = UIFont(name: "Helvetica Neue Medium", size: 14)
-        smallText.adjustsFontForContentSizeCategory = false
-        smallText.isEditable = false
-        smallText.sizeToFit()
-        smallText.setLineSpacing(lineSpacing: 1, lineHeightMultiple: 0.8)
-        smallText.isScrollEnabled = false
-        smallText.isSelectable = false
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
         let bigTextConstraints = [
             bigText.topAnchor.constraint(equalTo: personalRecommend.topAnchor, constant: 10),
             bigText.leftAnchor.constraint(equalTo: personalRecommend.leftAnchor, constant: 10),
             bigText.widthAnchor.constraint(equalToConstant: 300),
-            bigText.heightAnchor.constraint(equalToConstant: 80)
+            bigText.heightAnchor.constraint(equalToConstant: 70)
         ]
         
         smallText.translatesAutoresizingMaskIntoConstraints = false
         let smallTextConstraints = [
-            smallText.topAnchor.constraint(equalTo: bigText.bottomAnchor),
+            smallText.topAnchor.constraint(equalTo: bigText.bottomAnchor, constant: -15),
             //bigText.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             smallText.leftAnchor.constraint(equalTo: personalRecommend.leftAnchor, constant: 10),
             smallText.widthAnchor.constraint(equalToConstant: 300),
@@ -484,13 +370,11 @@ class MainViewController: UIViewController {
         ]
         
         personalRecommend.addSubview(bigText)
-        NSLayoutConstraint.activate(bigTextConstraints)
-        
         personalRecommend.addSubview(smallText)
-        NSLayoutConstraint.activate(smallTextConstraints)
-        
         personalRecommend.addSubview(imageView)
-        NSLayoutConstraint.activate(imageViewConstraints)
+        
+        let constraintsArray = [bigTextConstraints, smallTextConstraints, imageViewConstraints].flatMap{$0}
+        NSLayoutConstraint.activate(constraintsArray)
     }
     
 }
