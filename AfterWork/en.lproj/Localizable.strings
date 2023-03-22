@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  AfterWork
+
+  Created by Евгений Парфененков on 15.03.2023.
+  
+*/
+
+"welcome" = "welcome";
+"cancel" = "cancel";
