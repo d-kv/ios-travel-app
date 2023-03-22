@@ -1,6 +1,0 @@
-framework module TinkoffID {
-  umbrella header "TinkoffID-umbrella.h"
-
-  export *
-  module * { export * }
-}

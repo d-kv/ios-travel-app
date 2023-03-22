@@ -6,72 +6,79 @@
 //
 
 import Foundation
-import UIKit
 import TinkoffID
+import UIKit
 
-// MARK: - Protocols
+// MARK: - LoginViewPresenterDelegate
 
 protocol LoginViewPresenterDelegate: AnyObject {
-    func loginViewPresenter(_ reposViewModel: LoginViewPresenter,
-                            isLoading: Bool)
-    func TinkoffIDResolver(status: StatusCodes) // 0 - waiting; 1 - auth process; 2 - success login; 3 - login canceled; 4 - login failed; 5 - some mistake
+  func loginViewPresenter(
+    _ reposViewModel: LoginViewPresenter,
+    isLoading: Bool
+  )
+  func TinkoffIDResolver(status: StatusCodes) // 0 - waiting; 1 - auth process; 2 - success login; 3 - login canceled; 4 - login failed; 5 - some mistake
 }
 
-// MARK: - Main methods and Class
+// MARK: - LoginViewPresenter
 
 class LoginViewPresenter {
+  // MARK: Internal
 
-    weak var delegate: LoginViewPresenterDelegate?
-        
-    let container = DI.container
+  weak var delegate: LoginViewPresenterDelegate?
 
-    
-    @objc func authButtonClicked() {
-        delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
-        container.resolve(AuthService.self)?.TinkoffIDAuth(handler: handleSignInResult)
+  let container = DI.container
+
+  @objc
+  func authButtonClicked() {
+    delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
+    container.resolve(AuthService.self)?.TinkoffIDAuth(handler: handleSignInResult)
+  }
+
+  // MARK: Private
+
+  // MARK: - Auth handler
+
+  private var credentials: TinkoffTokenPayload!
+
+  private func goToMain() {
+    let mainViewController = container.resolve(MainViewController.self)!
+
+    mainViewController.modalPresentationStyle = .fullScreen
+
+    let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+    sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
+    sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+  }
+
+  private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
+    do {
+      credentials = try result.get()
+      delegate?.TinkoffIDResolver(status: StatusCodes.waiting)
+      goToMain()
+    } catch TinkoffAuthError.cancelledByUser {
+      delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
+    } catch TinkoffAuthError.failedToLaunchApp {
+      delegate?.TinkoffIDResolver(status: StatusCodes.failedToLaunch)
+    } catch TinkoffAuthError.failedToObtainToken {
+      delegate?.TinkoffIDResolver(status: StatusCodes.failedToObtainToken)
+    } catch TinkoffAuthError.unavailable {
+      delegate?.TinkoffIDResolver(status: StatusCodes.unavailable)
+    } catch {
+      delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
+      NSLog("AuthError", 1)
     }
-    
-    private func goToMain() {
-        let mainViewController = container.resolve(MainViewController.self)!
-        
-        mainViewController.modalPresentationStyle = .fullScreen
-        
-        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
-        sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
-        sceneDelegate.window!.rootViewController?.dismiss(animated: true)
-    }
-    
-    // MARK: - Auth handler
-    
-    private var credentials: TinkoffTokenPayload!
-    
-    private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
-        do {
-            credentials = try result.get()
-            delegate?.TinkoffIDResolver(status: StatusCodes.waiting)
-            goToMain()
-        } catch TinkoffAuthError.cancelledByUser {
-            delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
-        } catch TinkoffAuthError.failedToLaunchApp {
-            delegate?.TinkoffIDResolver(status: StatusCodes.failedToLaunch)
-        } catch TinkoffAuthError.failedToObtainToken {
-            delegate?.TinkoffIDResolver(status: StatusCodes.failedToObtainToken)
-        } catch TinkoffAuthError.unavailable {
-            delegate?.TinkoffIDResolver(status: StatusCodes.unavailable)
-        } catch {
-            delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
-            NSLog("AuthError", 1)
-        }
-    }
+  }
 }
 
+// MARK: - StatusCodes
+
 enum StatusCodes {
-    case waiting
-    case proceed
-    case failedToLaunch
-    case cancelledByUser
-    case unavailable
-    case failedToObtainToken
-    case failedToRefreshCredentials
-    case unknownError
+  case waiting
+  case proceed
+  case failedToLaunch
+  case cancelledByUser
+  case unavailable
+  case failedToObtainToken
+  case failedToRefreshCredentials
+  case unknownError
 }
