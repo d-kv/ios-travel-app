@@ -9,8 +9,10 @@ import Foundation
 import UIKit
 import TinkoffID
 
+// MARK: - SettingsViewPresenterDelegate
+
 protocol SettingsViewPresenterDelegate: AnyObject {
-    func settingsViewPresenter(isLoading: Bool)
+  func settingsViewPresenter(isLoading: Bool)
 }
 
 final class SettingsViewPresenter {
@@ -44,5 +46,5 @@ final class SettingsViewPresenter {
             print("HUY", error)
         }
     }
-    
+  }
 }

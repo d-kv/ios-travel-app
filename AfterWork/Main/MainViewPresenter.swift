@@ -9,12 +9,16 @@ import Foundation
 import UIKit
 import TinkoffID
 
+// MARK: - MainViewPresenterDelegate
 
 protocol MainViewPresenterDelegate: AnyObject {
-    func mainViewPresenter(_ reposViewModel: MainViewPresenter,
-                            isLoading: Bool)
+  func mainViewPresenter(
+    _ reposViewModel: MainViewPresenter,
+    isLoading: Bool
+  )
 }
 
+// MARK: - MainViewPresenter
 
 final class MainViewPresenter {
     weak var delegate: MainViewPresenterDelegate?
