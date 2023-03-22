@@ -23,26 +23,16 @@ final class SettingsViewPresenter {
     }
     
     private func handleSignOut(_ result: Result<Void, Error>) {
-        do {
-            _ = try result.get()
-            
-            preferences.removeObject(forKey: "accessToken")
-            preferences.removeObject(forKey: "refreshToken")
-            preferences.removeObject(forKey: "idToken")
-            
-            DispatchQueue.main.async {
-                
-                let loginViewController = DI.shared.getLoginViewController()
-                loginViewController.modalPresentationStyle = .fullScreen
-                
-                let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
-                sceneDelegate.window!.rootViewController?.dismiss(animated: true)
-                sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
-
-            }
-        } catch {
-            print("HUY", error)
-        }
+        preferences.removeObject(forKey: "accessToken")
+        preferences.removeObject(forKey: "refreshToken")
+        preferences.removeObject(forKey: "idToken")
+        
+        let loginViewController = DI.shared.getLoginViewController()
+        loginViewController.modalPresentationStyle = .fullScreen
+        
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+        sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
     }
     
 }

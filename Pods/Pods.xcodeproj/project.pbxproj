@@ -214,7 +214,7 @@
 		871A58E0A7A987947289650A06A8E89A /* TinkoffID-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TinkoffID-prefix.pch"; sourceTree = "<group>"; };
 		88F5DC026AB7D34D0F4EE8CA930B19F1 /* SwipeCardDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeCardDelegate.swift; path = Sources/Shuffle/Classes/SwipeCard/SwipeCardDelegate.swift; sourceTree = "<group>"; };
 		8993C99BD2BBAAC106894755784723C2 /* CardStackAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CardStackAnimator.swift; path = Sources/Shuffle/Classes/SwipeCardStack/CardStackAnimator.swift; sourceTree = "<group>"; };
-		8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Swinject; path = Swinject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swinject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AF74C908E9B05D668346D86B751E13B /* TinkoffApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TinkoffApp.swift; path = Sources/Models/Public/TinkoffApp.swift; sourceTree = "<group>"; };
 		8ECF413881895E238734B9EA4F9FE5B9 /* AuthProcess.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthProcess.swift; path = Sources/Models/Internal/AuthProcess.swift; sourceTree = "<group>"; };
 		904A9269F7CF3DB719B0C5AAB8528D17 /* ICallbackURLParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ICallbackURLParser.swift; path = Sources/CallbackURLParser/ICallbackURLParser.swift; sourceTree = "<group>"; };
@@ -226,8 +226,8 @@
 		9C693C57AC31B8C75CB901F3F90C47F8 /* DebugTinkoffIDFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DebugTinkoffIDFactory.swift; path = Sources/SDK/Factory/Concrete/DebugTinkoffIDFactory.swift; sourceTree = "<group>"; };
 		9C94687485767A1B11AC33EAF9C2C0F9 /* TinkoffIDButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TinkoffIDButton.swift; path = Sources/UI/Button/TinkoffIDButton.swift; sourceTree = "<group>"; };
 		9CAC4E89F2C9BDDDD12FA55C0EBF6433 /* TinkoffID-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TinkoffID-umbrella.h"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9F894767D73FFCD1D8D46D641473AE37 /* TinkoffID */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TinkoffID; path = TinkoffID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9F894767D73FFCD1D8D46D641473AE37 /* TinkoffID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TinkoffID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A46F5584DED0E847F164C54D95C5257B /* StringUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = Sources/Shuffle/Classes/Internal/StringUtils.swift; sourceTree = "<group>"; };
 		A54F20D3139BD1450AA4A97C0CAF3132 /* String+Base64.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+Base64.swift"; path = "Sources/Extensions/String+Base64.swift"; sourceTree = "<group>"; };
 		A5D5B159EE1E33327CA4DE45282669D7 /* Swinject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Swinject.release.xcconfig; sourceTree = "<group>"; };
@@ -257,7 +257,7 @@
 		EA62E10A86C80CB96453DDDE669398CC /* SwipeCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeCard.swift; path = Sources/Shuffle/Classes/SwipeCard/SwipeCard.swift; sourceTree = "<group>"; };
 		EE925C5224169BB019BA3978AF6CBFB4 /* ITinkoffIDFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ITinkoffIDFactory.swift; path = Sources/SDK/Factory/ITinkoffIDFactory.swift; sourceTree = "<group>"; };
 		EE94C589561E03CC0F0AF0441CCCB08A /* PanGestureRecognizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PanGestureRecognizer.swift; path = Sources/Shuffle/Classes/Internal/PanGestureRecognizer.swift; sourceTree = "<group>"; };
-		EF6D82A590C3AFFDB84FB22D5172CC1B /* Shuffle-iOS */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Shuffle-iOS"; path = Shuffle_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF6D82A590C3AFFDB84FB22D5172CC1B /* Shuffle_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Shuffle_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F04F5119B9EF57144FE79846233CC82A /* Array+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+Extensions.swift"; path = "Sources/Shuffle/Classes/Internal/Array+Extensions.swift"; sourceTree = "<group>"; };
 		F699FF07F7F4EC0F8194512B34CB70D3 /* TinkoffID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TinkoffID.release.xcconfig; sourceTree = "<group>"; };
 		FA9EB91C9939F7976097A6DCF2805C99 /* Swinject.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Swinject.modulemap; sourceTree = "<group>"; };
@@ -327,7 +327,6 @@
 				01E103CFBFCF29C281C17079C04DE92B /* UnavailableItems.swift */,
 				761FA4711DF4924A24D6A9558D2EC655 /* Support Files */,
 			);
-			name = Swinject;
 			path = Swinject;
 			sourceTree = "<group>";
 		};
@@ -366,9 +365,9 @@
 			isa = PBXGroup;
 			children = (
 				7DC19FAEADFAA46C235E32AD1F96FA92 /* Pods-AfterWork */,
-				EF6D82A590C3AFFDB84FB22D5172CC1B /* Shuffle-iOS */,
-				8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject */,
-				9F894767D73FFCD1D8D46D641473AE37 /* TinkoffID */,
+				EF6D82A590C3AFFDB84FB22D5172CC1B /* Shuffle_iOS.framework */,
+				8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */,
+				9F894767D73FFCD1D8D46D641473AE37 /* TinkoffID.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -413,7 +412,6 @@
 				D409D620E6AE48E367B34E042A00C647 /* UIView+Extensions.swift */,
 				397A444EE89AB8DEE675B58F59D215FB /* Support Files */,
 			);
-			name = "Shuffle-iOS";
 			path = "Shuffle-iOS";
 			sourceTree = "<group>";
 		};
@@ -539,7 +537,6 @@
 				BF3E4C95459E39EE84B6C1D3546B63A0 /* Resources */,
 				DF70385ADE91DCAA07A324A9640F3977 /* Support Files */,
 			);
-			name = TinkoffID;
 			path = TinkoffID;
 			sourceTree = "<group>";
 		};
@@ -597,7 +594,7 @@
 			);
 			name = Swinject;
 			productName = Swinject;
-			productReference = 8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject */;
+			productReference = 8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		50CDFA357982E2C19535C8E6922CCB7F /* Pods-AfterWork */ = {
@@ -636,7 +633,7 @@
 			);
 			name = "Shuffle-iOS";
 			productName = Shuffle_iOS;
-			productReference = EF6D82A590C3AFFDB84FB22D5172CC1B /* Shuffle-iOS */;
+			productReference = EF6D82A590C3AFFDB84FB22D5172CC1B /* Shuffle_iOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		AACFC9809F048F5BB418EDE1D07E6F0B /* TinkoffID */ = {
@@ -654,7 +651,7 @@
 			);
 			name = TinkoffID;
 			productName = TinkoffID;
-			productReference = 9F894767D73FFCD1D8D46D641473AE37 /* TinkoffID */;
+			productReference = 9F894767D73FFCD1D8D46D641473AE37 /* TinkoffID.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -664,7 +661,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1420;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -880,7 +877,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/TinkoffID/TinkoffID-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/TinkoffID/TinkoffID-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -915,7 +912,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Swinject/Swinject-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Swinject/Swinject-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -950,7 +947,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Swinject/Swinject-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Swinject/Swinject-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -984,7 +981,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Shuffle-iOS/Shuffle-iOS-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Shuffle-iOS/Shuffle-iOS-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1077,6 +1074,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1123,7 +1121,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Shuffle-iOS/Shuffle-iOS-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Shuffle-iOS/Shuffle-iOS-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1177,6 +1175,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1220,7 +1219,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/TinkoffID/TinkoffID-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/TinkoffID/TinkoffID-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
