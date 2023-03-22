@@ -58,10 +58,6 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             
             mapViewController.targetPoint = artwork
         }
-        if index + 4 == cards.count {
-            print("ZHOPA")
-            cardStack.swipe(.left, animated: true)
-        }
     }
     
     func cardStack(_ cardStack: Shuffle_iOS.SwipeCardStack, cardForIndexAt index: Int) -> Shuffle_iOS.SwipeCard {
