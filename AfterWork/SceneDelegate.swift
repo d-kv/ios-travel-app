@@ -19,11 +19,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        
-        if UserDefaults.standard.string(forKey: "idToken") != nil { window?.rootViewController = DI.shared.getMainViewController() }
-        else { window?.rootViewController = DI.shared.getLoginViewController() }
+        window?.rootViewController = DI.shared.getMainViewController()
         window?.makeKeyAndVisible()
-        window?.overrideUserInterfaceStyle = .dark        
+        window?.overrideUserInterfaceStyle = .dark
+        
+        if UserDefaults.standard.string(forKey: "idToken") == nil {
+            let loginViewController = DI.shared.getLoginViewController()
+            loginViewController.modalPresentationStyle = .fullScreen
+            
+            let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+            sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
+        }
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
