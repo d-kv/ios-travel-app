@@ -67,7 +67,6 @@ final class MainViewPresenter {
                 
                 AuthService.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
             } else {
-                print("ZHOPA")
                 self.delegate?.mainViewPresenter(self, isLoading: false)
                 goToLogin()
             }
@@ -81,14 +80,11 @@ final class MainViewPresenter {
             preferences.set(credentials.idToken, forKey: "idToken")
             preferences.set(credentials.accessToken, forKey: "accessToken")
             preferences.set(credentials.refreshToken, forKey: "refreshToken")
-            
-            print("HUY1", credentials)
-            
+                        
             DataLoader.loadData()
             
             self.delegate?.mainViewPresenter(self, isLoading: false)
         } catch {
-            print("HUY2")
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
         }

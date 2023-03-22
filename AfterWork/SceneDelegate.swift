@@ -42,7 +42,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             _ = AuthService.debugTinkoffId.handleCallbackUrl(firstUrl)
         }
-        NSLog(firstUrl.absoluteString, 1)
     }
 }
 

@@ -65,7 +65,6 @@ class AuthService {
         } else {
             AuthService.debugTinkoffId.obtainTokenPayload(using: refreshToken, handler)
         }
-        print("HUY3")
     }
     
     func logOut(accessToken: String, handler: @escaping SignOutCompletion) {
