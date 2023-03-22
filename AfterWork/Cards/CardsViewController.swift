@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import UIKit
-import Shuffle_iOS
 import MapKit
+import Shuffle_iOS
+import UIKit
 
 class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCardStackDelegate, CLLocationManagerDelegate {
     

@@ -6,13 +6,16 @@
 //
 
 import Foundation
-import UIKit
 import MapKit
+import UIKit
+
+// MARK: - MapViewPresenterDelegate
 
 protocol MapViewPresenterDelegate: AnyObject {
-    func switchedPoint(target: Artwork, isSwitched: Bool)
+  func switchedPoint(target: Artwork, isSwitched: Bool)
 }
 
+// MARK: - MapViewPresenter
 
 final class MapViewPresenter {
     

@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import UIKit
 import MapKit
+import UIKit
 
 class CardsViewPresenter {
     
