@@ -57,15 +57,20 @@ final class MainViewPresenter {
         
         self.delegate?.mainViewPresenter(self, isLoading: true)
         
-        if preferences.string(forKey: "idToken") ?? nil != nil {
-            
-            let refreshToken = preferences.string(forKey: "refreshToken") ?? ""
-            
-            AuthService.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
-        } else {
-            print("ZHOPA")
+        if !AuthService.tinkoffId.isTinkoffAuthAvailable {
             self.delegate?.mainViewPresenter(self, isLoading: false)
-            goToLogin()
+            DataLoader.loadData()
+        } else {
+            if preferences.string(forKey: "idToken") ?? nil != nil {
+                
+                let refreshToken = preferences.string(forKey: "refreshToken") ?? ""
+                
+                AuthService.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
+            } else {
+                print("ZHOPA")
+                self.delegate?.mainViewPresenter(self, isLoading: false)
+                goToLogin()
+            }
         }
     }
     
