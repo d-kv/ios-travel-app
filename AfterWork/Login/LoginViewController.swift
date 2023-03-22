@@ -11,11 +11,62 @@ import UIKit
 // MARK: - LoginViewController
 
 class LoginViewController: UIViewController {
-  let logos = UIImageView(image: UIImage(named: "TINHSE"))
-  let enterButton = UIButton()
-  let bigText = UITextView()
-  let smallText = UITextView()
-  let loginViewPresenter: LoginViewPresenter = .init()
+    let logos = UIImageView(image: UIImage(named: "TINHSE"))
+    let enterButton = UIButton()
+    let bigText = DI.shared.getInterfaceExt().standardTextView(text: "Вход с помощью Tinkoff ID", textColor: .white, font: .boldSystemFont(ofSize: 30))
+    let smallText = DI.shared.getInterfaceExt().standardTextView(text: "Вход доступен только для сотрудников", textColor: .gray, font: .systemFont(ofSize: 12))
+    let loginViewPresenter:LoginViewPresenter = LoginViewPresenter()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.loginViewPresenter.delegate = self
+        
+        creation()
+        constraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        view.backgroundColor = UIColor(named: "GreyColor")
+    }
+    
+    @objc func authButtonClicked() {
+        loginViewPresenter.authButtonClicked()
+    }
+    
+    func creation() {
+        enterButton.setImage(UIImage(named: "TINIDbutton"), for: .normal)
+        enterButton.addTarget(self, action: #selector(authButtonClicked), for: .touchUpInside)
+    }
+    
+    func constraints() {
+        logos.translatesAutoresizingMaskIntoConstraints = false
+        let logosConstraints = [
+            logos.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            logos.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logos.widthAnchor.constraint(equalToConstant: 215),
+            logos.heightAnchor.constraint(equalToConstant: 100)
+        ]
+        
+        bigText.translatesAutoresizingMaskIntoConstraints = false
+        let bigTextConstraints = [
+            bigText.topAnchor.constraint(equalTo: view.topAnchor, constant: 240),
+            bigText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            //logos.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            bigText.widthAnchor.constraint(equalToConstant: 270),
+            bigText.heightAnchor.constraint(equalToConstant: 80)
+        ]
+        
+        smallText.translatesAutoresizingMaskIntoConstraints = false
+        let smallTextConstraints = [
+            smallText.topAnchor.constraint(equalTo: bigText.bottomAnchor, constant: 0),
+            smallText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            //logos.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            smallText.widthAnchor.constraint(equalToConstant: 270),
+            smallText.heightAnchor.constraint(equalToConstant: 20)
+        ]
 
   override func viewDidLoad() {
     super.viewDidLoad()

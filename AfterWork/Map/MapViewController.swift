@@ -9,113 +9,93 @@ import Foundation
 import MapKit
 import UIKit
 
-// MARK: - MapViewController
-
+//let interfaceExt = DI.container.resolve(InterfaceExt.self)!
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-  // MARK: - Main
-
-  let mapViewPresenter: MapViewPresenter = .init()
-
-  let backButton = UIButton()
-  let mapView = MKMapView()
-
-  let taxiButton = UIButton()
-  let wayButton = UIButton()
-
-  var locationManager: CLLocationManager!
-
-  var anotherStart: CLLocationCoordinate2D!
-  var anotherEnd: CLLocationCoordinate2D!
-
-  var targetPoint: Artwork!
-
-  var setRegionFlag = true
-
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    let location = locations.last! as CLLocation
-
-    let center = CLLocationCoordinate2D(
-      latitude: location.coordinate.latitude,
-      longitude: location.coordinate.longitude
-    )
-    let region = MKCoordinateRegion(
-      center: center,
-      span: MKCoordinateSpan(latitudeDelta: 0.11, longitudeDelta: 0.11)
-    )
-
-    if setRegionFlag && targetPoint == nil {
-      mapView.setRegion(region, animated: false)
-      setRegionFlag = !setRegionFlag
+    
+    // MARK: - Main
+    
+    let mapViewPresenter: MapViewPresenter = MapViewPresenter()
+        
+    let backButton = UIButton()
+    let mapView = MKMapView()
+    
+    let taxiButton = DI.shared.getInterfaceExt().standardButton(title: "Такси", backgroundColor: UIColor(named: "YellowColor")!, cornerRadius: 15, titleColor: UIColor(named: "GreyColor")!, font: .systemFont(ofSize: 16))
+    let wayButton = DI.shared.getInterfaceExt().standardButton(title: "Маршрут", backgroundColor: UIColor(named: "LightGrayColor")!, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 16))
+    
+    var locationManager: CLLocationManager!
+    
+    var anotherStart: CLLocationCoordinate2D!
+    var anotherEnd: CLLocationCoordinate2D!
+    
+    var targetPoint: Artwork!
+        
+    var setRegionFlag = true
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let location = locations.last! as CLLocation
+        
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.11, longitudeDelta: 0.11))
+        
+        if setRegionFlag && targetPoint == nil {
+            mapView.setRegion(region, animated: false)
+            setRegionFlag = !setRegionFlag
+        }
+        
     }
-  }
+    
+    // MARK: - ViewDidLoad
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.mapViewPresenter.delegate = self
+        
+        mapView.delegate = self
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        MapViewPresenter.setUpLocation(locationManager: locationManager)
+        
+        backButton.setImage(UIImage(named: "backArrow"), for: .normal)
+        
+        backButton.addTarget(self, action: #selector(backButtonTap), for: .touchUpInside)
+        taxiButton.addTarget(self, action: #selector(taxiButtonTap), for: .touchUpInside)
+        wayButton.addTarget(self, action: #selector(wayButtonTap), for: .touchUpInside)
 
-  // MARK: - ViewDidLoad
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    mapViewPresenter.delegate = self
-
-    mapView.delegate = self
-
-    locationManager = CLLocationManager()
-    locationManager.delegate = self
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-
-    DispatchQueue.background(background: { [self] in
-      if CLLocationManager.locationServicesEnabled() {
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
-      }
-    })
-
-    backButton.setImage(UIImage(named: "backArrow"), for: .normal)
-    backButton.addTarget(self, action: #selector(backButtonTap), for: .touchUpInside)
-
-    taxiButton.setTitle("Такси", for: .normal)
-    taxiButton.backgroundColor = UIColor(named: "YellowColor")
-    taxiButton.layer.cornerRadius = 15
-    taxiButton.setTitleColor(UIColor(named: "GreyColor"), for: .normal)
-    taxiButton.titleLabel!.font = UIFont(name: "Helvetica Neue Regular", size: 50)
-    taxiButton.addTarget(self, action: #selector(taxiButtonTap), for: .touchUpInside)
-
-    wayButton.setTitle("Маршрут", for: .normal)
-    wayButton.backgroundColor = UIColor(named: "LightGrayColor")
-    wayButton.layer.cornerRadius = 15
-    wayButton.setTitleColor(.white, for: .normal)
-    wayButton.titleLabel!.font = UIFont(name: "Helvetica Neue Regular", size: 50)
-    wayButton.addTarget(self, action: #selector(wayButtonTap), for: .touchUpInside)
-
-    mapView.register(
-      ArtworkView.self,
-      forAnnotationViewWithReuseIdentifier:
-      MKMapViewDefaultAnnotationViewReuseIdentifier
-    )
-
-    let artwork = Artwork(
-      title: "King David Kalakaua",
-      locationName: "Waikiki Gateway Park",
-      discipline: "Sculpture",
-      coordinate: CLLocationCoordinate2D(latitude: 56.2965039, longitude: 43.9360589),
-      image: UIImage(named: "markerTop")
-    )
-
-    if targetPoint != nil {
-      mapView.addAnnotation(targetPoint)
-
-      let a = targetPoint.coordinate
-      let b = mapView.userLocation.coordinate
-      let apoint = MKMapPoint(a)
-      let bpoint = MKMapPoint(b)
-
-      mapView.centerToLocation(
-        CLLocation(latitude: a.latitude, longitude: a.longitude),
-        regionRadius: CLLocationDistance(10000)
-      )
-    } else {
-      mapView.addAnnotation(artwork)
-      taxiButton.isHidden = true
-      wayButton.isHidden = true
+        mapView.register(
+          ArtworkView.self,
+          forAnnotationViewWithReuseIdentifier:
+            MKMapViewDefaultAnnotationViewReuseIdentifier)
+        
+//        let artwork = Artwork(
+//            title: "King David Kalakaua",
+//            locationName: "Waikiki Gateway Park",
+//            discipline: "Sculpture",
+//            coordinate: CLLocationCoordinate2D(latitude: 56.2965039, longitude: 43.9360589),
+//            image: UIImage(named: "markerTop")
+//        )
+        
+        if targetPoint != nil {
+            
+            let a = targetPoint.coordinate
+            let b = mapView.userLocation.coordinate
+            let apoint = MKMapPoint(a)
+            let bpoint = MKMapPoint(b)
+            
+            mapView.centerToLocation(CLLocation(latitude: a.latitude, longitude: a.longitude), regionRadius: CLLocationDistance(10000))
+        } else {
+            //mapView.addAnnotation(artwork)
+            MapViewPresenter.setUpPoints(mapView: mapView)
+            taxiButton.isHidden = true
+            wayButton.isHidden = true
+        }
+            
+        mapView.showsUserLocation = true
+                
+        setUpConstraints()
     }
 
     mapView.showsUserLocation = true

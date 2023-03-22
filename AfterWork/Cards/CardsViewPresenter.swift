@@ -10,19 +10,29 @@ import MapKit
 import UIKit
 
 class CardsViewPresenter {
-  let controller = DI.container.resolve(CardsViewController.self)!
+    
+    private let controller = DI.shared.getCardsViewController()
 
-  func goToMain() {
-    let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
-    sceneDelegate.window!.rootViewController?.dismiss(animated: true)
-  }
-
-  func setUpLocation(locationManager: CLLocationManager) {
-    DispatchQueue.background(background: {
-      if CLLocationManager.locationServicesEnabled() {
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
-      }
-    })
-  }
+    
+    func goToMain() {
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+        
+        self.controller.dismiss(animated: true)
+    }
+    
+    
+    func setUpLocation(locationManager: CLLocationManager) {
+        
+        DispatchQueue.background(background: { 
+            if (CLLocationManager.locationServicesEnabled()) {
+                
+                locationManager.requestAlwaysAuthorization()
+                locationManager.startUpdatingLocation()
+            }
+        })
+        
+    }
+    
+    static func getCards() -> Array<Array<Any>>? { return DI.poiData.placesList }
 }

@@ -24,50 +24,51 @@ protocol LoginViewPresenterDelegate: AnyObject {
 class LoginViewPresenter {
   // MARK: Internal
 
-  weak var delegate: LoginViewPresenterDelegate?
-
-  let container = DI.container
-
-  @objc
-  func authButtonClicked() {
-    delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
-    container.resolve(AuthService.self)?.TinkoffIDAuth(handler: handleSignInResult)
-  }
-
-  // MARK: Private
-
-  // MARK: - Auth handler
-
-  private var credentials: TinkoffTokenPayload!
-
-  private func goToMain() {
-    let mainViewController = container.resolve(MainViewController.self)!
-
-    mainViewController.modalPresentationStyle = .fullScreen
-
-    let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
-    sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
-    sceneDelegate.window!.rootViewController?.dismiss(animated: true)
-  }
-
-  private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
-    do {
-      credentials = try result.get()
-      delegate?.TinkoffIDResolver(status: StatusCodes.waiting)
-      goToMain()
-    } catch TinkoffAuthError.cancelledByUser {
-      delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
-    } catch TinkoffAuthError.failedToLaunchApp {
-      delegate?.TinkoffIDResolver(status: StatusCodes.failedToLaunch)
-    } catch TinkoffAuthError.failedToObtainToken {
-      delegate?.TinkoffIDResolver(status: StatusCodes.failedToObtainToken)
-    } catch TinkoffAuthError.unavailable {
-      delegate?.TinkoffIDResolver(status: StatusCodes.unavailable)
-    } catch {
-      delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
-      NSLog("AuthError", 1)
+    weak var delegate: LoginViewPresenterDelegate?
+    
+    let preferences = UserDefaults.standard
+    
+    @objc func authButtonClicked() {
+        delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
+        DI.shared.getAuthSerivce().TinkoffIDAuth(handler: handleSignInResult)
     }
-  }
+    
+    private func goToMain() {
+        let mainViewController = DI.shared.getMainViewController()
+        
+        mainViewController.modalPresentationStyle = .fullScreen
+        
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
+        sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+    }
+    
+    // MARK: - Auth handler
+    
+    private var credentials: TinkoffTokenPayload!
+    
+    private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
+        do {
+            credentials = try result.get()
+            
+            preferences.set(credentials.idToken, forKey: "idToken")
+            preferences.set(credentials.accessToken, forKey: "accessToken")
+            preferences.set(credentials.refreshToken, forKey: "refreshToken")
+            
+            delegate?.TinkoffIDResolver(status: StatusCodes.waiting)            
+            goToMain()            
+        } catch TinkoffAuthError.cancelledByUser {
+            delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
+        } catch TinkoffAuthError.failedToLaunchApp {
+            delegate?.TinkoffIDResolver(status: StatusCodes.failedToLaunch)
+        } catch TinkoffAuthError.failedToObtainToken {
+            delegate?.TinkoffIDResolver(status: StatusCodes.failedToObtainToken)
+        } catch TinkoffAuthError.unavailable {
+            delegate?.TinkoffIDResolver(status: StatusCodes.unavailable)
+        } catch {
+            delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
+        }
+    }
 }
 
 // MARK: - StatusCodes
