@@ -19,8 +19,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let backButton = UIButton()
     let mapView = MKMapView()
     
-    let taxiButton = DI.shared.getInterfaceExt().standardButton(title: "Такси", backgroundColor: UIColor(named: "YellowColor")!, cornerRadius: 15, titleColor: UIColor(named: "GreyColor")!, font: .systemFont(ofSize: 16))
-    let wayButton = DI.shared.getInterfaceExt().standardButton(title: "Маршрут", backgroundColor: UIColor(named: "LightGrayColor")!, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 16))
+    let taxiButton = DI.shared.getInterfaceExt().standardButton(title: String(localized: "map_taxi"), backgroundColor: UIColor(named: "YellowColor")!, cornerRadius: 15, titleColor: UIColor(named: "GreyColor")!, font: .systemFont(ofSize: 16))
+    let wayButton = DI.shared.getInterfaceExt().standardButton(title: String(localized: "map_path"), backgroundColor: UIColor(named: "LightGrayColor")!, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 16))
     
     var locationManager: CLLocationManager!
     
@@ -81,9 +81,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if targetPoint != nil {
             
             let a = targetPoint.coordinate
-            let b = mapView.userLocation.coordinate
-            let apoint = MKMapPoint(a)
-            let bpoint = MKMapPoint(b)
+            //let b = mapView.userLocation.coordinate
+            //let apoint = MKMapPoint(a)
+            //let bpoint = MKMapPoint(b)
+            mapView.addAnnotation(targetPoint)
             
             mapView.centerToLocation(CLLocation(latitude: a.latitude, longitude: a.longitude), regionRadius: CLLocationDistance(10000))
         } else {

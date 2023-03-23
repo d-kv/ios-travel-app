@@ -6,5 +6,26 @@
   
 */
 
-"welcome" = "Йоу";
-"cancel" = "отмена";
+"login_big" = "Вход с помощью Tinkoff ID";
+"login_small" = "Вход доступен только для сотрудников";
+
+"main_top" = "куда отправимся?";
+"main_search" = "Британский паб";
+"main_cafe_big" = "Кафе";
+"main_cafe_small" = "Для быстрого перекуса";
+"main_restaurant" = "Ресторан";
+"main_hotel" = "Отель";
+"main_culture" = "Культура";
+"main_personal_big" = "Персональные рекомендации";
+"main_personal_small" = "Может, это именно то что нужно";
+"main_all" = "Посмотреть все";
+
+"settings_achievements" = "Достижения";
+"settings_admin" = "Админ-панель";
+"settings_recomendations" = "Сбросить рекомендации";
+"settings_leave" = "Выйти из аккаунта";
+
+"map_taxi" = "Такси";
+"map_path" = "Маршрут";
+"cards_workhours" = "Часы работы";
+"cards_bill" = "Средний чек";

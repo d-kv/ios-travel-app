@@ -11,8 +11,8 @@ import UIKit
 class LoginViewController: UIViewController {
     let logos = UIImageView(image: UIImage(named: "TINHSE"))
     let enterButton = UIButton()
-    let bigText = DI.shared.getInterfaceExt().standardTextView(text: "Вход с помощью Tinkoff ID", textColor: .white, font: .boldSystemFont(ofSize: 30))
-    let smallText = DI.shared.getInterfaceExt().standardTextView(text: "Вход доступен только для сотрудников", textColor: .gray, font: .systemFont(ofSize: 12))
+    let bigText = DI.shared.getInterfaceExt().standardTextView(text: String(localized: "login_big"), textColor: .white, font: .boldSystemFont(ofSize: 30))
+    let smallText = DI.shared.getInterfaceExt().standardTextView(text: String(localized: "login_small"), textColor: .gray, font: .systemFont(ofSize: 12))
     let loginViewPresenter:LoginViewPresenter = LoginViewPresenter()
     
     override func viewDidLoad() {

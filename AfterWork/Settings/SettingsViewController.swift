@@ -19,10 +19,10 @@ class SettingsViewController: UIViewController {
             
     let achievementsView = UIView()
     
-    let signOutButton = DI.shared.getInterfaceExt().lightGreyButton(title: "Выйти из аккаунта", color: UIColor(named: "LightGrayColor")!)
+    let signOutButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_leave"), color: UIColor(named: "LightGrayColor")!)
     
-    let resetRecommendButton = DI.shared.getInterfaceExt().lightGreyButton(title: "Сбросить рекомендации", color: UIColor(named: "LightGrayColor")!)
-    let adminButton = DI.shared.getInterfaceExt().lightGreyButton(title: "Админ-панель", color: UIColor(named: "LightGrayColor")!)
+    let resetRecommendButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_recomendations"), color: UIColor(named: "LightGrayColor")!)
+    let adminButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_admin"), color: UIColor(named: "LightGrayColor")!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,7 +148,7 @@ class SettingsViewController: UIViewController {
         firstImage.setImage(UIImage(named: "bottleImage"), for: .normal)
         firstImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         
-        textView.text = "Достижения"
+        textView.text = String(localized: "settings_achievements")
         textView.contentInsetAdjustmentBehavior = .automatic
         textView.center = self.view.center
         textView.textAlignment = NSTextAlignment.justified
