@@ -237,12 +237,15 @@ extension MKMapViewDelegate {
 }
 
 extension MapViewController: MapViewPresenterDelegate {
-
-   
-    
     func switchedPoint(target: Artwork, isSwitched: Bool) {
-        NSLog("Target2", 1)
-//        mapView.removeAnnotations(mapView.annotations)
-//        mapView.addAnnotation(target)
+        print("ZHOPA")
     }
+    
+
+    
+//    func switchedPoint(target: Artwork, isSwitched: Bool) {
+//        NSLog("Target2", 1)
+////        mapView.removeAnnotations(mapView.annotations)
+////        mapView.addAnnotation(target)
+//    }
 }
