@@ -8,63 +8,93 @@
 import Foundation
 import Swinject
 
-//let interfaceExt = DI.container.resolve(InterfaceExt.self)!
+// MARK: - DIProtocol
+
+// let interfaceExt = DI.container.resolve(InterfaceExt.self)!
 
 protocol DIProtocol {
-    func getAuthService() -> AuthService
-    func getInterfaceExt() -> InterfaceExt
-    
-    func getMainViewController() -> MainViewController
-    func getMainViewPresenter() -> MainViewPresenter
-    
-    
-    func getLoginViewController() -> LoginViewController
-    func getSettingsViewController() -> SettingsViewController
-    func getMapViewController_Cards() -> MapViewController
-    func getMapViewController_Map() -> MapViewController
-    func getCardsViewController() -> CardsViewController
-    func getCardsViewPresenter() -> CardsViewPresenter
+  func getAuthService() -> AuthService
+  func getInterfaceExt() -> InterfaceExt
+
+  func getMainViewController() -> MainViewController
+  func getMainViewPresenter() -> MainViewPresenter
+
+  func getLoginViewController() -> LoginViewController
+  func getSettingsViewController() -> SettingsViewController
+  func getMapViewController_Cards() -> MapViewController
+  func getMapViewController_Map() -> MapViewController
+  func getCardsViewController() -> CardsViewController
+  func getCardsViewPresenter() -> CardsViewPresenter
 }
 
+// MARK: - DI
+
 class DI: DIProtocol {
-    
-    func getAuthService() -> AuthService { return container.resolve(AuthService.self)!}
-    func getInterfaceExt() -> InterfaceExt { return container.resolve(InterfaceExt.self)! }
-    
-    func getMainViewController() -> MainViewController { return container.resolve(MainViewController.self)!}
-    func getLoginViewController() -> LoginViewController { return container.resolve(LoginViewController.self)!}
-    func getSettingsViewController() -> SettingsViewController { return container.resolve(SettingsViewController.self)!}
-    func getMapViewController_Cards() -> MapViewController { return container.resolve(MapViewController.self, name: "Cards")!}
-    func getMapViewController_Map() -> MapViewController { return container.resolve(MapViewController.self, name: "Map")!}
-    func getCardsViewController() -> CardsViewController { return container.resolve(CardsViewController.self)!}
-    
-    func getMainViewPresenter() -> MainViewPresenter { return container.resolve(MainViewPresenter.self)!}
-    func getCardsViewPresenter() -> CardsViewPresenter { return container.resolve(CardsViewPresenter.self)!}
-    func getSettingsViewPresenter() -> SettingsViewPresenter { return container.resolve(SettingsViewPresenter.self)!}
-    
-    static let shared = DI()
-    
-    private let container: Container = {
-        let container = Container()
+  // MARK: Internal
 
-        container.register(AuthService.self) { _ in return AuthService() }
-        container.register(InterfaceExt.self) { _ in return InterfaceExt() }
+  static let shared = DI()
 
-        container.register(MainViewController.self) { _ in return MainViewController() }
-        container.register(LoginViewController.self) { _ in return LoginViewController() }
-        container.register(SettingsViewController.self) { _ in return SettingsViewController() }
-        container.register(MapViewController.self, name: "Cards") { _ in return MapViewController() }
-        container.register(MapViewController.self, name: "Map") { _ in return MapViewController() }
-        container.register(CardsViewController.self) { _ in return CardsViewController() }
+  static var poiData: PoiData = .init()
+  static let userData: UserData = .init()
 
-        container.register(MainViewPresenter.self) { _ in return MainViewPresenter() }
-        container.register(CardsViewPresenter.self) { _ in return CardsViewPresenter() }
-        container.register(SettingsViewPresenter.self) { _ in return SettingsViewPresenter() }
-        
+  func getAuthService() -> AuthService { return container.resolve(AuthService.self)! }
+  func getInterfaceExt() -> InterfaceExt { return container.resolve(InterfaceExt.self)! }
 
-        return container
-    }()
-        
-    static var poiData: PoiData = PoiData.init()
-    static let userData: UserData = UserData.init()
+  func getMainViewController() -> MainViewController { return container
+    .resolve(MainViewController.self)!
+  }
+
+  func getLoginViewController() -> LoginViewController { return container
+    .resolve(LoginViewController.self)!
+  }
+
+  func getSettingsViewController() -> SettingsViewController { return container
+    .resolve(SettingsViewController.self)!
+  }
+
+  func getMapViewController_Cards() -> MapViewController { return container
+    .resolve(MapViewController.self, name: "Cards")!
+  }
+
+  func getMapViewController_Map() -> MapViewController { return container
+    .resolve(MapViewController.self, name: "Map")!
+  }
+
+  func getCardsViewController() -> CardsViewController { return container
+    .resolve(CardsViewController.self)!
+  }
+
+  func getMainViewPresenter() -> MainViewPresenter { return container
+    .resolve(MainViewPresenter.self)!
+  }
+
+  func getCardsViewPresenter() -> CardsViewPresenter { return container
+    .resolve(CardsViewPresenter.self)!
+  }
+
+  func getSettingsViewPresenter() -> SettingsViewPresenter { return container
+    .resolve(SettingsViewPresenter.self)!
+  }
+
+  // MARK: Private
+
+  private let container: Container = {
+    let container = Container()
+
+    container.register(AuthService.self) { _ in AuthService() }
+    container.register(InterfaceExt.self) { _ in InterfaceExt() }
+
+    container.register(MainViewController.self) { _ in MainViewController() }
+    container.register(LoginViewController.self) { _ in LoginViewController() }
+    container.register(SettingsViewController.self) { _ in SettingsViewController() }
+    container.register(MapViewController.self, name: "Cards") { _ in MapViewController() }
+    container.register(MapViewController.self, name: "Map") { _ in MapViewController() }
+    container.register(CardsViewController.self) { _ in CardsViewController() }
+
+    container.register(MainViewPresenter.self) { _ in MainViewPresenter() }
+    container.register(CardsViewPresenter.self) { _ in CardsViewPresenter() }
+    container.register(SettingsViewPresenter.self) { _ in SettingsViewPresenter() }
+
+    return container
+  }()
 }
