@@ -6,33 +6,31 @@
 //
 
 import Foundation
-import UIKit
 import MapKit
+import UIKit
 
 class CardsViewPresenter {
-    
-    private let controller = DI.shared.getCardsViewController()
+  // MARK: Internal
 
-    
-    func goToMain() {
-        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
-        sceneDelegate.window!.rootViewController?.dismiss(animated: true)
-        
-        self.controller.dismiss(animated: true)
-    }
-    
-    
-    func setUpLocation(locationManager: CLLocationManager) {
-        
-        DispatchQueue.background(background: { 
-            if (CLLocationManager.locationServicesEnabled()) {
-                
-                locationManager.requestAlwaysAuthorization()
-                locationManager.startUpdatingLocation()
-            }
-        })
-        
-    }
-    
-    static func getCards() -> Array<Array<Any>>? { return DI.poiData.placesList }
+  static func getCards() -> [[Any]]? { return DI.poiData.placesList }
+
+  func goToMain() {
+    let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+    sceneDelegate.window!.rootViewController?.dismiss(animated: true)
+
+    controller.dismiss(animated: true)
+  }
+
+  func setUpLocation(locationManager: CLLocationManager) {
+    DispatchQueue.background(background: {
+      if CLLocationManager.locationServicesEnabled() {
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+      }
+    })
+  }
+
+  // MARK: Private
+
+  private let controller = DI.shared.getCardsViewController()
 }
