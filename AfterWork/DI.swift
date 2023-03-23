@@ -11,7 +11,7 @@ import Swinject
 //let interfaceExt = DI.container.resolve(InterfaceExt.self)!
 
 protocol DIProtocol {
-    func getAuthSerivce() -> AuthService
+    func getAuthService() -> AuthService
     func getInterfaceExt() -> InterfaceExt
     
     func getMainViewController() -> MainViewController
@@ -28,7 +28,7 @@ protocol DIProtocol {
 
 class DI: DIProtocol {
     
-    func getAuthSerivce() -> AuthService { return container.resolve(AuthService.self)!}
+    func getAuthService() -> AuthService { return container.resolve(AuthService.self)!}
     func getInterfaceExt() -> InterfaceExt { return container.resolve(InterfaceExt.self)! }
     
     func getMainViewController() -> MainViewController { return container.resolve(MainViewController.self)!}

@@ -19,7 +19,7 @@ final class SettingsViewPresenter {
     
     func signOut() {
         
-        DI.shared.getAuthSerivce().logOut(accessToken: preferences.string(forKey: "accessToken")!, handler: handleSignOut)
+        DI.shared.getAuthService().logOut(accessToken: preferences.string(forKey: "accessToken")!, handler: handleSignOut)
     }
     
     private func handleSignOut(_ result: Result<Void, Error>) {

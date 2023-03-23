@@ -27,7 +27,7 @@ class LoginViewPresenter {
     
     @objc func authButtonClicked() {
         delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
-        DI.shared.getAuthSerivce().TinkoffIDAuth(handler: handleSignInResult)
+        DI.shared.getAuthService().TinkoffIDAuth(handler: handleSignInResult)
     }
     
     private func goToMain() {

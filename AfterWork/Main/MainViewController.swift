@@ -51,11 +51,11 @@ class MainViewController: UIViewController {
         mainViewPresenter.goToMap()
     }
     
-    @objc func recomendButtonTap() {
+    @objc func recommendButtonTap() {
         mainViewPresenter.goToCards()
     }
     
-    // MARK: - Contraints
+    // MARK: - Constraints
     
     func creation() {
         userImage.setImage(UIImage(named: "userImage"), for: .normal)
@@ -103,15 +103,15 @@ class MainViewController: UIViewController {
         centerRecommend.isUserInteractionEnabled = true
         rightRecommend.isUserInteractionEnabled = true
         
-        let gesturePersonal:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gesturePersonal:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recommendButtonTap))
         gesturePersonal.numberOfTapsRequired = 1
-        let gestureBig:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gestureBig:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recommendButtonTap))
         gestureBig.numberOfTapsRequired = 1
-        let gestureLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gestureLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recommendButtonTap))
         gestureLeft.numberOfTapsRequired = 1
-        let gestureCenter:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gestureCenter:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recommendButtonTap))
         gestureCenter.numberOfTapsRequired = 1
-        let gestureRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gestureRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recommendButtonTap))
         gestureRight.numberOfTapsRequired = 1
         
         personalRecommend.addGestureRecognizer(gesturePersonal)
