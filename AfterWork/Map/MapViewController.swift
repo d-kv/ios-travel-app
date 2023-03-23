@@ -166,15 +166,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//         let launchOptions = [
-//             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-//         ]
-//
-//         guard let artwork = view.annotation as? Artwork else {
-//             return
-//         }
-//         artwork.mapItem?.openInMaps(launchOptions: launchOptions)
-        DI.shared.getMapViewPresenter().goToDesc()
+        guard let artwork = view.annotation as? Artwork else {
+            return
+        }
+        if targetPoint == nil {
+            let currentData = DI.poiData.placesList?.filter { $0[0] as? Int == Int(artwork.discipline!)}[0]
+            DI.shared.getMapViewPresenter().goToDesc(type: currentData![1] as! String, name: currentData![2] as! String, description: currentData![6] as! String, workHours: currentData![10] as! String, contacts: currentData![9] as! String, bill: currentData![8] as! Int, artwork: artwork, currentCoords: mapView.userLocation.coordinate)
+        }
      
      }
 
