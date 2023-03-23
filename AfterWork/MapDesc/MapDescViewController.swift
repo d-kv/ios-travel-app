@@ -10,6 +10,12 @@ import UIKit
 
 class MapDescViewController: UIViewController {
     
-    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        view.backgroundColor = .yellow
+        
+        
+    }
     
 }

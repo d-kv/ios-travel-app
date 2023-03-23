@@ -31,6 +31,15 @@ final class MapViewPresenter {
         NSLog("Target1", 1)
     }
     
+    func goToDesc() {
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            topController.present(DI.shared.getMapDescViewController(), animated: true, completion: nil)
+        }
+    }
+    
     static func setUpLocation(locationManager: CLLocationManager) {
         DispatchQueue.background(background: {
             if (CLLocationManager.locationServicesEnabled()) {

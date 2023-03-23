@@ -166,20 +166,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-         let launchOptions = [
-             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-         ]
-        
-         guard let artwork = view.annotation as? Artwork else {
-             return
-         }
-         artwork.mapItem?.openInMaps(launchOptions: launchOptions)
+//         let launchOptions = [
+//             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+//         ]
+//
+//         guard let artwork = view.annotation as? Artwork else {
+//             return
+//         }
+//         artwork.mapItem?.openInMaps(launchOptions: launchOptions)
+        DI.shared.getMapViewPresenter().goToDesc()
      
      }
 
-     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
-         //print("didSelectAnnotationTapped")
-     }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
+        //print("didSelectAnnotationTapped")
+        //print("ZHOPA1")
+        
+    }
+    
     func makeRect(coordinates:[CLLocationCoordinate2D]) -> MKMapRect {
         var rect = MKMapRect()
         var coordinates = coordinates
@@ -224,28 +228,20 @@ extension MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: ArtworkView,
         calloutAccessoryControlTapped control: UIControl) {
-            guard let artwork = view.annotation as? Artwork else {
-                return
-            }
-
-            let launchOptions = [
-                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
-            ]
-        
-            artwork.mapItem?.openInMaps(launchOptions: launchOptions)
+        guard let artwork = view.annotation as? Artwork else {
+            return
         }
+
+        let launchOptions = [
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
+        ]
+        
+        artwork.mapItem?.openInMaps(launchOptions: launchOptions)
+    }
 }
 
 extension MapViewController: MapViewPresenterDelegate {
     func switchedPoint(target: Artwork, isSwitched: Bool) {
-        print("ZHOPA")
+        // do nothing
     }
-    
-
-    
-//    func switchedPoint(target: Artwork, isSwitched: Bool) {
-//        NSLog("Target2", 1)
-////        mapView.removeAnnotations(mapView.annotations)
-////        mapView.addAnnotation(target)
-//    }
 }
