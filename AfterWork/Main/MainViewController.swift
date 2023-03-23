@@ -61,7 +61,7 @@ class MainViewController: UIViewController {
         userImage.setImage(UIImage(named: "userImage"), for: .normal)
         userImage.addTarget(self, action: #selector(userImageTap), for: .touchUpInside)
         
-        userName.text = "Евгений,\nкуда отправимся?"
+        userName.text = "Евгений,\n" + String(localized: "main_top")
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
         userName.textAlignment = NSTextAlignment.justified
@@ -74,7 +74,7 @@ class MainViewController: UIViewController {
         userName.isScrollEnabled = false
         userName.isSelectable = false
         
-        searchBar.placeholder = "Британский паб"
+        searchBar.placeholder = String(localized: "main_search")
         searchBar.barTintColor = .clear
         
         bigRecommend.backgroundColor = UIColor(named: "GreyColor")
@@ -120,7 +120,7 @@ class MainViewController: UIViewController {
         centerRecommend.addGestureRecognizer(gestureCenter)
         rightRecommend.addGestureRecognizer(gestureRight)
         
-        checkAllButton.setTitle("Посмотреть все", for: .normal)
+        checkAllButton.setTitle(String(localized: "main_all"), for: .normal)
         checkAllButton.backgroundColor = UIColor(named: "YellowColor")
         checkAllButton.layer.cornerRadius = 23
         checkAllButton.setTitleColor(.black, for: .normal)
@@ -224,8 +224,8 @@ class MainViewController: UIViewController {
     // MARK: - Content on Custom Views
     
     func addto_bigRecommend() {
-        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Кафе", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
-        let smallText = DI.shared.getInterfaceExt().frameTextView(text: "Для быстрого перекуса", font: .systemFont(ofSize: 14), lineHeightMultiple: 0.6)
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: String(localized: "main_cafe_big"), font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
+        let smallText = DI.shared.getInterfaceExt().frameTextView(text: String(localized: "main_cafe_small"), font: .systemFont(ofSize: 14), lineHeightMultiple: 0.6)
         let imageView = UIImageView(image: UIImage(named: "cupImage"))
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
@@ -261,7 +261,7 @@ class MainViewController: UIViewController {
     }
     
     func addto_centerRecommend() {
-        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Отель", font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: String(localized: "main_hotel"), font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
         let imageView = UIImageView(image: UIImage(named: "hotelImage"))
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
@@ -288,7 +288,7 @@ class MainViewController: UIViewController {
     }
     
     func addto_leftRecommend() {
-        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Ресторан", font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: String(localized: "main_restaurant"), font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
         let imageView = UIImageView(image: UIImage(named: "restaurantImage"))
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
@@ -315,7 +315,7 @@ class MainViewController: UIViewController {
     }
     
     func addto_rightRecommend() {
-        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Культура", font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: String(localized: "main_culture"), font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0)
         let imageView = UIImageView(image: UIImage(named: "cultureImage"))
         
         bigText.translatesAutoresizingMaskIntoConstraints = false
@@ -342,8 +342,8 @@ class MainViewController: UIViewController {
     }
     
     func addto_personalRecommend() {
-        let bigText = DI.shared.getInterfaceExt().frameTextView(text: "Персональные рекомендации", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.8)
-        let smallText = DI.shared.getInterfaceExt().frameTextView(text: "Может, это именно то что нужно", font: .systemFont(ofSize: 14), lineHeightMultiple: 0.8)
+        let bigText = DI.shared.getInterfaceExt().frameTextView(text: String(localized: "main_personal_big"), font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.8)
+        let smallText = DI.shared.getInterfaceExt().frameTextView(text: String(localized: "main_personal_small"), font: .systemFont(ofSize: 14), lineHeightMultiple: 0.8)
         let imageView = UIImageView(image: UIImage(named: "multiArrowsImage"))
         
         bigText.translatesAutoresizingMaskIntoConstraints = false

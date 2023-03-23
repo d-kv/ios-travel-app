@@ -104,10 +104,10 @@ class InterfaceExt {
         let viewRectangle = UIView()
         let hideRectangle = UIView()
         
-        let workHouseTitle = self.frameTextView(text: "Часы работы", font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
+        let workHouseTitle = self.frameTextView(text: String(localized: "cards_workhours"), font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
         let workHouseText = self.frameTextView(text: workHours, font: UIFont(name: "Helvetica Neue Medium", size: 14)!, lineHeightMultiple: 0.5)
         
-        let billTitle = self.frameTextView(text: "Средний чек", font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
+        let billTitle = self.frameTextView(text: String(localized: "cards_bill"), font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
         let billPrice = worstPrice(price: bill)
         
         if isRecommended {

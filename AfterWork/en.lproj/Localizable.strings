@@ -6,5 +6,26 @@
   
 */
 
-"welcome" = "welcome";
-"cancel" = "cancel";
+"login_big" = "Sign in with Tinkoff ID";
+"login_small" = "This app can used only by staff";
+
+"main_top" = "where we go?";
+"main_search" = "British pub";
+"main_cafe_big" = "Cafe";
+"main_cafe_small" = "For a quck snack";
+"main_restaurant" = "Restaurant";
+"main_hotel" = "Hotel";
+"main_culture" = "Culture";
+"main_personal_big" = "Personal recomendations";
+"main_personal_small" = "Maybe this is exactly what you need";
+"main_all" = "Check all";
+
+"settings_achievements" = "Achievements";
+"settings_admin" = "Admin-panel";
+"settings_recomendations" = "Reset recomendations";
+"settings_leave" = "Sign Out";
+
+"map_taxi" = "Taxi";
+"map_path" = "Navigator";
+"cards_workhours" = "Workhours";
+"cards_bill" = "Median bill";
