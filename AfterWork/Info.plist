@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>TESTING</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Just testing</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>AppName(Demo App) would like to use your current location</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -23,6 +17,7 @@
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>tel</string>
 		<string>tinkoffiddebug</string>
 		<string>tinkoffbank</string>
 	</array>

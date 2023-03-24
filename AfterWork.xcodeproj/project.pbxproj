@@ -495,6 +495,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AfterWork/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AfterWork;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = TESTING;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "AppName(Demo App) would like to use your current location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Just testing";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -529,6 +532,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AfterWork/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AfterWork;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = TESTING;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "AppName(Demo App) would like to use your current location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Just testing";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

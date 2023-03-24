@@ -9,12 +9,17 @@ import Foundation
 import UIKit
 import MapKit
 
-//protocol MapDescViewDelegate: AnyObject {
-//    func syncData(type: String, name: String, description: String, workHours: String, contacts: String, bill: Int)
-//}
 
 class MapDescViewPresenter {
     
     //weak var delegate: MapDescViewDelegate?
+    
+    func callNumber(phoneNumber: String) {
+        guard let url = URL(string: "tel://\(phoneNumber)"),
+            UIApplication.shared.canOpenURL(url) else {
+            return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
     
 }

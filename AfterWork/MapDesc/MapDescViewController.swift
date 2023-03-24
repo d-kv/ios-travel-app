@@ -21,11 +21,12 @@ class MapDescViewController: UIViewController {
     let descriptionText = DI.shared.getInterfaceExt().frameTextView(text: "Ъуй Пхзда Тест", font: UIFont(name: "Helvetica Neue Medium", size: 13)!, lineHeightMultiple: 0.6)
     
     private let workHoursTitle = DI.shared.getInterfaceExt().frameTextView(text: "Часы работы", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
-    let workHoursText = DI.shared.getInterfaceExt().frameTextView(text: "Ежедневно с 12:00 до 23:00", font: .systemFont(ofSize: 12), lineHeightMultiple: 0.6)
+    let workHoursText = DI.shared.getInterfaceExt().frameTextView(text: "Ежедневно с 12:00 до 23:00", font: .systemFont(ofSize: 16), lineHeightMultiple: 0.6)
     private let lineViewSecond = UIView()
     
     private let contactsTitle = DI.shared.getInterfaceExt().frameTextView(text: "Контакты", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
-    let contactsText = DI.shared.getInterfaceExt().frameTextView(text: "+7 (999) 999 99-99", font: .systemFont(ofSize: 12), lineHeightMultiple: 0.6)
+    let contactsText = UIButton()
+//    let contactsText = DI.shared.getInterfaceExt().frameTextView(text: "+7 (999) 999 99-99", font: .systemFont(ofSize: 14), lineHeightMultiple: 0.6)
     private let lineViewThird = UIView()
     
     private let billTitle = DI.shared.getInterfaceExt().frameTextView(text: "Cредний чек", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
@@ -36,6 +37,7 @@ class MapDescViewController: UIViewController {
     
     var artwork: Artwork? = nil
     var currentCoordinate: CLLocationCoordinate2D? = nil
+    var isRecomended: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,13 +58,21 @@ class MapDescViewController: UIViewController {
         
         descriptionText.textAlignment = .right
         
-        contactsText.textColor = .tintColor
-//        bigView.layer.shadowColor = UIColor(named: "YellowColor")?.cgColor
-//        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-//        bigView.layer.shadowOpacity = 1
-//        bigView.layer.shadowRadius = 10.0
+        contactsText.setTitleColor(.tintColor, for: .normal)
+        contactsText.backgroundColor = .clear
+        contactsText.titleLabel?.font = .systemFont(ofSize: 16)
+        
+        if isRecomended {
+            bigView.layer.shadowColor = UIColor(named: "YellowColor")?.cgColor
+            view.layer.shadowOffset = CGSize(width: 0, height: 0)
+            bigView.layer.shadowOpacity = 1
+            bigView.layer.shadowRadius = 10.0
+        }
+
         taxiButton.addTarget(self, action: #selector(taxiButtonTap), for: .touchUpInside)
         pathButton.addTarget(self, action: #selector(pathButtonTap), for: .touchUpInside)
+        contactsText.addTarget(self, action: #selector(contactsTap), for: .touchUpInside)
+        
     }
     
     private func setUpConstraints() {
@@ -126,8 +136,8 @@ class MapDescViewController: UIViewController {
         lineViewSecond.translatesAutoresizingMaskIntoConstraints = false
         let lineViewSecondConstraints = [
             lineViewSecond.topAnchor.constraint(equalTo: workHoursText.bottomAnchor, constant: 20),
-            lineViewSecond.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 25),
-            lineViewSecond.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -25),
+            lineViewSecond.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 5),
+            lineViewSecond.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -5),
             lineViewSecond.heightAnchor.constraint(equalToConstant: 3),
         ]
         
@@ -143,15 +153,15 @@ class MapDescViewController: UIViewController {
         let contactsTextConstraints = [
             contactsText.topAnchor.constraint(equalTo: contactsTitle.bottomAnchor, constant: 0),
             contactsText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
-            contactsText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
+            //contactsText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
             //workHoursText.heightAnchor.constraint(equalToConstant: 30),
         ]
         
         lineViewThird.translatesAutoresizingMaskIntoConstraints = false
         let lineViewThirdConstraints = [
             lineViewThird.topAnchor.constraint(equalTo: contactsText.bottomAnchor, constant: 20),
-            lineViewThird.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 25),
-            lineViewThird.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -25),
+            lineViewThird.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 5),
+            lineViewThird.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -5),
             lineViewThird.heightAnchor.constraint(equalToConstant: 3),
         ]
         
@@ -224,5 +234,9 @@ class MapDescViewController: UIViewController {
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
         ]
         artwork?.mapItem?.openInMaps(launchOptions: launchOptions)
+    }
+    
+    @objc private func contactsTap() {
+        DI.shared.getMapDescViewPresenter().callNumber(phoneNumber: contactsText.title(for: .normal)!)
     }
 }
