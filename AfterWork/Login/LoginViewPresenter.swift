@@ -52,6 +52,8 @@ class LoginViewPresenter {
             preferences.set(credentials.accessToken, forKey: "accessToken")
             preferences.set(credentials.refreshToken, forKey: "refreshToken")
             
+            print("AUTH", credentials)
+            
             delegate?.TinkoffIDResolver(status: StatusCodes.waiting)            
             goToMain()            
         } catch TinkoffAuthError.cancelledByUser {
