@@ -29,9 +29,10 @@ final class MainViewPresenter {
     func goToMap() {
         let mapViewController = DI.shared.getMapViewController_Map()
         mapViewController.modalPresentationStyle = .fullScreen
-        
+
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
+        
     }
     
     func goToCards() {

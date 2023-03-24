@@ -39,6 +39,26 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     }
     
     func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
+        
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let artwork = Artwork(
+            title: cards[index + 1][2] as? String,
+            locationName: "Waikiki Gateway Park",
+            discipline: cards[index + 1][1] as? String,
+            coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
+            image: UIImage(named: "markerTop")
+        )
+        mapView.addAnnotation(artwork)
+        
+        
+        let a = artwork.coordinate
+        let b = mapView.userLocation.coordinate
+        let apoint = MKMapPoint(a)
+        let bpoint = MKMapPoint(b)
+        
+        mapView.setVisibleMapRect(MKMapRect(x: min(apoint.x, bpoint.x), y: min(apoint.y, bpoint.y), width: abs(apoint.x - bpoint.x), height: abs(apoint.y - bpoint.y)), edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20), animated: true)
+        
         if direction == .right  && index != 0 {
             
             self.dismiss(animated: true)
@@ -52,7 +72,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
                 title: cards[index + 1][2] as? String,
                 locationName: "Waikiki Gateway Park",
                 discipline: cards[index + 1][1] as? String,
-                coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
+                coordinate: CLLocationCoordinate2D(latitude: a.latitude, longitude: b.longitude), //cards[0][6]
                 image: UIImage(named: "markerTop")
             )
             
@@ -61,24 +81,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     }
     
     func cardStack(_ cardStack: Shuffle_iOS.SwipeCardStack, cardForIndexAt index: Int) -> Shuffle_iOS.SwipeCard {
-        mapView.removeAnnotations(mapView.annotations)
         
-        let artwork = Artwork(
-            title: cards[index + 1][2] as? String,
-            locationName: "Waikiki Gateway Park",
-            discipline: cards[index + 1][1] as? String,
-            coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
-            image: UIImage(named: "markerTop")
-        )
-        
-        mapView.addAnnotation(artwork)
-                
-        let a = artwork.coordinate
-        let b = mapView.userLocation.coordinate
-        let apoint = MKMapPoint(a)
-        let bpoint = MKMapPoint(b)
-        
-        mapView.setVisibleMapRect(MKMapRect(x: min(apoint.x, bpoint.x), y: min(apoint.y, bpoint.y), width: abs(apoint.x - bpoint.x), height: abs(apoint.y - bpoint.y)), edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20), animated: true)
         return DI.shared.getInterfaceExt().card(fromData: cards[index])
     }
     
