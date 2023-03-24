@@ -43,15 +43,37 @@ class MainViewController: UIViewController {
         view.backgroundColor = .black
     }
     
-    @objc func userImageTap() {
+    @objc private func userImageTap() {
         mainViewPresenter.openSettings()
     }
     
-    @objc func checkAllButtonTap() {
-        mainViewPresenter.goToMap()
+    @objc private func checkAllButtonTap() {
+        self.checkAllButton.showAnimation {}
+        self.mainViewPresenter.goToMap()
     }
     
-    @objc func recomendButtonTap() {
+    @objc private func bigRecommendTap() {
+        self.bigRecommend.showAnimation {}
+        mainViewPresenter.goToCards()
+    }
+    
+    @objc private func centerRecommendTap() {
+        self.centerRecommend.showAnimation {}
+        mainViewPresenter.goToCards()
+    }
+    
+    @objc private func leftRecommendTap() {
+        self.leftRecommend.showAnimation {}
+        mainViewPresenter.goToCards()
+    }
+    
+    @objc private func rightRecommendTap() {
+        self.rightRecommend.showAnimation {}
+        mainViewPresenter.goToCards()
+    }
+    
+    @objc private func personalRecommendTap() {
+        self.personalRecommend.showAnimation {}
         mainViewPresenter.goToCards()
     }
     
@@ -103,15 +125,15 @@ class MainViewController: UIViewController {
         centerRecommend.isUserInteractionEnabled = true
         rightRecommend.isUserInteractionEnabled = true
         
-        let gesturePersonal:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gesturePersonal:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(personalRecommendTap))
         gesturePersonal.numberOfTapsRequired = 1
-        let gestureBig:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gestureBig:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bigRecommendTap))
         gestureBig.numberOfTapsRequired = 1
-        let gestureLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gestureLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(leftRecommendTap))
         gestureLeft.numberOfTapsRequired = 1
-        let gestureCenter:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gestureCenter:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(centerRecommendTap))
         gestureCenter.numberOfTapsRequired = 1
-        let gestureRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recomendButtonTap))
+        let gestureRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightRecommendTap))
         gestureRight.numberOfTapsRequired = 1
         
         personalRecommend.addGestureRecognizer(gesturePersonal)
