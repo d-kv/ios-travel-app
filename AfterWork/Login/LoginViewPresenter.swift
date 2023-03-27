@@ -52,10 +52,8 @@ class LoginViewPresenter {
             preferences.set(credentials.accessToken, forKey: "accessToken")
             preferences.set(credentials.refreshToken, forKey: "refreshToken")
             
-            print("AUTH", credentials)
+            req()
             
-            delegate?.TinkoffIDResolver(status: StatusCodes.waiting)            
-            goToMain()            
         } catch TinkoffAuthError.cancelledByUser {
             delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
         } catch TinkoffAuthError.failedToLaunchApp {
@@ -68,6 +66,57 @@ class LoginViewPresenter {
             delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
         }
     }
+    
+    private func req() {
+        let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=" + preferences.string(forKey: "idToken")! + "&tid_accessToken=" + preferences.string(forKey: "accessToken")!)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpMethod = "POST"
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {                                                               // check for fundamental networking error
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
+                return
+            }
+
+            switch response.statusCode {
+            case 200: // success
+                
+                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
+                    print(jsonArray)
+                    self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
+                    self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
+                    self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
+                    self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
+                    DispatchQueue.main.async {
+                        self.delegate?.TinkoffIDResolver(status: .waiting)
+                        self.goToMain()
+                    }
+                } else {
+                    DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
+                }
+            case 404:
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
+            case 401:
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .failTID) }
+            case 500:
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .serverError) }
+            case 207:
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .notTester) }
+            case 403:
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .blocked) }
+            default:
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
+            }
+        }
+
+        task.resume()
+        
+    }
 }
 
 enum StatusCodes {
@@ -79,4 +128,15 @@ enum StatusCodes {
     case failedToObtainToken
     case failedToRefreshCredentials
     case unknownError
+    case someError//                case 404: // some error
+    case failTID//                case 401: // failed to auth TID
+    case serverError//                case 500: // server error
+    case notTester//                case 207: // not tester
+    case blocked//                case 403: // blocked
 }
+
+//                case 404: // some error
+//                case 401: // failed to auth TID
+//                case 500: // server error
+//                case 207: // not tester
+//                case 403: // blocked

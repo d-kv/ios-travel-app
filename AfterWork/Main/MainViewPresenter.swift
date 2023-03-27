@@ -63,10 +63,9 @@ final class MainViewPresenter {
             DataLoader.loadData()
         } else {
             if preferences.string(forKey: "idToken") ?? nil != nil {
-                
                 let refreshToken = preferences.string(forKey: "refreshToken") ?? ""
-                
                 AuthService.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
+                
             } else {
                 self.delegate?.mainViewPresenter(self, isLoading: false)
                 goToLogin()
@@ -81,10 +80,57 @@ final class MainViewPresenter {
             preferences.set(credentials.idToken, forKey: "idToken")
             preferences.set(credentials.accessToken, forKey: "accessToken")
             preferences.set(credentials.refreshToken, forKey: "refreshToken")
-                        
-            DataLoader.loadData()
             
-            self.delegate?.mainViewPresenter(self, isLoading: false)
+            let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=" + preferences.string(forKey: "idToken")! + "&tid_accessToken=" + preferences.string(forKey: "accessToken")!)!
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.httpMethod = "POST"
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard
+                    let data = data,
+                    let response = response as? HTTPURLResponse,
+                    error == nil
+                else {                                                               // check for fundamental networking error
+                    DispatchQueue.main.async {
+                        self.delegate?.mainViewPresenter(self, isLoading: false)
+                        self.goToLogin()
+                    }
+                    return
+                }
+
+                switch response.statusCode {
+                case 200: // success
+                    
+                    if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
+                        print(jsonArray)
+                        self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
+                        self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
+                        self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
+                        self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
+                        DataLoader.loadData()
+                        
+                    } else {
+                        DispatchQueue.main.async {
+                            self.delegate?.mainViewPresenter(self, isLoading: false)
+                            self.goToLogin()
+                        }
+                    }
+
+                    DataLoader.loadData()
+                    DispatchQueue.main.async { self.delegate?.mainViewPresenter(self, isLoading: false) }
+                    
+                default:
+                    DispatchQueue.main.async {
+                        self.delegate?.mainViewPresenter(self, isLoading: false)
+                        self.goToLogin()
+                    }
+                }
+            }
+
+            task.resume()
+            
+            
         } catch {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
