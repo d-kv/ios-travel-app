@@ -41,16 +41,18 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
         
         mapView.removeAnnotations(mapView.annotations)
+        var currentAnnotationImage = UIImage(named: "marker")
+        if (cards[index + 1][7] as! Bool) { currentAnnotationImage =  UIImage(named: "markerTop") }
         
         let artwork = Artwork(
-            title: cards[index + 1][2] as? String,
+            title: cards[index][2] as? String,
             locationName: "Waikiki Gateway Park",
-            discipline: cards[index + 1][1] as? String,
-            coordinate: CLLocationCoordinate2D(latitude: cards[index][4] as! CLLocationDegrees, longitude: cards[index][5] as! CLLocationDegrees), //cards[0][6]
-            image: UIImage(named: "markerTop")
+            discipline: cards[index][1] as? String,
+            coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
+            image: currentAnnotationImage
         )
         mapView.addAnnotation(artwork)
-        
+        print()
         
         let a = artwork.coordinate
         let b = mapView.userLocation.coordinate
@@ -67,13 +69,13 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
             sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
             
-            
+            if (cards[index][7] as! Bool) { currentAnnotationImage =  UIImage(named: "markerTop") }
             let artwork = Artwork(
-                title: cards[index + 1][2] as? String,
+                title: cards[index][2] as? String,
                 locationName: "Waikiki Gateway Park",
                 discipline: cards[index][1] as? String,
-                coordinate: CLLocationCoordinate2D(latitude: a.latitude, longitude: b.longitude), //cards[0][6]
-                image: UIImage(named: "markerTop")
+                coordinate: CLLocationCoordinate2D(latitude: cards[index][4] as! CLLocationDegrees, longitude: cards[index][5] as! CLLocationDegrees), //cards[0][6]
+                image: currentAnnotationImage
             )
             
             mapViewController.targetPoint = artwork

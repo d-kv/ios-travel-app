@@ -408,6 +408,10 @@ class MainViewController: UIViewController {
 extension MainViewController: MainViewPresenterDelegate {
     func mainViewPresenter(_ reposViewModel: MainViewPresenter, isLoading: Bool) {
         if isLoading { view.showBlurLoader() }
-        else { view.removeBluerLoader() }
+        else {
+            view.removeBluerLoader()
+            
+            userName.text = (UserDefaults.standard.string(forKey: "firstName") ?? "Хуй") + ",\n" + String(localized: "main_top")
+        }
     }
 }

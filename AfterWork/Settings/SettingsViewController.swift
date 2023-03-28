@@ -42,7 +42,8 @@ class SettingsViewController: UIViewController {
     // MARK: - Constraints
     
     func create() {
-        userName.text = "Парфененков Евгений"
+        let preferences = UserDefaults.standard
+        userName.text = preferences.string(forKey: "lastName")! + " " + preferences.string(forKey: "firstName")!
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
         userName.textAlignment = NSTextAlignment.justified
