@@ -18,7 +18,7 @@ class MapDescViewController: UIViewController {
     let titleText = DI.shared.getInterfaceExt().frameTextView(text: "Пиццерия", font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0.6)
     let nameText = DI.shared.getInterfaceExt().frameTextView(text: "Papa Jhones", font: UIFont(name: "Helvetica Neue Condensed Black", size: 36)!, lineHeightMultiple: 0.6)
     private let lineView = UIView()
-    let descriptionText = DI.shared.getInterfaceExt().frameTextView(text: "Ъуй Пхзда Тест", font: UIFont(name: "Helvetica Neue Medium", size: 13)!, lineHeightMultiple: 0.6)
+    let descriptionText = DI.shared.getInterfaceExt().frameTextView(text: "Ъуй Пхзда Тест", font: UIFont(name: "Helvetica Neue Medium", size: 13)!, lineHeightMultiple: 0.5)
     
     private let workHoursTitle = DI.shared.getInterfaceExt().frameTextView(text: "Часы работы", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
     let workHoursText = DI.shared.getInterfaceExt().frameTextView(text: "Ежедневно с 12:00 до 23:00", font: .systemFont(ofSize: 16), lineHeightMultiple: 0.6)

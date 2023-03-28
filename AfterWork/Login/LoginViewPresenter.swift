@@ -91,6 +91,7 @@ class LoginViewPresenter {
                     self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
                     self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
                     self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
+                    self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
                     self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
                     DispatchQueue.main.async {
                         self.delegate?.TinkoffIDResolver(status: .waiting)

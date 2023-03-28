@@ -46,7 +46,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             title: cards[index + 1][2] as? String,
             locationName: "Waikiki Gateway Park",
             discipline: cards[index + 1][1] as? String,
-            coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
+            coordinate: CLLocationCoordinate2D(latitude: cards[index][4] as! CLLocationDegrees, longitude: cards[index][5] as! CLLocationDegrees), //cards[0][6]
             image: UIImage(named: "markerTop")
         )
         mapView.addAnnotation(artwork)
@@ -71,7 +71,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             let artwork = Artwork(
                 title: cards[index + 1][2] as? String,
                 locationName: "Waikiki Gateway Park",
-                discipline: cards[index + 1][1] as? String,
+                discipline: cards[index][1] as? String,
                 coordinate: CLLocationCoordinate2D(latitude: a.latitude, longitude: b.longitude), //cards[0][6]
                 image: UIImage(named: "markerTop")
             )

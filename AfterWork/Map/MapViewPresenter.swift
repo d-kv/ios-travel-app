@@ -43,7 +43,7 @@ final class MapViewPresenter {
             mapDescViewController.nameText.text = name
             mapDescViewController.nameText.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 0.6)
             mapDescViewController.descriptionText.text = description
-            mapDescViewController.descriptionText.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 0.6)
+            mapDescViewController.descriptionText.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1)
             mapDescViewController.workHoursText.text = workHours
             //mapDescViewController.contactsText.text = contacts
             mapDescViewController.contactsText.setTitle(contacts, for: .normal)

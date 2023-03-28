@@ -60,7 +60,7 @@ final class MainViewPresenter {
         
         if !AuthService.tinkoffId.isTinkoffAuthAvailable {
             self.delegate?.mainViewPresenter(self, isLoading: false)
-            DataLoader.loadData()
+            //DataLoader.loadData()
         } else {
             if preferences.string(forKey: "idToken") ?? nil != nil {
                 let refreshToken = preferences.string(forKey: "refreshToken") ?? ""
@@ -103,12 +103,17 @@ final class MainViewPresenter {
                 case 200: // success
                     
                     if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
-                        print(jsonArray)
+                        //print(jsonArray)
                         self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
                         self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
                         self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
+                        self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
                         self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
-                        DataLoader.loadData()
+                        if !DataLoader.loadData() {
+                            self.goToLogin()
+                        } else {
+                            DispatchQueue.main.async { self.delegate?.mainViewPresenter(self, isLoading: false) }
+                        }
                         
                     } else {
                         DispatchQueue.main.async {
@@ -116,9 +121,6 @@ final class MainViewPresenter {
                             self.goToLogin()
                         }
                     }
-
-                    DataLoader.loadData()
-                    DispatchQueue.main.async { self.delegate?.mainViewPresenter(self, isLoading: false) }
                     
                 default:
                     DispatchQueue.main.async {
