@@ -107,21 +107,36 @@ extension LoginViewController: LoginViewPresenterDelegate {
             self.view.showBlurLoader()
         case .failedToLaunch:
             self.view.removeBluerLoader()
-            showAlert(text: "Невозможно открыть приложение Tinkoff")
+            showAlert(text: "TINKOFF: Невозможно открыть приложение Tinkoff")
         case .cancelledByUser:
             self.view.removeBluerLoader()
-            showAlert(text: "Вход отменен")
+            showAlert(text: "TINKOFF: Вход отменен")
         case .unavailable:
             self.view.removeBluerLoader()
-            showAlert(text: "В данный момент невозможно выполнить вход")
+            showAlert(text: "TINKOFF: В данный момент невозможно выполнить вход")
         case .failedToObtainToken:
             self.view.removeBluerLoader()
-            showAlert(text: "Произошла неизвестная ошибка (Токен)")
+            showAlert(text: "TINKOFF: Произошла неизвестная ошибка (Токен)")
         case .failedToRefreshCredentials:
             self.view.removeBluerLoader()
-            showAlert(text: "Произошла неизвестная ошибка (Обновление)")
+            showAlert(text: "TINKOFF: Произошла неизвестная ошибка (Обновление)")
         case .unknownError:
-            showAlert(text: "Произошла неизвестная ошибка (Токен)")
+            showAlert(text: "TINKOFF: Произошла неизвестная ошибка (Токен)")
+            self.view.removeBluerLoader()
+        case .someError:
+            showAlert(text: "Произошла неизвестная ошибка, повторите попытку позже")
+            self.view.removeBluerLoader()
+        case .failTID:
+            showAlert(text: "Произошла ошибка с получением данных, повторите попытку позже")
+            self.view.removeBluerLoader()
+        case .serverError:
+            showAlert(text: "Произошла неизвестная ошибка, повторите попытку позже")
+            self.view.removeBluerLoader()
+        case .notTester:
+            showAlert(text: "К сожалению, в данный момент проходит тестирование приложения")
+            self.view.removeBluerLoader()
+        case .blocked:
+            showAlert(text: "Ваш аккаунт заморожен, обратитесь к разработчику")
             self.view.removeBluerLoader()
         }
 

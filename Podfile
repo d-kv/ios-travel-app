@@ -9,7 +9,7 @@ target 'AfterWork' do
   pod 'Shuffle-iOS'
 #  pod 'AfterWorkAPI', :git =>
 #'https://github.com/ruslanSorokin/afterwork-api.git', :branch =>
-#'feat/add-swift-version'
+#'feat/add-v0-version'
   # Pods for AfterWork
 
 end

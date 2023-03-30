@@ -1,12 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "8u5578az71rlfmfugjo.svg",
+      "filename" : "star.svg",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
   }
 }

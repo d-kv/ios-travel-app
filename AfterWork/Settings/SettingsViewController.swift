@@ -42,7 +42,8 @@ class SettingsViewController: UIViewController {
     // MARK: - Constraints
     
     func create() {
-        userName.text = "Парфененков Евгений"
+        let preferences = UserDefaults.standard
+        userName.text = preferences.string(forKey: "lastName")! + " " + preferences.string(forKey: "firstName")!
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
         userName.textAlignment = NSTextAlignment.justified
@@ -61,6 +62,12 @@ class SettingsViewController: UIViewController {
         
         signOutButton.setTitleColor(.red, for: .normal)
         signOutButton.addTarget(self, action: #selector(signOutTap), for: .touchUpInside)
+        
+        if preferences.bool(forKey: "isAdmin") {
+            adminButton.addTarget(self, action: #selector(adminTap), for: .touchUpInside)
+        } else {
+            adminButton.isHidden = true
+        }
     }
     
     func setUpConstraints() {
@@ -136,6 +143,14 @@ class SettingsViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Нет", style: .default))
         self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    @objc func adminTap() {
+        
+        if let url = URL(string: "http://82.146.33.253:8000/admin/") {
+            UIApplication.shared.open(url)
+        }
         
     }
     
