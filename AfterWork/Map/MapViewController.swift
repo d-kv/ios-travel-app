@@ -22,6 +22,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let taxiButton = DI.shared.getInterfaceExt().standardButton(title: String(localized: "map_taxi"), backgroundColor: UIColor(named: "YellowColor")!, cornerRadius: 15, titleColor: UIColor(named: "GreyColor")!, font: .systemFont(ofSize: 16))
     let wayButton = DI.shared.getInterfaceExt().standardButton(title: String(localized: "map_path"), backgroundColor: UIColor(named: "LightGrayColor")!, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 16))
     
+    let recomendButton = UIButton()
+    let segmentControl = UISegmentedControl(items: ["Все", "Еда", "Досуг", "Отель"])
+    
     var locationManager: CLLocationManager!
     
     var anotherStart: CLLocationCoordinate2D!
@@ -64,6 +67,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         backButton.addTarget(self, action: #selector(backButtonTap), for: .touchUpInside)
         taxiButton.addTarget(self, action: #selector(taxiButtonTap), for: .touchUpInside)
         wayButton.addTarget(self, action: #selector(wayButtonTap), for: .touchUpInside)
+        
+        setUpSegment()
 
         mapView.register(
           ArtworkView.self,
@@ -85,11 +90,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             //let apoint = MKMapPoint(a)
             //let bpoint = MKMapPoint(b)
             mapView.addAnnotation(targetPoint)
+            segmentControl.isHidden = true
+            recomendButton.isHidden = true
             
             mapView.centerToLocation(CLLocation(latitude: a.latitude, longitude: a.longitude), regionRadius: CLLocationDistance(10000))
         } else {
             //mapView.addAnnotation(artwork)
-            MapViewPresenter.setUpPoints(mapView: mapView)
+            MapViewPresenter.setUpPoints(mapView: mapView, category: "all", isRecommended: false)
             taxiButton.isHidden = true
             wayButton.isHidden = true
         }
@@ -135,13 +142,116 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             wayButton.heightAnchor.constraint(equalToConstant: 50),
         ]
         
+        recomendButton.translatesAutoresizingMaskIntoConstraints = false
+        let recomendButtonConstraints = [
+            recomendButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
+            recomendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            //recomendButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            recomendButton.heightAnchor.constraint(equalToConstant: 50),
+            recomendButton.widthAnchor.constraint(equalToConstant: 50)
+        ]
+        
+        segmentControl.translatesAutoresizingMaskIntoConstraints = false
+        let segmentControlConstraints = [
+            segmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
+            segmentControl.rightAnchor.constraint(equalTo: recomendButton.leftAnchor, constant: -10),
+            segmentControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            segmentControl.heightAnchor.constraint(equalToConstant: 50),
+        ]
+        
         view.addSubview(mapView)
         view.addSubview(backButton)
         view.addSubview(taxiButton)
         view.addSubview(wayButton)
+        view.addSubview(recomendButton)
+        view.addSubview(segmentControl)
         
-        let constraintsArray = [mapViewConstraints, backButtonConstraints, taxiButtonConstraints, wayButtonConstraints].flatMap{$0}
+        let constraintsArray = [mapViewConstraints, backButtonConstraints, taxiButtonConstraints, wayButtonConstraints, recomendButtonConstraints, segmentControlConstraints].flatMap{$0}
         NSLayoutConstraint.activate(constraintsArray)
+    }
+    
+    func setUpSegment() {
+        recomendButton.backgroundColor = UIColor(named: "LightGrayColor")
+        recomendButton.layer.cornerRadius = 10
+        recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+        recomendButton.addTarget(self, action: #selector(recomendTap), for: .touchUpInside)
+        
+        segmentControl.selectedSegmentTintColor = UIColor(named: "LightGrayColor")
+        segmentControl.selectedSegmentIndex = 0
+        segmentControl.backgroundColor = .white
+        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "LightGrayColor")!], for: .normal)
+        segmentControl.layer.cornerRadius = 50
+        segmentControl.layer.masksToBounds = true
+        segmentControl.clipsToBounds = true
+        segmentControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+    }
+    
+    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: false) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: true) }
+        case 1:
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: false) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: true) }
+        case 2:
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: false) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: true) }
+        case 3:
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true) }
+        default:
+            print("aaa")
+        }
+
+    }
+    
+    @objc func recomendTap() {
+        UIView.animate(withDuration: 0.3) {
+            if self.segmentControl.backgroundColor == .white {
+                switch self.segmentControl.selectedSegmentIndex {
+                case 0:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: true)
+                case 1:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: true)
+                case 2:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: true)
+                case 3:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true)
+                default:
+                    print("aa")
+                }
+                
+                self.recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(UIColor(named: "YellowColor")!, renderingMode: .alwaysOriginal), for: .normal)
+                self.segmentControl.selectedSegmentTintColor = UIColor(named: "YellowColor")
+                self.segmentControl.backgroundColor = UIColor(named: "GreyColor")
+                self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "GreyColor")!], for: .selected)
+                self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
+
+            } else {
+                switch self.segmentControl.selectedSegmentIndex {
+                case 0:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: false)
+                case 1:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: false)
+                case 2:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: false)
+                case 3:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false)
+                default:
+                    print("aa")
+                }
+                
+                self.recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+                self.segmentControl.selectedSegmentTintColor = UIColor(named: "LightGrayColor")
+                self.segmentControl.backgroundColor = .white
+                self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+                self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "LightGrayColor")!], for: .normal)
+
+            }
+        }
+        
     }
     
     // MARK: - Button Tap

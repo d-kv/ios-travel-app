@@ -78,7 +78,7 @@ class DataLoader {
                     //self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
                     
                     for i in jsonArray {
-                        let data7 = [i["id"] as! Int, i["category"] as! String, i["name"] as! String, i["address"] as! String, Double(i["latitude"] as! String), Double(i["longitude"] as! String), i["description"] as! String, i["isRecommended"] as! Bool, 4, i["phone"] as! String, i["availability"] as! String] as [Any]
+                        let data7 = [i["id"] as! Int, i["category"] as! String, i["name"] as! String, i["address"] as! String, Double(i["latitude"] as! String)!, Double(i["longitude"] as! String)!, i["description"] as! String, i["isRecommended"] as! Bool, 4, i["phone"] as! String, i["availability"] as! String] as [Any]
                         DI.poiData.placesList?.append(data7)
                     }
 

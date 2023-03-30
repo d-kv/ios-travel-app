@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import TinkoffID
 
-
 protocol MainViewPresenterDelegate: AnyObject {
     func mainViewPresenter(_ reposViewModel: MainViewPresenter,
                             isLoading: Bool)
@@ -49,7 +48,6 @@ final class MainViewPresenter {
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
-        
     }
     
     let preferences = UserDefaults.standard
@@ -62,6 +60,7 @@ final class MainViewPresenter {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             //DataLoader.loadData()
         } else {
+            
             if preferences.string(forKey: "idToken") ?? nil != nil {
                 let refreshToken = preferences.string(forKey: "refreshToken") ?? ""
                 AuthService.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
@@ -72,6 +71,7 @@ final class MainViewPresenter {
             }
         }
     }
+    
     
     private func handleRefreshToken(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {

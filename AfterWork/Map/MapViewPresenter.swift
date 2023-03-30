@@ -67,14 +67,15 @@ final class MapViewPresenter {
         })
     }
     
-    static func setUpPoints(mapView: MKMapView) {
+    static func setUpPoints(mapView: MKMapView, category: String, isRecommended: Bool) {
+        UIView.animate(withDuration: 1) { mapView.removeAnnotations(mapView.annotations) }
+        
         
         for i in DI.poiData.placesList! {
             var image = UIImage(named: "marker")
             if i[7] as! Bool {
                 image = UIImage(named: "markerTop")
             }
-            
             let artwork = Artwork(
                 title: i[2] as? String,
                 locationName: i[1] as? String,
@@ -82,13 +83,38 @@ final class MapViewPresenter {
                 coordinate: CLLocationCoordinate2D(latitude: i[4] as! CLLocationDegrees, longitude: i[5] as! CLLocationDegrees),
                 image: image
             )
-            
+                        
             if !(i[1] as! String).isEqual("Инструкция") {
-                mapView.addAnnotation(artwork)
+                
+                let catCafe = ["bars", "cafe", "fast food", "restaurants", "sushi"]
+                let catArt = ["museum", "spa", "malls", "fallback services", "confectionary", "concert hall", "bars"]
+                let catHotel = ["hotels"]
+                
+                UIView.animate(withDuration: 0.3) {
+                    switch category {
+                    case "all":
+                        if isRecommended && (i[7] as! Bool) { mapView.addAnnotation(artwork) }
+                        else if !isRecommended { mapView.addAnnotation(artwork) }
+                    case "food":
+                        if isRecommended && (i[7] as! Bool) && catCafe.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catCafe.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i[7] as! Bool) && i[2] as? String == "Lee' Food" {print("Selected")}
+                    case "art":
+                        if isRecommended && (i[7] as! Bool) && catArt.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catArt.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+                    case "hotel":
+                        if isRecommended && (i[7] as! Bool) && catHotel.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catHotel.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+
+                    default:
+                        if isRecommended && (i[7] as! Bool) {
+                            print("selected", i[1] as! String, catCafe.contains(i[1] as! String), i[7] as! Bool)
+                        }
+                    }
+                }
             }
             
         }
         
     }
-    
 }
