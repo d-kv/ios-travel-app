@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
     let bigText = DI.shared.getInterfaceExt().standardTextView(text: String(localized: "login_big"), textColor: .white, font: .boldSystemFont(ofSize: 30))
     let smallText = DI.shared.getInterfaceExt().standardTextView(text: String(localized: "login_small"), textColor: .gray, font: .systemFont(ofSize: 12))
     let loginViewPresenter:LoginViewPresenter = LoginViewPresenter()
+    let alphaText = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,9 @@ class LoginViewController: UIViewController {
     func creation() {
         enterButton.setImage(UIImage(named: "TINIDbutton"), for: .normal)
         enterButton.addTarget(self, action: #selector(authButtonClicked), for: .touchUpInside)
+        
+        alphaText.setTitle("alpha_test_" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String) + "_" +  (Bundle.main.infoDictionary?["CFBundleVersion"] as! String), for: .normal)
+        alphaText.addTarget(self, action: #selector(alphaTap), for: .touchUpInside)
     }
     
     func constraints() {
@@ -74,20 +78,46 @@ class LoginViewController: UIViewController {
             enterButton.heightAnchor.constraint(equalToConstant: 55)
         ]
         
+        alphaText.translatesAutoresizingMaskIntoConstraints = false
+        let alphaTextConstraints = [
+            alphaText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            //alphaText.widthAnchor.constraint(equalToConstant: 270),
+            alphaText.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
+        ]
+        
         view.addSubview(logos)
-        //NSLayoutConstraint.activate(logosConstraints)
-        
         view.addSubview(bigText)
-        //NSLayoutConstraint.activate(bigTextConstraints)
-        
         view.addSubview(smallText)
-        //NSLayoutConstraint.activate(smallTextConstraints)
-        
         view.addSubview(enterButton)
-        //NSLayoutConstraint.activate(enterButtonConstraints)
+        view.addSubview(alphaText)
         
-        let constraintsArray = [logosConstraints, bigTextConstraints, smallTextConstraints, enterButtonConstraints].flatMap{$0}
+        let constraintsArray = [logosConstraints, bigTextConstraints, smallTextConstraints, enterButtonConstraints, alphaTextConstraints].flatMap{$0}
         NSLayoutConstraint.activate(constraintsArray)
+    }
+    
+    @objc func alphaTap() {
+        alphaAlert()
+    }
+    
+    func alphaAlert() {
+        let alert = UIAlertController(title: "DEBUG", message: "Enter a key to enter debug mode", preferredStyle: .alert)
+
+        alert.addTextField { (textField) in
+            textField.placeholder = "enter key"
+            textField.textContentType = .password
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { [weak alert] (_) in
+            alert?.dismiss(animated: true)
+        }))
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self, weak alert] (_) in
+            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+            if textField.text != nil { loginViewPresenter.debug_req(TIN_accessToken: textField.text!) }
+            alert?.isEditing = false
+            
+        }))
+        self.present(alert, animated: true)
     }
     
     func showAlert(text: String!) {

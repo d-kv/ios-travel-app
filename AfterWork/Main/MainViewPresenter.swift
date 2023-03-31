@@ -56,9 +56,14 @@ final class MainViewPresenter {
         
         self.delegate?.mainViewPresenter(self, isLoading: true)
         
-        if !AuthService.tinkoffId.isTinkoffAuthAvailable {
+        if !AuthService.tinkoffId.isTinkoffAuthAvailable && !AuthService.isAuthDebug {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             //DataLoader.loadData()
+            goToLogin()
+        } else if AuthService.isAuthDebug {
+            
+            self.delegate?.mainViewPresenter(self, isLoading: false)
+            _ =  DataLoader.loadData()
         } else {
             
             if preferences.string(forKey: "idToken") ?? nil != nil {
@@ -104,11 +109,13 @@ final class MainViewPresenter {
                     
                     if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
                         //print(jsonArray)
+                        print(jsonArray[0])
                         self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
                         self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
                         self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
                         self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
                         self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
+                        self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
                         if !DataLoader.loadData() {
                             self.goToLogin()
                         } else {
