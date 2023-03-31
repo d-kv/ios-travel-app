@@ -158,10 +158,66 @@ class SettingsViewController: UIViewController {
     
     func addTo_achievementsView() {
         let textView = UITextView()
+        let zeroImage = UIButton()
         let firstImage = UIButton()
+        let secondImage = UIButton()
+        let thirdImage = UIButton()
+        let fourthImage = UIButton()
+        let fivthImage = UIButton()
+        let sixthImage = UIButton()
+        let seventhImage = UIButton()
+        let eightthImage = UIButton()
+        let ninethImage = UIButton()
         
-        firstImage.setImage(UIImage(named: "bottleImage"), for: .normal)
+        zeroImage.setImage(UIImage(named: "bottleImage0")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        zeroImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        zeroImage.tag = 0
+        zeroImage.isHidden = true
+        
+        firstImage.setImage(UIImage(named: "michleinAImage1")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
         firstImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        firstImage.tag = 1
+        firstImage.isHidden = true
+        
+        secondImage.setImage(UIImage(named: "gidImage2")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        secondImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        secondImage.tag = 2
+        secondImage.isHidden = true
+        
+        thirdImage.setImage(UIImage(named: "greenImage3")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        thirdImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        thirdImage.tag = 3
+        thirdImage.isHidden = true
+        
+        fourthImage.setImage(UIImage(named: "pdrImage4")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        fourthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        fourthImage.tag = 4
+        fourthImage.isHidden = true
+        
+        fivthImage.setImage(UIImage(named: "hrImage5")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        fivthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        fivthImage.tag = 5
+        fivthImage.isHidden = true
+        
+        sixthImage.setImage(UIImage(named: "armanImage6")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        sixthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        sixthImage.tag = 6
+        sixthImage.isHidden = true
+        
+        seventhImage.setImage(UIImage(named: "desicionImage7")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        seventhImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        seventhImage.tag = 7
+        seventhImage.isHidden = true
+        
+        eightthImage.setImage(UIImage(named: "testerImage8")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        eightthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        eightthImage.tag = 8
+        eightthImage.isHidden = true
+        
+        ninethImage.setImage(UIImage(named: "deusVultImage9")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        ninethImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        ninethImage.tag = 9
+        ninethImage.isHidden = true
         
         textView.text = String(localized: "settings_achievements")
         textView.contentInsetAdjustmentBehavior = .automatic
@@ -183,23 +239,140 @@ class SettingsViewController: UIViewController {
             textView.centerXAnchor.constraint(equalTo: achievementsView.centerXAnchor)
         ]
         
+        zeroImage.translatesAutoresizingMaskIntoConstraints = false
+        let zeroImageConstraints = [
+            zeroImage.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 5),
+            zeroImage.heightAnchor.constraint(equalToConstant: 50),
+            zeroImage.widthAnchor.constraint(equalToConstant: 50),
+            zeroImage.rightAnchor.constraint(equalTo: firstImage.leftAnchor, constant: -15)
+        ]
+        
         firstImage.translatesAutoresizingMaskIntoConstraints = false
         let firstImageConstraints = [
             firstImage.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 5),
-            firstImage.heightAnchor.constraint(equalToConstant: 40),
-            firstImage.widthAnchor.constraint(equalToConstant: 40),
-            firstImage.centerXAnchor.constraint(equalTo: achievementsView.centerXAnchor)
+            firstImage.heightAnchor.constraint(equalToConstant: 50),
+            firstImage.widthAnchor.constraint(equalToConstant: 50),
+            firstImage.rightAnchor.constraint(equalTo: secondImage.leftAnchor, constant: -15)
+        ]
+        
+        secondImage.translatesAutoresizingMaskIntoConstraints = false
+        let secondImageConstraints = [
+            secondImage.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 5),
+            secondImage.heightAnchor.constraint(equalToConstant: 50),
+            secondImage.widthAnchor.constraint(equalToConstant: 50),
+            secondImage.centerXAnchor.constraint(equalTo: achievementsView.centerXAnchor)
+        ]
+        
+        thirdImage.translatesAutoresizingMaskIntoConstraints = false
+        let thirdImageConstraints = [
+            thirdImage.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 5),
+            thirdImage.heightAnchor.constraint(equalToConstant: 50),
+            thirdImage.widthAnchor.constraint(equalToConstant: 50),
+            //thirdImage.rightAnchor.constraint(equalTo: secondImage.rightAnchor, constant: 20),
+            thirdImage.leftAnchor.constraint(equalTo: secondImage.rightAnchor, constant: 15)
+        ]
+        
+        fourthImage.translatesAutoresizingMaskIntoConstraints = false
+        let fourthImageConstraints = [
+            fourthImage.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 5),
+            fourthImage.heightAnchor.constraint(equalToConstant: 50),
+            fourthImage.widthAnchor.constraint(equalToConstant: 50),
+            fourthImage.leftAnchor.constraint(equalTo: thirdImage.rightAnchor, constant: 15)
+        ]
+        
+        fivthImage.translatesAutoresizingMaskIntoConstraints = false
+        let fivthImageConstraints = [
+            fivthImage.bottomAnchor.constraint(equalTo: achievementsView.bottomAnchor, constant: -10),
+            fivthImage.heightAnchor.constraint(equalToConstant: 50),
+            fivthImage.widthAnchor.constraint(equalToConstant: 50),
+            fivthImage.rightAnchor.constraint(equalTo: sixthImage.leftAnchor, constant: -15)
+        ]
+        
+        sixthImage.translatesAutoresizingMaskIntoConstraints = false
+        let sixthImageConstraints = [
+            sixthImage.bottomAnchor.constraint(equalTo: achievementsView.bottomAnchor, constant: -10),
+            sixthImage.heightAnchor.constraint(equalToConstant: 50),
+            sixthImage.widthAnchor.constraint(equalToConstant: 50),
+            sixthImage.rightAnchor.constraint(equalTo: seventhImage.leftAnchor, constant: -15)
+        ]
+        
+        seventhImage.translatesAutoresizingMaskIntoConstraints = false
+        let seventhImageConstraints = [
+            seventhImage.bottomAnchor.constraint(equalTo: achievementsView.bottomAnchor, constant: -10),
+            seventhImage.heightAnchor.constraint(equalToConstant: 50),
+            seventhImage.widthAnchor.constraint(equalToConstant: 50),
+            seventhImage.centerXAnchor.constraint(equalTo: achievementsView.centerXAnchor)
+        ]
+        
+        eightthImage.translatesAutoresizingMaskIntoConstraints = false
+        let eightthImageConstraints = [
+            eightthImage.bottomAnchor.constraint(equalTo: achievementsView.bottomAnchor, constant: -10),
+            eightthImage.heightAnchor.constraint(equalToConstant: 50),
+            eightthImage.widthAnchor.constraint(equalToConstant: 50),
+            eightthImage.leftAnchor.constraint(equalTo: seventhImage.rightAnchor, constant: 15)
+        ]
+        
+        ninethImage.translatesAutoresizingMaskIntoConstraints = false
+        let ninethImageConstraints = [
+            ninethImage.bottomAnchor.constraint(equalTo: achievementsView.bottomAnchor, constant: -10),
+            ninethImage.heightAnchor.constraint(equalToConstant: 50),
+            ninethImage.widthAnchor.constraint(equalToConstant: 50),
+            ninethImage.leftAnchor.constraint(equalTo: eightthImage.rightAnchor, constant: 15)
         ]
         
         achievementsView.addSubview(textView)
-        NSLayoutConstraint.activate(textViewConstraints)
-        
+        achievementsView.addSubview(zeroImage)
         achievementsView.addSubview(firstImage)
-        NSLayoutConstraint.activate(firstImageConstraints)
+        achievementsView.addSubview(secondImage)
+        achievementsView.addSubview(thirdImage)
+        achievementsView.addSubview(fourthImage)
+        achievementsView.addSubview(fivthImage)
+        achievementsView.addSubview(sixthImage)
+        achievementsView.addSubview(seventhImage)
+        achievementsView.addSubview(eightthImage)
+        achievementsView.addSubview(ninethImage)
+        
+        let constraintsArray = [textViewConstraints, zeroImageConstraints, firstImageConstraints, secondImageConstraints, thirdImageConstraints, fourthImageConstraints, fivthImageConstraints, sixthImageConstraints, seventhImageConstraints, eightthImageConstraints, ninethImageConstraints].flatMap{$0}
+        NSLayoutConstraint.activate(constraintsArray)
+        
+        let userA = UserDefaults.standard.string(forKey: "achievements")!
+        for i in userA {
+            print(i)
+            if i == "0" { zeroImage.isHidden = false }
+            achievementsView.viewWithTag(Int(String(i))!)?.isHidden = false
+        }
     }
     
-    @objc func achievementTap() {
-        let alert = UIAlertController(title: "Хороший отдых", message: "Из-за трясущихся рук не в состоянии тыкнуть на нужную кнопку", preferredStyle: .alert)
+    @objc func achievementTap(_ sender: UIButton) {
+        print("sender:", sender.tag)
+        switch sender.tag {
+        case 0:
+            showAlert(title: "Хороший отдых", message: "из-за трясущихся рук промахиваетесь по кнопкам")
+        case 1:
+            showAlert(title: "Инспектор Мишлен", message: "заслуженный оценщик заведений")
+        case 2:
+            showAlert(title: "Гид", message: "провести за собой группу людей")
+        case 3:
+            showAlert(title: "Истинный зеленый", message: "большинство отзывов негативные")
+        case 4:
+            showAlert(title: "*****", message: "скачивать приложение только по необходимости или ставить негативную оценку")
+        case 5:
+            showAlert(title: "HR", message: "просто и понятно - админ или разработчик")
+        case 6:
+            showAlert(title: "Вайвай", message: "стать премиум пользователем")
+        case 7:
+            showAlert(title: "Сама неопределенность", message: "иметь трудности с выбором")
+        case 8:
+            showAlert(title: "Нахлебник", message: "участвовал в тестировании приложения")
+        case 9:
+            showAlert(title: "Deus Vult", message: "не раскрывается")
+        default: break
+            //do nothing
+        }
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true, completion: nil)
     }

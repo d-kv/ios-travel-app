@@ -444,7 +444,7 @@ extension MainViewController: MainViewPresenterDelegate {
         else {
             view.removeBluerLoader()
             
-            userName.text = (UserDefaults.standard.string(forKey: "firstName") ?? "Хуй") + ",\n" + String(localized: "main_top")
+            userName.text = (UserDefaults.standard.string(forKey: "firstName") ?? "Привет") + ",\n" + String(localized: "main_top")
         }
     }
 }

@@ -10,6 +10,7 @@ import TinkoffID
 
 class AuthService {
     
+    static var isAuthDebug = false
     
     static var tinkoffId: ITinkoffID = {
         

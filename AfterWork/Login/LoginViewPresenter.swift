@@ -87,12 +87,12 @@ class LoginViewPresenter {
             case 200: // success
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
-                    print(jsonArray)
                     self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
                     self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
                     self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
                     self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
                     self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
+                    self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
                     DispatchQueue.main.async {
                         self.delegate?.TinkoffIDResolver(status: .waiting)
                         self.goToMain()
@@ -110,6 +110,51 @@ class LoginViewPresenter {
                 DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .notTester) }
             case 403:
                 DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .blocked) }
+            default:
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
+            }
+        }
+
+        task.resume()
+        
+    }
+    
+    func debug_req(TIN_accessToken: String) {
+        let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=ID&tid_accessToken=" + TIN_accessToken + "&debug=1")!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpMethod = "POST"
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {                                                               // check for fundamental networking error
+                DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
+                return
+            }
+
+            switch response.statusCode {
+            case 200: // success
+                
+                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
+                    print(jsonArray[0])
+                    self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
+                    self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
+                    self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
+                    self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
+                    self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
+                    self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
+                    AuthService.isAuthDebug = true
+                    print(self.preferences.string(forKey: "achievements"), "HUY")
+                    DispatchQueue.main.async {
+                        self.delegate?.TinkoffIDResolver(status: .waiting)
+                        self.goToMain()
+                    }
+                } else {
+                    DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
+                }
             default:
                 DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
             }
