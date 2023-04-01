@@ -75,7 +75,7 @@ class InterfaceExt {
     func card(fromData data: [Any]) -> SwipeCard {
         let card = SwipeCard()
     
-        let content = DI.shared.getInterfaceExt().basicCard(type: data[1] as! String, title: data[2] as! String, description: data[6] as! String, workHours: data[10] as! String, bill: data[8] as! Int, isRecommended: data[7] as! Bool)
+        let content = DI.shared.getInterfaceExt().basicCard(type: data[1] as! String, title: data[2] as! String, description: data[6] as! String, workHours: data[10] as! String, url: data[3] as! String, isRecommended: data[7] as! Bool)
         
         card.swipeDirections = [.left, .right]
         card.content = content
@@ -93,7 +93,7 @@ class InterfaceExt {
         return card
     }
     
-    func basicCard(type: String, title: String, description: String, workHours: String, bill: Int, isRecommended: Bool) -> UIView {
+    func basicCard(type: String, title: String, description: String, workHours: String, url: String, isRecommended: Bool) -> UIView {
         
         let view = UIView()
         
@@ -107,13 +107,12 @@ class InterfaceExt {
         let workHouseTitle = self.frameTextView(text: String(localized: "cards_workhours"), font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
         let workHouseText = self.frameTextView(text: workHours, font: UIFont(name: "Helvetica Neue Medium", size: 14)!, lineHeightMultiple: 0.5)
         
-        let billTitle = self.frameTextView(text: String(localized: "cards_bill"), font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
-        let billPrice = worstPrice(price: bill)
+        let urlTitle = self.frameTextView(text: String(localized: "cards_bill"), font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
+        let urlText = UIButton()
         
         if isRecommended {
             
             view.layer.shadowColor = UIColor(named: "YellowColor")?.cgColor
-            //view.layer.shadowOffset = CGSize(width: 0, height: 0)
             view.layer.shadowOpacity = 1
             view.layer.shadowRadius = 10.0
         }
@@ -125,6 +124,9 @@ class InterfaceExt {
         
         hideRectangle.layer.borderWidth = 2
         hideRectangle.layer.borderColor = UIColor(named: "GreyColor")!.cgColor
+        
+        urlText.setTitle(url, for: .normal)
+        urlText.setTitleColor(.tintColor, for: .normal)
                 
         typeText.translatesAutoresizingMaskIntoConstraints = false
         let typeTextConstraints = [
@@ -182,20 +184,20 @@ class InterfaceExt {
             workHouseText.heightAnchor.constraint(equalToConstant: 20)
         ]
         
-        billTitle.translatesAutoresizingMaskIntoConstraints = false
-        let billTitleConstraints = [
-            billTitle.topAnchor.constraint(equalTo: workHouseText.bottomAnchor, constant: 25),
-            billTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            billTitle.widthAnchor.constraint(equalToConstant: 200),
-            billTitle.heightAnchor.constraint(equalToConstant: 30)
+        urlTitle.translatesAutoresizingMaskIntoConstraints = false
+        let urlTitleConstraints = [
+            urlTitle.topAnchor.constraint(equalTo: workHouseText.bottomAnchor, constant: 25),
+            urlTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            urlTitle.widthAnchor.constraint(equalToConstant: 200),
+            urlTitle.heightAnchor.constraint(equalToConstant: 30)
         ]
         
-        billPrice.translatesAutoresizingMaskIntoConstraints = false
-        let billPriceConstraints = [
-            billPrice.topAnchor.constraint(equalTo: billTitle.bottomAnchor, constant: 10),
-            billPrice.leftAnchor.constraint(equalTo: billTitle.leftAnchor, constant: 6),
-            billPrice.widthAnchor.constraint(equalToConstant: 200),
-            billPrice.heightAnchor.constraint(equalToConstant: 20)
+        urlText.translatesAutoresizingMaskIntoConstraints = false
+        let urlTextConstraints = [
+            urlText.topAnchor.constraint(equalTo: urlTitle.bottomAnchor, constant: 10),
+            urlText.leftAnchor.constraint(equalTo: urlTitle.leftAnchor, constant: 6),
+            //urlText.widthAnchor.constraint(equalToConstant: 200),
+            urlText.heightAnchor.constraint(equalToConstant: 20)
         ]
         
         view.addSubview(typeText)
@@ -205,17 +207,17 @@ class InterfaceExt {
         view.addSubview(descriptionText)
         view.addSubview(workHouseTitle)
         view.addSubview(workHouseText)
-        view.addSubview(billTitle)
-        view.addSubview(billPrice)
+        view.addSubview(urlTitle)
+        view.addSubview(urlText)
         
-        let constraintsArray = [typeTextConstraints, nameTextConstraints, viewRectangleConstraints, hideRectangleConstraints, descriptionTextConstraints, workHouseTitleConstraints, workHouseTextConstraints, billTitleConstraints, billPriceConstraints].flatMap{$0}
+        let constraintsArray = [typeTextConstraints, nameTextConstraints, viewRectangleConstraints, hideRectangleConstraints, descriptionTextConstraints, workHouseTitleConstraints, workHouseTextConstraints, urlTitleConstraints, urlTextConstraints].flatMap{$0}
         NSLayoutConstraint.activate(constraintsArray)
         
         if typeText.text == "Инструкция" {
             workHouseTitle.isHidden = true
             workHouseText.isHidden = true
-            billTitle.isHidden = true
-            billPrice.isHidden = true
+            urlTitle.isHidden = true
+            urlText.isHidden = true
         }
         
         view.backgroundColor = UIColor(named: "GreyColor")

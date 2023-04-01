@@ -67,11 +67,13 @@ final class MapViewPresenter {
         })
     }
     
-    static func setUpPoints(mapView: MKMapView, category: String, isRecommended: Bool) {
+    static func setUpPoints(mapView: MKMapView, category: String, isRecommended: Bool, isSearching: Bool) {
         UIView.animate(withDuration: 1) { mapView.removeAnnotations(mapView.annotations) }
         
+        var tempData = DI.poiData.placesList!
+        if isSearching { tempData = DI.poiData.placesListSearch! }
         
-        for i in DI.poiData.placesList! {
+        for i in tempData {
             var image = UIImage(named: "marker")
             if i[7] as! Bool {
                 image = UIImage(named: "markerTop")

@@ -337,7 +337,6 @@ class SettingsViewController: UIViewController {
         
         let userA = UserDefaults.standard.string(forKey: "achievements")!
         for i in userA {
-            print(i)
             if i == "0" { zeroImage.isHidden = false }
             achievementsView.viewWithTag(Int(String(i))!)?.isHidden = false
         }
