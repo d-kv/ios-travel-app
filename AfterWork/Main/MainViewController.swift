@@ -40,35 +40,8 @@ class MainViewController: UIViewController {
         
         mainViewPresenter.enteredApp()
         
-        //test()
     }
     
-//    func test() {
-//        let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-//        defer { try! group.syncShutdownGracefully() }
-//        let channel = try? GRPCChannelPool.with(
-//         target: .host("localhost", port: 8000),
-//         transportSecurity: .plaintext,
-//         eventLoopGroup: group
-//        )
-//        defer { try! channel?.close().wait() }
-//        let rs = Ruslansorokin_Afterwork_V0_Service_PlaceServiceClient(channel: channel!)
-//        let request = Ruslansorokin_Afterwork_V0_Transport_ReadPlacesReq.with {
-//            $0.accessToken = "huy"
-//            $0.userID = "2345"
-//            $0.searchAreaCenter = Google_Type_LatLng.with {
-//                $0.latitude = 0.0
-//                $0.longitude = 0.0
-//            }
-//        }
-//        do {
-//            let response = try rs.readPlaces(request)
-//            print("kaka \(response.response.map { $0.places })")
-//
-//        } catch {
-//            print("huyerror")
-//        }
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -181,6 +154,23 @@ class MainViewController: UIViewController {
         checkAllButton.setTitleColor(.black, for: .normal)
         checkAllButton.titleLabel?.font = UIFont(name: "Helvetica Neue Bold", size: 22)
         checkAllButton.addTarget(self, action: #selector(checkAllButtonTap), for: .touchUpInside)
+        
+        
+        searchBar.searchTextField.addTarget(self, action: #selector(searchBarHandler), for: .editingDidEndOnExit)
+    }
+    
+    @objc private func searchBarHandler() {
+        let searchReq = searchBar.text
+        var newData = [[]]
+        for (index, element) in DI.poiData.placesList!.enumerated() {
+            if (element[1] as! String).lowercased().contains(searchReq!.lowercased()) || (element[2] as! String).lowercased().contains(searchReq!.lowercased()) || (element[3] as! String).lowercased().contains(searchReq!.lowercased()) || (element[6] as! String).lowercased().contains(searchReq!.lowercased()) || (element[9] as! String).lowercased().contains(searchReq!.lowercased()) {
+                newData.append(element)
+            }
+        }
+        newData.remove(at: 0)
+        DI.poiData.placesListSearch = newData
+        MapViewController.isSearching = true
+        self.present(DI.shared.getMapViewController_Map(), animated: true)
     }
     
     func setUpConstraints() {

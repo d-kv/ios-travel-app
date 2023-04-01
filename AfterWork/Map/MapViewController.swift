@@ -31,6 +31,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var anotherEnd: CLLocationCoordinate2D!
     
     var targetPoint: Artwork!
+    
+    static var isSearching: Bool = false
         
     var setRegionFlag = true
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -96,7 +98,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             mapView.centerToLocation(CLLocation(latitude: a.latitude, longitude: a.longitude), regionRadius: CLLocationDistance(10000))
         } else {
             //mapView.addAnnotation(artwork)
-            MapViewPresenter.setUpPoints(mapView: mapView, category: "all", isRecommended: false)
+            MapViewPresenter.setUpPoints(mapView: mapView, category: "all", isRecommended: false, isSearching: MapViewController.isSearching)
             taxiButton.isHidden = true
             wayButton.isHidden = true
         }
@@ -190,17 +192,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: false) }
-            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: true) }
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: false, isSearching: MapViewController.isSearching) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: true, isSearching: MapViewController.isSearching) }
         case 1:
-            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: false) }
-            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: true) }
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: false, isSearching: MapViewController.isSearching) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: true, isSearching: MapViewController.isSearching) }
         case 2:
-            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: false) }
-            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: true) }
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: false, isSearching: MapViewController.isSearching) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: true, isSearching: MapViewController.isSearching) }
         case 3:
-            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false) }
-            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true) }
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false, isSearching: MapViewController.isSearching) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true, isSearching: MapViewController.isSearching) }
         default:
             print("aaa")
         }
@@ -212,13 +214,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             if self.segmentControl.backgroundColor == .white {
                 switch self.segmentControl.selectedSegmentIndex {
                 case 0:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: true)
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: true, isSearching: MapViewController.isSearching)
                 case 1:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: true)
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: true, isSearching: MapViewController.isSearching)
                 case 2:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: true)
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: true, isSearching: MapViewController.isSearching)
                 case 3:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true)
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true, isSearching: MapViewController.isSearching)
                 default:
                     print("aa")
                 }
@@ -232,13 +234,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             } else {
                 switch self.segmentControl.selectedSegmentIndex {
                 case 0:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: false)
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: false, isSearching: MapViewController.isSearching)
                 case 1:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: false)
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: false, isSearching: MapViewController.isSearching)
                 case 2:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: false)
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: false, isSearching: MapViewController.isSearching)
                 case 3:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false)
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false, isSearching: MapViewController.isSearching)
                 default:
                     print("aa")
                 }

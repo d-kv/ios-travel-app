@@ -23,9 +23,11 @@ struct UserData {
 
 struct PoiData {
     var placesList: Array<Array<Any>>? = nil
+    var placesListSearch: Array<Array<Any>>? = nil
     
     init() {
         self.placesList = []
+        self.placesListSearch = []
     }
 }
 
@@ -57,7 +59,7 @@ class DataLoader {
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
-        
+        print("Loading")
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let data = data,
@@ -78,8 +80,9 @@ class DataLoader {
                     //self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
                     
                     for i in jsonArray {
-                        let data7 = [i["id"] as! Int, i["category"] as! String, i["name"] as! String, i["address"] as! String, Double(i["latitude"] as! String)!, Double(i["longitude"] as! String)!, i["description"] as! String, i["isRecommended"] as! Bool, 4, i["phone"] as! String, i["availability"] as! String] as [Any]
+                        let data7 = [i["id"] as! Int, i["category"] as! String, i["name"] as! String, i["url"] as! String, Double(i["latitude"] as! String)!, Double(i["longitude"] as! String)!, i["description"] as! String, i["isRecommended"] as! Bool, 4, i["phone"] as! String, i["availability"] as! String] as [Any]
                         DI.poiData.placesList?.append(data7)
+                        print(data7)
                     }
 
                 } else {

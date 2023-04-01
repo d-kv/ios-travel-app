@@ -26,6 +26,7 @@ final class MainViewPresenter {
     }
     
     func goToMap() {
+        MapViewController.isSearching = false
         let mapViewController = DI.shared.getMapViewController_Map()
         mapViewController.modalPresentationStyle = .fullScreen
 
@@ -56,6 +57,13 @@ final class MainViewPresenter {
         
         self.delegate?.mainViewPresenter(self, isLoading: true)
         
+        if preferences.string(forKey: "idToken") == "ID" {
+            AuthService.isAuthDebug = true
+            print("okay debug")
+        } else {
+            print("okay not")
+        }
+        
         if !AuthService.tinkoffId.isTinkoffAuthAvailable && !AuthService.isAuthDebug {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             //DataLoader.loadData()
@@ -63,7 +71,11 @@ final class MainViewPresenter {
         } else if AuthService.isAuthDebug {
             
             self.delegate?.mainViewPresenter(self, isLoading: false)
-            _ =  DataLoader.loadData()
+            if DataLoader.loadData() {
+                print("okay")
+            } else {
+                print("okay")
+            }
         } else {
             
             if preferences.string(forKey: "idToken") ?? nil != nil {
@@ -75,6 +87,7 @@ final class MainViewPresenter {
                 goToLogin()
             }
         }
+        print("okay", AuthService.isAuthDebug)
     }
     
     

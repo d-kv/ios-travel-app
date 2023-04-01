@@ -46,7 +46,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         
         let artwork = Artwork(
             title: cards[index][2] as? String,
-            locationName: "Waikiki Gateway Park",
+            locationName: cards[index][1] as? String,
             discipline: cards[index][1] as? String,
             coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
             image: currentAnnotationImage
@@ -72,7 +72,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             if (cards[index][7] as! Bool) { currentAnnotationImage =  UIImage(named: "markerTop") }
             let artwork = Artwork(
                 title: cards[index][2] as? String,
-                locationName: "Waikiki Gateway Park",
+                locationName: cards[index][1] as? String,
                 discipline: cards[index][1] as? String,
                 coordinate: CLLocationCoordinate2D(latitude: cards[index][4] as! CLLocationDegrees, longitude: cards[index][5] as! CLLocationDegrees), //cards[0][6]
                 image: currentAnnotationImage
@@ -80,6 +80,14 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             
             mapViewController.targetPoint = artwork
         }
+        
+        let gesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cardTap))
+        gesture.numberOfTapsRequired = 1
+        cardStack.card(forIndexAt: index + 1)!.content!.isUserInteractionEnabled = true
+        cardStack.card(forIndexAt: index + 1)!.content!.addGestureRecognizer(gesture)
+        
+        (cardStack.card(forIndexAt: index + 1)!.content!.subviews[8] as! UIButton).addTarget(self, action: #selector(openLink), for: .touchUpInside)
+        currentIndex = index
     }
     
     func cardStack(_ cardStack: Shuffle_iOS.SwipeCardStack, cardForIndexAt index: Int) -> Shuffle_iOS.SwipeCard {
@@ -87,13 +95,38 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         return DI.shared.getInterfaceExt().card(fromData: cards[index])
     }
     
+    var currentIndex = 0
+    @objc private func cardTap() {
+        self.dismiss(animated: true)
+        
+        var currentAnnotationImage = UIImage(named: "marker")
+        if (cards[currentIndex + 1][7] as! Bool) { currentAnnotationImage =  UIImage(named: "markerTop") }
+                    
+        let mapViewController = DI.shared.getMapViewController_Cards()
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
+        
+        let artwork = Artwork(
+            title: cards[currentIndex][2] as? String,
+            locationName: cards[currentIndex + 1][1] as? String,
+            discipline: cards[currentIndex][1] as? String,
+            coordinate: CLLocationCoordinate2D(latitude: cards[currentIndex + 1][4] as! CLLocationDegrees, longitude: cards[currentIndex + 1][5] as! CLLocationDegrees), 
+            image: currentAnnotationImage
+        )
+        
+        mapViewController.targetPoint = artwork
+    }
+    @objc private func openLink(_ sender: UIButton) {
+        if let url = URL(string: cards[currentIndex + 1][3] as! String) {
+            UIApplication.shared.open(url)
+        }
+    }
     
     
     // MARK: - Main
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         cardStack.dataSource = self
         cardStack.delegate = self
         view.backgroundColor = .black
@@ -108,6 +141,10 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
             
+    }
+    
+    @objc func tap(_ sender: UIButton) {
+        print("TAPAAAAA")
     }
     
     // MARK: - View
