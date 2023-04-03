@@ -33,6 +33,14 @@ class CardsViewPresenter {
         })
         
     }
-    
-    static func getCards() -> Array<Array<Any>>? { return DI.poiData.placesList }
+    static var isSearching: Bool = false
+    static func getCards() -> Array<Array<Any>>? {
+        if isSearching {
+            DI.poiData.placesListSearch?.insert([1, "Инструкция", "Что это такое?", "Some address", 57.2965039, 47.9360589, "Смахнешь влево - получишь карточки, смахнешь вправо - отдохни на браво. А карточки с подсветкой - наши избранные, имей ввиду", false, 4, "+79991234060", "12:00 - 22:00"] as [Any], at: 0)
+            return DI.poiData.placesListSearch
+        } else {
+            return DI.poiData.placesList
+        }
+        
+    }
 }

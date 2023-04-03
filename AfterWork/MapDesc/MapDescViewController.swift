@@ -26,11 +26,10 @@ class MapDescViewController: UIViewController {
     
     private let contactsTitle = DI.shared.getInterfaceExt().frameTextView(text: "Контакты", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
     let contactsText = UIButton()
-//    let contactsText = DI.shared.getInterfaceExt().frameTextView(text: "+7 (999) 999 99-99", font: .systemFont(ofSize: 14), lineHeightMultiple: 0.6)
     private let lineViewThird = UIView()
     
-    private let billTitle = DI.shared.getInterfaceExt().frameTextView(text: "Cредний чек", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
-    var billText = DI.shared.getInterfaceExt().worstPrice(price: 4)
+    private let urlTitle = DI.shared.getInterfaceExt().frameTextView(text: "Сайт", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
+    var urlText = UIButton()
     
     private let taxiButton = DI.shared.getInterfaceExt().standardButton(title: "Такси", backgroundColor: UIColor(named: "YellowColor")!, cornerRadius: 15, titleColor: UIColor(named: "GreyColor")!, font: .systemFont(ofSize: 18))
     private let pathButton = DI.shared.getInterfaceExt().standardButton(title: "Маршрут", backgroundColor: UIColor(named: "LightGrayColor")!, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 18))
@@ -62,6 +61,10 @@ class MapDescViewController: UIViewController {
         contactsText.backgroundColor = .clear
         contactsText.titleLabel?.font = .systemFont(ofSize: 16)
         
+        urlText.setTitleColor(.tintColor, for: .normal)
+        urlText.backgroundColor = .clear
+        urlText.titleLabel?.font = .systemFont(ofSize: 16)
+        
         if isRecomended {
             bigView.layer.shadowColor = UIColor(named: "YellowColor")?.cgColor
             view.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -72,6 +75,7 @@ class MapDescViewController: UIViewController {
         taxiButton.addTarget(self, action: #selector(taxiButtonTap), for: .touchUpInside)
         pathButton.addTarget(self, action: #selector(pathButtonTap), for: .touchUpInside)
         contactsText.addTarget(self, action: #selector(contactsTap), for: .touchUpInside)
+        urlText.addTarget(self, action: #selector(websiteTap), for: .touchUpInside)
         
     }
     
@@ -165,18 +169,19 @@ class MapDescViewController: UIViewController {
             lineViewThird.heightAnchor.constraint(equalToConstant: 3),
         ]
         
-        billTitle.translatesAutoresizingMaskIntoConstraints = false
-        let billTitleConstraints = [
-            billTitle.topAnchor.constraint(equalTo: lineViewThird.bottomAnchor, constant: 25),
-            billTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
-            billTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
+        urlTitle.translatesAutoresizingMaskIntoConstraints = false
+        let urlTitleConstraints = [
+            urlTitle.topAnchor.constraint(equalTo: lineViewThird.bottomAnchor, constant: 25),
+            urlTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
+            urlTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
             //workHoursText.heightAnchor.constraint(equalToConstant: 30),
         ]
         
-        billText.translatesAutoresizingMaskIntoConstraints = false
-        let billTextConstraints = [
-            billText.topAnchor.constraint(equalTo: billTitle.bottomAnchor, constant: 5),
-            billText.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 20)
+        urlText.translatesAutoresizingMaskIntoConstraints = false
+        let urlTextConstraints = [
+            urlText.topAnchor.constraint(equalTo: urlTitle.bottomAnchor, constant: 5),
+            urlText.leftAnchor.constraint(equalTo: urlTitle.leftAnchor, constant: 5),
+            
         ]
         
         taxiButton.translatesAutoresizingMaskIntoConstraints = false
@@ -210,13 +215,13 @@ class MapDescViewController: UIViewController {
         view.addSubview(contactsText)
         view.addSubview(lineViewThird)
         
-        view.addSubview(billTitle)
-        view.addSubview(billText)
+        view.addSubview(urlTitle)
+        view.addSubview(urlText)
         
         view.addSubview(taxiButton)
         view.addSubview(pathButton)
         
-        let constraintsArray = [bigViewConstraints, titleTextConstraints, nameTextConstraints, lineViewConstraints, descriptionTextConstraints, workHoursTitleConstraints, workHoursTextConstraints, lineViewSecondConstraints, contactsTitleConstraints, contactsTextConstraints, lineViewThirdConstraints, billTitleConstraints, billTextConstraints, taxiButtonConstraints, pathButtonConstraints].flatMap{$0}
+        let constraintsArray = [bigViewConstraints, titleTextConstraints, nameTextConstraints, lineViewConstraints, descriptionTextConstraints, workHoursTitleConstraints, workHoursTextConstraints, lineViewSecondConstraints, contactsTitleConstraints, contactsTextConstraints, lineViewThirdConstraints, urlTitleConstraints, urlTextConstraints, taxiButtonConstraints, pathButtonConstraints].flatMap{$0}
         NSLayoutConstraint.activate(constraintsArray)
         
     }
@@ -237,6 +242,11 @@ class MapDescViewController: UIViewController {
     }
     
     @objc private func contactsTap() {
+        print("contactsTap")
         DI.shared.getMapDescViewPresenter().callNumber(phoneNumber: contactsText.title(for: .normal)!)
+    }
+    
+    @objc private func websiteTap() {
+        DI.shared.getMapDescViewPresenter().openLink(website: urlText.title(for: .normal)!)
     }
 }
