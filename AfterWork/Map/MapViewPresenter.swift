@@ -31,7 +31,7 @@ final class MapViewPresenter {
         NSLog("Target1", 1)
     }
     
-    func goToDesc(type: String, name: String, description: String, workHours: String, contacts: String, bill: Int, artwork: Artwork, currentCoords: CLLocationCoordinate2D, isRecommended: Bool) {
+    func goToDesc(type: String, name: String, description: String, workHours: String, contacts: String, url: String, artwork: Artwork, currentCoords: CLLocationCoordinate2D, isRecommended: Bool) {
         // todo
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
@@ -47,7 +47,7 @@ final class MapViewPresenter {
             mapDescViewController.workHoursText.text = workHours
             //mapDescViewController.contactsText.text = contacts
             mapDescViewController.contactsText.setTitle(contacts, for: .normal)
-            mapDescViewController.billText = DI.shared.getInterfaceExt().worstPrice(price: bill)
+            mapDescViewController.urlText.setTitle(url, for: .normal)
             mapDescViewController.artwork = artwork
             mapDescViewController.currentCoordinate = currentCoords
             mapDescViewController.isRecomended = isRecommended

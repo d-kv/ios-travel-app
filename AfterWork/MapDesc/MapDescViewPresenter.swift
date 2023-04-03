@@ -15,11 +15,19 @@ class MapDescViewPresenter {
     //weak var delegate: MapDescViewDelegate?
     
     func callNumber(phoneNumber: String) {
-        guard let url = URL(string: "tel://\(phoneNumber)"),
+        let str = phoneNumber.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: "-", with: "")
+        guard let url = URL(string: "tel://\(str)"),
             UIApplication.shared.canOpenURL(url) else {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
-    
+    func openLink(website: String) {
+        guard let url = URL(string: website),
+            UIApplication.shared.canOpenURL(url) else {
+            print("openLink")
+            return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
 }

@@ -35,7 +35,21 @@ final class MainViewPresenter {
         
     }
     
-    func goToCards() {
+    func goToCards(type: String) {
+        switch type {
+        case "cafe":
+            cardSearch(categories: ["bars", "cafe", "fast food"])
+            
+        case "rest":
+            cardSearch(categories: ["restaurants", "sushi"])
+        case "hotel":
+            cardSearch(categories: ["hotels"])
+        case "culture":
+            cardSearch(categories: ["museum", "spa", "malls", "fallback services", "confectionary", "concert hall"])
+        default:
+            CardsViewPresenter.isSearching = false
+            
+        }
         let cardsViewController = DI.shared.getCardsViewController()
         cardsViewController.modalPresentationStyle = .fullScreen
         
@@ -49,6 +63,42 @@ final class MainViewPresenter {
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
+    }
+    
+    func search(req: String) {
+        let searchReq = req
+        print("HUY, \(searchReq)")
+        var newData = [[]]
+        for (index, element) in DI.poiData.placesList!.enumerated() {
+
+            let newStr = (element[1] as! String) + (element[2] as! String) + (element[3] as! String) + (element[6] as! String) + (element[9] as! String)
+            if newStr.smartContains(searchReq) {
+                newData.append(element)
+            }
+        }
+        newData.remove(at: 0)
+        DI.poiData.placesListSearch = newData
+        MapViewController.isSearching = true
+        DispatchQueue.main.async {
+            if let topVC = UIApplication.getTopViewController() {
+                topVC.present(DI.shared.getMapViewController_Map(), animated: true)
+            }
+        }
+        
+    }
+    private func cardSearch(categories: [String]) {
+        var newData = [[]]
+        for (index, element) in DI.poiData.placesList!.enumerated() {
+            let newStr = (element[1] as! String) + (element[2] as! String) + (element[3] as! String) + (element[6] as! String) + (element[9] as! String)
+            for i in categories {
+                if newStr.smartContains(i) {
+                    newData.append(element)
+                }
+            }
+        }
+        newData.remove(at: 0)
+        DI.poiData.placesListSearch = newData
+        CardsViewPresenter.isSearching = true
     }
     
     let preferences = UserDefaults.standard
@@ -130,10 +180,10 @@ final class MainViewPresenter {
                         self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
                         self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
                         if !DataLoader.loadData() {
-                            self.goToLogin()
-                        } else {
-                            DispatchQueue.main.async { self.delegate?.mainViewPresenter(self, isLoading: false) }
-                        }
+                            self.goToLogin()}
+//                        } else {
+//                            DispatchQueue.main.async { self.delegate?.mainViewPresenter(self, isLoading: false) }
+//                        }
                         
                     } else {
                         DispatchQueue.main.async {

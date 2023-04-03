@@ -38,6 +38,13 @@ class BlurLoader: UIView {
     }
 }
 
+extension String {
+    func smartContains(_ other: String) -> Bool {
+        let array : [String] = other.lowercased().components(separatedBy: " ").filter { !$0.isEmpty }
+        return array.reduce(true) { !$0 ? false : (self.lowercased().range(of: $1) != nil ) }
+    }
+}
+
 extension UIView {
     func showBlurLoader() {
         let blurLoader = BlurLoader(frame: frame)
@@ -123,54 +130,22 @@ extension UIImage {
 
 }
 
-//extension MapViewController: MKMapViewDelegate {
-//  // 1
-////  func mapView(
-////    _ mapView: MKMapView,
-////    viewFor annotation: MKAnnotation
-////  ) -> MKAnnotationView? {
-////    // 2
-////    guard let annotation = annotation as? Artwork else {
-////      return nil
-////    }
-////    // 3
-////    let identifier = "artwork"
-////    var view: MKMarkerAnnotationView
-////    // 4
-////    if let dequeuedView = mapView.dequeueReusableAnnotationView(
-////      withIdentifier: identifier) as? MKMarkerAnnotationView {
-////      dequeuedView.annotation = annotation
-////      view = dequeuedView
-////    } else {
-////      // 5
-////      view = MKMarkerAnnotationView(
-////        annotation: annotation,
-////        reuseIdentifier: identifier)
-////      view.canShowCallout = true
-////      view.calloutOffset = CGPoint(x: -5, y: 5)
-////      view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-////    }
-////    return view
-////  }
-//
-//
-//
-////    private func mapView(_ mapView: MKMapView, annotationView view: ArtworkView,
-////        calloutAccessoryControlTapped control: UIControl) {
-////            guard let artwork = view.annotation as? Artwork else {
-////                return
-////            }
-////
-////            let launchOptions = [
-////                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
-////            ]
-////
-////            artwork.mapItem?.openInMaps(launchOptions: launchOptions)
-////            print("ZHOPA")
-////        }
-//
-//}
+extension UIApplication {
 
+    class func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+
+        if let nav = base as? UINavigationController {
+            return getTopViewController(base: nav.visibleViewController)
+
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getTopViewController(base: selected)
+
+        } else if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+        return base
+    }
+}
 
 extension DispatchQueue {
 

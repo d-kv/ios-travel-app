@@ -67,7 +67,9 @@ class DataLoader {
                 error == nil
             else {                                                               // check for fundamental networking error
                 DispatchQueue.main.async {
-                    exit(1) //error
+                    if let topVC = UIApplication.getTopViewController() {
+                        topVC.present(DI.shared.getLoginViewController(), animated: true)
+                    }
                 }
                 return
             }
@@ -76,30 +78,32 @@ class DataLoader {
             case 200: // success
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
-                    //print(jsonArray)
-                    //self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
-                    
                     for i in jsonArray {
                         let data7 = [i["id"] as! Int, i["category"] as! String, i["name"] as! String, i["url"] as! String, Double(i["latitude"] as! String)!, Double(i["longitude"] as! String)!, i["description"] as! String, i["isRecommended"] as! Bool, 4, i["phone"] as! String, i["availability"] as! String] as [Any]
                         DI.poiData.placesList?.append(data7)
-                        print(data7)
                     }
+                    DispatchQueue.main.async {
+                        if let topVC = UIApplication.getTopViewController() {
+                            topVC.view.removeBluerLoader()
+                        }
+                    }
+                    
+                    print("Loaded")
 
                 } else {
-//                    DispatchQueue.main.async {
-//                        self.delegate?.mainViewPresenter(self, isLoading: false)
-//                        self.goToLogin()
-//                    }
-                    print("error1")
-                    exit(1)
+                    DispatchQueue.main.async {
+                        if let topVC = UIApplication.getTopViewController() {
+                            topVC.present(DI.shared.getLoginViewController(), animated: true)
+                        }
+                    }
                 }
                 
             default:
-                print("error, \(response.statusCode), \(url)")
-                exit(1)
-//                DispatchQueue.main.async {
-//                    exit(1) // error
-//                }
+                DispatchQueue.main.async {
+                    if let topVC = UIApplication.getTopViewController() {
+                        topVC.present(DI.shared.getLoginViewController(), animated: true)
+                    }
+                }
             }
         }
 

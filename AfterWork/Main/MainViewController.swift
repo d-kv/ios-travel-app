@@ -60,27 +60,27 @@ class MainViewController: UIViewController {
     
     @objc private func bigRecommendTap() {
         self.bigRecommend.showAnimation {}
-        mainViewPresenter.goToCards()
+        mainViewPresenter.goToCards(type: "cafe")
     }
     
     @objc private func centerRecommendTap() {
         self.centerRecommend.showAnimation {}
-        mainViewPresenter.goToCards()
+        mainViewPresenter.goToCards(type: "hotel")
     }
     
     @objc private func leftRecommendTap() {
         self.leftRecommend.showAnimation {}
-        mainViewPresenter.goToCards()
+        mainViewPresenter.goToCards(type: "rest")
     }
     
     @objc private func rightRecommendTap() {
         self.rightRecommend.showAnimation {}
-        mainViewPresenter.goToCards()
+        mainViewPresenter.goToCards(type: "culture")
     }
     
     @objc private func personalRecommendTap() {
         self.personalRecommend.showAnimation {}
-        mainViewPresenter.goToCards()
+        mainViewPresenter.goToCards(type: "")
     }
     
     // MARK: - Contraints
@@ -160,17 +160,7 @@ class MainViewController: UIViewController {
     }
     
     @objc private func searchBarHandler() {
-        let searchReq = searchBar.text
-        var newData = [[]]
-        for (index, element) in DI.poiData.placesList!.enumerated() {
-            if (element[1] as! String).lowercased().contains(searchReq!.lowercased()) || (element[2] as! String).lowercased().contains(searchReq!.lowercased()) || (element[3] as! String).lowercased().contains(searchReq!.lowercased()) || (element[6] as! String).lowercased().contains(searchReq!.lowercased()) || (element[9] as! String).lowercased().contains(searchReq!.lowercased()) {
-                newData.append(element)
-            }
-        }
-        newData.remove(at: 0)
-        DI.poiData.placesListSearch = newData
-        MapViewController.isSearching = true
-        self.present(DI.shared.getMapViewController_Map(), animated: true)
+        mainViewPresenter.search(req: searchBar.text!)
     }
     
     func setUpConstraints() {
