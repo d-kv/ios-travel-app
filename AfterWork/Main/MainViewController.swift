@@ -7,12 +7,13 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 //import AfterWorkAPI
 //import NIO
 //import GRPC
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     let userImage = UIButton()
     let userName = UITextView()
@@ -28,6 +29,8 @@ class MainViewController: UIViewController {
     
     let mainViewPresenter = DI.shared.getMainViewPresenter()
     
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +43,7 @@ class MainViewController: UIViewController {
         
         mainViewPresenter.enteredApp()
         
+        setUpLocation(locationManager: locationManager)
     }
     
     
@@ -82,6 +86,29 @@ class MainViewController: UIViewController {
         self.personalRecommend.showAnimation {}
         mainViewPresenter.goToCards(type: "")
     }
+    
+    private func setUpLocation(locationManager: CLLocationManager) {
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+
+        // For use in foreground
+        locationManager.requestWhenInUseAuthorization()
+        
+        DispatchQueue.background(background:  {
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
+            }
+        })
+        
+        
+    }
+    
+    func getLocation() -> CLLocationCoordinate2D {
+        return locationManager.location!.coordinate
+    }
+    
     
     // MARK: - Contraints
     
