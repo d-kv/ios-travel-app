@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 struct UserData {
     
@@ -32,30 +33,21 @@ struct PoiData {
 }
 
 class DataLoader {
-
+    
     
     static func loadData() -> Bool {
         let preferences = UserDefaults.standard
         
         let data0 = [1, "Инструкция", "Что это такое?", "Some address", 57.2965039, 47.9360589, "Смахнешь влево - получишь карточки, смахнешь вправо - отдохни на браво. А карточки с подсветкой - наши избранные, имей ввиду", false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
-//        let data1 = [2, "Restoraunt", "Papa Jhones", "Some address", 55.2965039, 43.9360589, "Somde Description", false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
-//        let data2 = [3, "Ресторанyy", "Papa Jhones", "Большая печерская", 56.2965039, 43.9360589, "Somde Description", true, 4, "+79991234060", "12:00 - 22:00"] as [Any]
-//        let data3 = [4, "Restoraunt", "Papa Jhones", "Some address", 56.2965039, 46.9360589, "Somde Description", false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
-//        let data4 = [5, "Restoraunt", "Papa Jhones", "Some address", 56.2965039, 45.9360589, "Somde Description", false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
-//        let data5 = [6, "Restoraunt", "Papa Jhones", "Some address", 55.2965039, 45.9360589, "Somde Description", true, 4, "+79991234060", "12:00 - 22:00"] as [Any]
-//        let data6 = [7, "Restoraunt", "Papa Jhones", "Some address", 54.2965039, 45.9360589, "Somde Description", false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
-//        let data7 = [8, "Restoraunt", "Papa Jhones", "Some address", 54.2965039, 44.9360589, "Somde Description", false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
+
         DI.poiData.placesList?.append(data0)
-//        DI.poiData.placesList?.append(data1)
-//        DI.poiData.placesList?.append(data2)
-//        DI.poiData.placesList?.append(data3)
-//        DI.poiData.placesList?.append(data4)
-//        DI.poiData.placesList?.append(data5)
-//        DI.poiData.placesList?.append(data6)
-//        DI.poiData.placesList?.append(data7)
-                
         
-        let url = URL(string: "http://82.146.33.253:8000/api/getlocation?tid_id=" + preferences.string(forKey: "idToken")! + "&tid_accessToken=" + preferences.string(forKey: "accessToken")!)!
+        let location = DI.shared.getMainViewController().getLocation()
+        let lat = String(location.latitude)
+        let lng = String(location.longitude)
+        
+        let url = URL(string: "http://82.146.33.253:8000/api/getlocation?tid_id=" + preferences.string(forKey: "idToken")! + "&tid_accessToken=" + preferences.string(forKey: "accessToken")! + "&lat=" + lat + "&lng=" + lng)!
+        print(url)
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
