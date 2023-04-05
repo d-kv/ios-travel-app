@@ -46,7 +46,7 @@ class DataLoader {
         let lat = String(location.latitude)
         let lng = String(location.longitude)
         
-        let url = URL(string: "http://82.146.33.253:8000/api/getlocation?tid_id=" + preferences.string(forKey: "idToken")! + "&tid_accessToken=" + preferences.string(forKey: "accessToken")! + "&lat=" + lat + "&lng=" + lng)!
+        let url = URL(string: "http://82.146.33.253:8000/api/getlocation?tid_id=" + AuthService.getSecret(key: "idToken") + "&tid_accessToken=" + AuthService.getSecret(key: "accessToken") + "&lat=" + lat + "&lng=" + lng)!
         print(url)
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
