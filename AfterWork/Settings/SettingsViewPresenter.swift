@@ -14,18 +14,16 @@ protocol SettingsViewPresenterDelegate: AnyObject {
 }
 
 final class SettingsViewPresenter {
-    
-    let preferences = UserDefaults.standard
-    
+        
     func signOut() {
         
-        DI.shared.getAuthSerivce().logOut(accessToken: preferences.string(forKey: "accessToken")!, handler: handleSignOut)
+        DI.shared.getAuthSerivce().logOut(accessToken: AuthService.getSecret(key: "accessToken"), handler: handleSignOut)
     }
     
     private func handleSignOut(_ result: Result<Void, Error>) {
-        preferences.removeObject(forKey: "accessToken")
-        preferences.removeObject(forKey: "refreshToken")
-        preferences.removeObject(forKey: "idToken")
+        AuthService.setSecret(key: "accessToken", value: "")
+        AuthService.setSecret(key: "refreshToken", value: "")
+        AuthService.setSecret(key: "idToken", value: "")
         
         let loginViewController = DI.shared.getLoginViewController()
         loginViewController.modalPresentationStyle = .fullScreen

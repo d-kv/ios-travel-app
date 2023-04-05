@@ -107,7 +107,11 @@ final class MainViewPresenter {
         
         self.delegate?.mainViewPresenter(self, isLoading: true)
         
-        if preferences.string(forKey: "idToken") == "ID" {
+        
+        var idToken = AuthService.getSecret(key: "idToken")
+        var refreshToken = AuthService.getSecret(key: "refreshToken")
+        
+        if idToken == "ID" {
             AuthService.isAuthDebug = true
             print("okay debug")
         } else {
@@ -116,28 +120,28 @@ final class MainViewPresenter {
         
         if !AuthService.tinkoffId.isTinkoffAuthAvailable && !AuthService.isAuthDebug {
             self.delegate?.mainViewPresenter(self, isLoading: false)
-            //DataLoader.loadData()
             goToLogin()
+            print("debug4")
+            
         } else if AuthService.isAuthDebug {
             
-            self.delegate?.mainViewPresenter(self, isLoading: false)
             if DataLoader.loadData() {
                 print("okay")
             } else {
                 print("okay")
             }
+            
         } else {
             
-            if preferences.string(forKey: "idToken") ?? nil != nil {
-                let refreshToken = preferences.string(forKey: "refreshToken") ?? ""
+            if idToken != "" {
                 AuthService.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
-                
             } else {
                 self.delegate?.mainViewPresenter(self, isLoading: false)
                 goToLogin()
+                print("debug8: ", refreshToken)
             }
+            
         }
-        print("okay", AuthService.isAuthDebug)
     }
     
     
@@ -145,11 +149,14 @@ final class MainViewPresenter {
         do {
             let credentials = try result.get()
             
-            preferences.set(credentials.idToken, forKey: "idToken")
-            preferences.set(credentials.accessToken, forKey: "accessToken")
-            preferences.set(credentials.refreshToken, forKey: "refreshToken")
+//            preferences.set(credentials.idToken, forKey: "idToken")
+//            preferences.set(credentials.accessToken, forKey: "accessToken")
+//            preferences.set(credentials.refreshToken, forKey: "refreshToken")
+            AuthService.setSecret(key: "idToken", value: credentials.idToken)
+            AuthService.setSecret(key: "accessToken", value: credentials.accessToken)
+            AuthService.setSecret(key: "refreshToken", value: credentials.refreshToken!)
             
-            let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=" + preferences.string(forKey: "idToken")! + "&tid_accessToken=" + preferences.string(forKey: "accessToken")!)!
+            let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=" + credentials.idToken + "&tid_accessToken=" + credentials.accessToken)!
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
             request.httpMethod = "POST"
@@ -173,14 +180,20 @@ final class MainViewPresenter {
                     if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
                         //print(jsonArray)
                         print(jsonArray[0])
-                        self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
-                        self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
+//                        self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
+//                        self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
+
+                        AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as! String)
+                        AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as! String)
                         self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
                         self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
                         self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
                         self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
                         if !DataLoader.loadData() {
-                            self.goToLogin()}
+                            self.goToLogin()
+                            print("debug1")
+                        }
+
 //                        } else {
 //                            DispatchQueue.main.async { self.delegate?.mainViewPresenter(self, isLoading: false) }
 //                        }
@@ -189,6 +202,7 @@ final class MainViewPresenter {
                         DispatchQueue.main.async {
                             self.delegate?.mainViewPresenter(self, isLoading: false)
                             self.goToLogin()
+                            print("debug2")
                         }
                     }
                     
@@ -196,16 +210,17 @@ final class MainViewPresenter {
                     DispatchQueue.main.async {
                         self.delegate?.mainViewPresenter(self, isLoading: false)
                         self.goToLogin()
+                        print("debug3")
                     }
                 }
             }
 
             task.resume()
             
-            
         } catch {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
+            print("debug4")
         }
     }
 }

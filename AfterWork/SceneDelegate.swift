@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .dark
         
-        if UserDefaults.standard.string(forKey: "idToken") == nil {
+        if AuthService.getSecret(key: "idToken") == ""  {
             let loginViewController = DI.shared.getLoginViewController()
             loginViewController.modalPresentationStyle = .fullScreen
             
