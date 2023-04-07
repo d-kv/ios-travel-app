@@ -242,7 +242,6 @@ class MapDescViewController: UIViewController {
     }
     
     @objc private func contactsTap() {
-        print("contactsTap")
         DI.shared.getMapDescViewPresenter().callNumber(phoneNumber: contactsText.title(for: .normal)!)
     }
     

@@ -47,11 +47,9 @@ class DataLoader {
         let lng = String(location.longitude)
         
         let url = URL(string: "http://82.146.33.253:8000/api/getlocation?tid_id=" + AuthService.getSecret(key: "idToken") + "&tid_accessToken=" + AuthService.getSecret(key: "accessToken") + "&lat=" + lat + "&lng=" + lng)!
-        print(url)
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
-        print("Loading")
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let data = data,
@@ -79,8 +77,6 @@ class DataLoader {
                             topVC.view.removeBluerLoader()
                         }
                     }
-                    
-                    print("Loaded")
 
                 } else {
                     DispatchQueue.main.async {

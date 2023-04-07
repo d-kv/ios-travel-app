@@ -67,7 +67,6 @@ final class MainViewPresenter {
     
     func search(req: String) {
         let searchReq = req
-        print("HUY, \(searchReq)")
         var newData = [[]]
         for (index, element) in DI.poiData.placesList!.enumerated() {
 
@@ -121,7 +120,6 @@ final class MainViewPresenter {
         if !AuthService.tinkoffId.isTinkoffAuthAvailable && !AuthService.isAuthDebug {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
-            print("debug4")
             
         } else if AuthService.isAuthDebug {
             
@@ -138,7 +136,6 @@ final class MainViewPresenter {
             } else {
                 self.delegate?.mainViewPresenter(self, isLoading: false)
                 goToLogin()
-                print("debug8: ", refreshToken)
             }
             
         }
@@ -178,11 +175,7 @@ final class MainViewPresenter {
                 case 200: // success
                     
                     if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
-                        //print(jsonArray)
-                        print(jsonArray[0])
-//                        self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
-//                        self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
-
+                        
                         AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as! String)
                         AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as! String)
                         self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
@@ -191,18 +184,13 @@ final class MainViewPresenter {
                         self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
                         if !DataLoader.loadData() {
                             self.goToLogin()
-                            print("debug1")
                         }
 
-//                        } else {
-//                            DispatchQueue.main.async { self.delegate?.mainViewPresenter(self, isLoading: false) }
-//                        }
                         
                     } else {
                         DispatchQueue.main.async {
                             self.delegate?.mainViewPresenter(self, isLoading: false)
                             self.goToLogin()
-                            print("debug2")
                         }
                     }
                     
@@ -210,7 +198,6 @@ final class MainViewPresenter {
                     DispatchQueue.main.async {
                         self.delegate?.mainViewPresenter(self, isLoading: false)
                         self.goToLogin()
-                        print("debug3")
                     }
                 }
             }
@@ -220,7 +207,6 @@ final class MainViewPresenter {
         } catch {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
-            print("debug4")
         }
     }
 }

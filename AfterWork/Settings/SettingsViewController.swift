@@ -343,7 +343,6 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func achievementTap(_ sender: UIButton) {
-        print("sender:", sender.tag)
         switch sender.tag {
         case 0:
             showAlert(title: "Хороший отдых", message: "из-за трясущихся рук промахиваетесь по кнопкам")

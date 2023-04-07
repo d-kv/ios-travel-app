@@ -52,7 +52,6 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             image: currentAnnotationImage
         )
         mapView.addAnnotation(artwork)
-        print()
         
         let a = artwork.coordinate
         let b = mapView.userLocation.coordinate
@@ -143,9 +142,9 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             
     }
     
-    @objc func tap(_ sender: UIButton) {
-        print("TAPAAAAA")
-    }
+//    @objc func tap(_ sender: UIButton) {
+//        print("TAPAAAAA")
+//    }
     
     // MARK: - View
     

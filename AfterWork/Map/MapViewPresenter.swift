@@ -100,7 +100,6 @@ final class MapViewPresenter {
                     case "food":
                         if isRecommended && (i[7] as! Bool) && catCafe.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
                         else if !isRecommended && catCafe.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
-                        if isRecommended && (i[7] as! Bool) && i[2] as? String == "Lee' Food" {print("Selected")}
                     case "art":
                         if isRecommended && (i[7] as! Bool) && catArt.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
                         else if !isRecommended && catArt.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
@@ -110,7 +109,7 @@ final class MapViewPresenter {
 
                     default:
                         if isRecommended && (i[7] as! Bool) {
-                            print("selected", i[1] as! String, catCafe.contains(i[1] as! String), i[7] as! Bool)
+                            
                         }
                     }
                 }

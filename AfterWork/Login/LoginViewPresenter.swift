@@ -76,10 +76,6 @@ class LoginViewPresenter {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
         
-        print("debug: ", idToken)
-        print("debug: ", accessToken)
-        print("debug: ", AuthService.getSecret(key: "refreshToken"))
-        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let data = data,
@@ -87,7 +83,6 @@ class LoginViewPresenter {
                 error == nil
             else {                                                               // check for fundamental networking error
                 DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
-                print("debug15")
                 return
             }
 
@@ -95,8 +90,7 @@ class LoginViewPresenter {
             case 200: // success
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
-//                    self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
-//                    self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
+
                     AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as! String)
                     AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as! String)
                     self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
@@ -144,7 +138,6 @@ class LoginViewPresenter {
                 error == nil
             else {                                                               // check for fundamental networking error
                 DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
-                print("debug14")
                 return
             }
 
@@ -152,9 +145,7 @@ class LoginViewPresenter {
             case 200: // success
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
-                    print(jsonArray[0])
-//                    self.preferences.set(jsonArray[0]["TID_ID"] as! String, forKey: "idToken")
-//                    self.preferences.set(jsonArray[0]["TID_AccessToken"] as! String, forKey: "accessToken")
+
                     AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as! String)
                     AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as! String)
                     self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
@@ -167,15 +158,12 @@ class LoginViewPresenter {
                     DispatchQueue.main.async {
                         self.delegate?.TinkoffIDResolver(status: .waiting)
                         self.goToMain()
-                        print("debug13")
                     }
                 } else {
                     DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
-                    print("debug12")
                 }
             default:
                 DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
-                print("debug11")
             }
         }
 
