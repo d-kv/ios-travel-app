@@ -249,10 +249,10 @@ class MapDescViewController: UIViewController {
     }
     
     @objc private func contactsTap() {
-        DI.shared.getMapDescViewPresenter().callNumber(phoneNumber: contactsText.title(for: .normal) ?? "https://apple.com")
+        presenter.callNumber(phoneNumber: contactsText.title(for: .normal) ?? "https://apple.com")
     }
     
     @objc private func websiteTap() {
-        DI.shared.getMapDescViewPresenter().openLink(website: urlText.title(for: .normal) ?? "https://apple.com")
+        presenter.openLink(website: urlText.title(for: .normal) ?? "https://apple.com")
     }
 }

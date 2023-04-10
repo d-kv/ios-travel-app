@@ -46,7 +46,13 @@ class DataLoader {
         let lat = String(location.latitude)
         let lng = String(location.longitude)
         
-        let url = URL(string: "http://82.146.33.253:8000/api/getlocation?tid_id=" + AuthService.getSecret(key: "idToken") + "&tid_accessToken=" + AuthService.getSecret(key: "accessToken") + "&lat=" + lat + "&lng=" + lng)!
+        var host = ""
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
+            host = keys["HOST"] as? String ?? ""
+        }
+        
+        let url = URL(string: host + "/api/getlocation?tid_id=" + AuthService.getSecret(key: "idToken") + "&tid_accessToken=" + AuthService.getSecret(key: "accessToken") + "&lat=" + lat + "&lng=" + lng)!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"

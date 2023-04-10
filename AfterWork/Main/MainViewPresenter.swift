@@ -161,7 +161,13 @@ final class MainViewPresenter {
             AuthService.setSecret(key: "accessToken", value: credentials.accessToken)
             AuthService.setSecret(key: "refreshToken", value: credentials.refreshToken ?? "")
             
-            let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=" + credentials.idToken + "&tid_accessToken=" + credentials.accessToken)!
+            var host = ""
+            if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+                let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
+                host = keys["HOST"] as? String ?? ""
+            }
+            
+            let url = URL(string: host + "/api/auth?tid_id=" + credentials.idToken + "&tid_accessToken=" + credentials.accessToken)!
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
             request.httpMethod = "POST"

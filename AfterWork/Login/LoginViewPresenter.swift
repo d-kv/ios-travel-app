@@ -71,7 +71,13 @@ class LoginViewPresenter {
         var idToken = AuthService.getSecret(key: "idToken")
         var accessToken = AuthService.getSecret(key: "accessToken")
                 
-        let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=" + idToken + "&tid_accessToken=" + accessToken)!
+        var host = ""
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
+            host = keys["HOST"] as? String ?? ""
+        }
+        
+        let url = URL(string: host + "/api/auth?tid_id=" + idToken + "&tid_accessToken=" + accessToken)!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
@@ -126,7 +132,13 @@ class LoginViewPresenter {
     
     func debug_req(TIN_accessToken: String) {
         
-        let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=ID&tid_accessToken=" + TIN_accessToken + "&debug=1")!
+        var host = ""
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
+            host = keys["HOST"] as? String ?? ""
+        }
+        
+        let url = URL(string: host + "/api/auth?tid_id=ID&tid_accessToken=" + TIN_accessToken + "&debug=1")!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"

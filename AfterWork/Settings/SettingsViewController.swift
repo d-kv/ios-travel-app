@@ -147,8 +147,12 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func adminTap() {
-        
-        if let url = URL(string: "http://82.146.33.253:8000/admin/") {
+        var host = ""
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
+            host = keys["HOST"] as? String ?? ""
+        }
+        if let url = URL(string: host + "/admin/") {
             UIApplication.shared.open(url)
         }
         
