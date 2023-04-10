@@ -19,25 +19,25 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let backButton = UIButton()
     let mapView = MKMapView()
     
-    let taxiButton = DI.shared.getInterfaceExt().standardButton(title: String(localized: "map_taxi"), backgroundColor: UIColor(named: "YellowColor")!, cornerRadius: 15, titleColor: UIColor(named: "GreyColor")!, font: .systemFont(ofSize: 16))
-    let wayButton = DI.shared.getInterfaceExt().standardButton(title: String(localized: "map_path"), backgroundColor: UIColor(named: "LightGrayColor")!, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 16))
+    let taxiButton = DI.shared.getInterfaceExt().standardButton(title: String(localized: "map_taxi"), backgroundColor: UIColor(named: "YellowColor") ?? .yellow, cornerRadius: 15, titleColor: UIColor(named: "GreyColor") ?? .white, font: .systemFont(ofSize: 16))
+    let wayButton = DI.shared.getInterfaceExt().standardButton(title: String(localized: "map_path"), backgroundColor: UIColor(named: "LightGrayColor") ?? .white, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 16))
     
     let recomendButton = UIButton()
     let segmentControl = UISegmentedControl(items: ["Все", "Еда", "Досуг", "Отель"])
     
-    var locationManager: CLLocationManager!
+    var locationManager: CLLocationManager?
     
-    var anotherStart: CLLocationCoordinate2D!
-    var anotherEnd: CLLocationCoordinate2D!
+    var anotherStart: CLLocationCoordinate2D?
+    var anotherEnd: CLLocationCoordinate2D?
     
-    var targetPoint: Artwork!
+    var targetPoint: Artwork?
     
     static var isSearching: Bool = false
         
     var setRegionFlag = true
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let location = locations.last! as CLLocation
+        let location = (locations.last ?? CLLocation(latitude: 0, longitude: 0)) as CLLocation
         
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.11, longitudeDelta: 0.11))
@@ -59,10 +59,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         mapView.delegate = self
         
         locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         
-        MapViewPresenter.setUpLocation(locationManager: locationManager)
+        MapViewPresenter.setUpLocation(locationManager: locationManager ?? CLLocationManager())
         
         backButton.setImage(UIImage(named: "backArrow"), for: .normal)
         
@@ -87,15 +87,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         if targetPoint != nil {
             
-            let a = targetPoint.coordinate
+            let a = targetPoint?.coordinate
             //let b = mapView.userLocation.coordinate
             //let apoint = MKMapPoint(a)
             //let bpoint = MKMapPoint(b)
-            mapView.addAnnotation(targetPoint)
+            mapView.addAnnotation(targetPoint ?? Artwork(title: "", locationName: "", discipline: "", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0), image: .add))
             segmentControl.isHidden = true
             recomendButton.isHidden = true
             
-            mapView.centerToLocation(CLLocation(latitude: a.latitude, longitude: a.longitude), regionRadius: CLLocationDistance(10000))
+            mapView.centerToLocation(CLLocation(latitude: a?.latitude ?? CLLocationDegrees(0), longitude: a?.longitude ?? CLLocationDegrees(0)), regionRadius: CLLocationDistance(10000))
         } else {
             //mapView.addAnnotation(artwork)
             MapViewPresenter.setUpPoints(mapView: mapView, category: "all", isRecommended: false, isSearching: MapViewController.isSearching)
@@ -182,7 +182,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         segmentControl.selectedSegmentIndex = 0
         segmentControl.backgroundColor = .white
         segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "LightGrayColor")!], for: .normal)
+        segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "LightGrayColor") ?? .white], for: .normal)
         segmentControl.layer.cornerRadius = 50
         segmentControl.layer.masksToBounds = true
         segmentControl.clipsToBounds = true
@@ -204,7 +204,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false, isSearching: MapViewController.isSearching) }
             else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true, isSearching: MapViewController.isSearching) }
         default:
-            print("aaa")
+            print("")
         }
 
     }
@@ -222,13 +222,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 case 3:
                     MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true, isSearching: MapViewController.isSearching)
                 default:
-                    print("aa")
+                    print("")
                 }
                 
-                self.recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(UIColor(named: "YellowColor")!, renderingMode: .alwaysOriginal), for: .normal)
+                self.recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow, renderingMode: .alwaysOriginal), for: .normal)
                 self.segmentControl.selectedSegmentTintColor = UIColor(named: "YellowColor")
                 self.segmentControl.backgroundColor = UIColor(named: "GreyColor")
-                self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "GreyColor")!], for: .selected)
+                self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "GreyColor") ?? .yellow], for: .selected)
                 self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
 
             } else {
@@ -242,14 +242,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 case 3:
                     MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false, isSearching: MapViewController.isSearching)
                 default:
-                    print("aa")
+                    print("")
                 }
                 
                 self.recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
                 self.segmentControl.selectedSegmentTintColor = UIColor(named: "LightGrayColor")
                 self.segmentControl.backgroundColor = .white
                 self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-                self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "LightGrayColor")!], for: .normal)
+                self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "LightGrayColor") ?? .white], for: .normal)
 
             }
         }
@@ -264,8 +264,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     @objc func taxiButtonTap() {
         let start = mapView.userLocation.coordinate
-        let end = targetPoint.coordinate
-        let defaultWebsiteURL = URL(string: "https://3.redirect.appmetrica.yandex.com/route?start-lat=" + String(start.latitude) + "&start-lon=" + String(start.longitude) + "&end-lat=" + String(end.latitude) + "&end-lon=" + String(end.longitude) + "&level=50&appmetrica_tracking_id=1178268795219780156")!
+        let end = targetPoint?.coordinate
+        let defaultWebsiteURL = URL(string: "https://3.redirect.appmetrica.yandex.com/route?start-lat=" + String(start.latitude) + "&start-lon=" + String(start.longitude) + "&end-lat=" + String(end?.latitude ?? CLLocationDegrees(0)) + "&end-lon=" + String(end?.longitude ?? CLLocationDegrees(0)) + "&level=50&appmetrica_tracking_id=1178268795219780156")!
         
         UIApplication.shared.open(defaultWebsiteURL)
     }
@@ -274,7 +274,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let launchOptions = [
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
         ]
-        targetPoint.mapItem?.openInMaps(launchOptions: launchOptions)
+        targetPoint?.mapItem?.openInMaps(launchOptions: launchOptions)
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -282,9 +282,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             return
         }
         if targetPoint == nil {
-            let currentData = DI.poiData.placesList?.filter { $0[0] as? Int == Int(artwork.discipline!)}[0]
+            let currentData = DI.poiData.placesList?.filter { $0[0] as? Int == Int(artwork.discipline ?? "")}[0]
             
-            DI.shared.getMapViewPresenter().goToDesc(type: currentData![1] as! String, name: currentData![2] as! String, description: currentData![6] as! String, workHours: currentData![10] as! String, contacts: currentData![9] as! String, url: currentData![3] as! String, artwork: artwork, currentCoords: mapView.userLocation.coordinate, isRecommended: currentData![7] as! Bool)
+            DI.shared.getMapViewPresenter().goToDesc(type: currentData?[1] as? String ?? "", name: currentData?[2] as? String ?? "", description: currentData?[6] as? String ?? "", workHours: currentData?[10] as? String ?? "", contacts: currentData?[9] as? String ?? "", url: currentData?[3] as? String ?? "", artwork: artwork, currentCoords: mapView.userLocation.coordinate, isRecommended: currentData?[7] as? Bool ?? false)
         }
      
      }

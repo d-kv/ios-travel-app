@@ -27,8 +27,7 @@ final class MapViewPresenter {
     
     func calculateDistance(mapView: MKMapView) {
         
-        delegate?.switchedPoint(target: mapView.annotations[0] as! Artwork, isSwitched: true)
-        NSLog("Target1", 1)
+        delegate?.switchedPoint(target: mapView.annotations[0] as? Artwork ?? Artwork(title: "", locationName: "", discipline: "", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0), image: .add), isSwitched: true)
     }
     
     func goToDesc(type: String, name: String, description: String, workHours: String, contacts: String, url: String, artwork: Artwork, currentCoords: CLLocationCoordinate2D, isRecommended: Bool) {
@@ -70,23 +69,23 @@ final class MapViewPresenter {
     static func setUpPoints(mapView: MKMapView, category: String, isRecommended: Bool, isSearching: Bool) {
         UIView.animate(withDuration: 1) { mapView.removeAnnotations(mapView.annotations) }
         
-        var tempData = DI.poiData.placesList!
-        if isSearching { tempData = DI.poiData.placesListSearch! }
+        var tempData = DI.poiData.placesList ?? [[]]
+        if isSearching { tempData = DI.poiData.placesListSearch ?? [[]] }
         
         for i in tempData {
             var image = UIImage(named: "marker")
-            if i[7] as! Bool {
+            if i[7] as? Bool ?? false {
                 image = UIImage(named: "markerTop")
             }
             let artwork = Artwork(
                 title: i[2] as? String,
                 locationName: i[1] as? String,
                 discipline: "\(i[0])",
-                coordinate: CLLocationCoordinate2D(latitude: i[4] as! CLLocationDegrees, longitude: i[5] as! CLLocationDegrees),
+                coordinate: CLLocationCoordinate2D(latitude: i[4] as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: i[5] as? CLLocationDegrees ?? CLLocationDegrees(0)),
                 image: image
             )
                         
-            if !(i[1] as! String).isEqual("Инструкция") {
+            if !(i[1] as? String ?? "").isEqual("Инструкция") {
                 
                 let catCafe = ["bars", "cafe", "fast food", "restaurants", "sushi"]
                 let catArt = ["museum", "spa", "malls", "fallback services", "confectionary", "concert hall", "bars"]
@@ -95,20 +94,20 @@ final class MapViewPresenter {
                 UIView.animate(withDuration: 0.3) {
                     switch category {
                     case "all":
-                        if isRecommended && (i[7] as! Bool) { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i[7] as? Bool ?? false) { mapView.addAnnotation(artwork) }
                         else if !isRecommended { mapView.addAnnotation(artwork) }
                     case "food":
-                        if isRecommended && (i[7] as! Bool) && catCafe.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catCafe.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i[7] as? Bool ?? false) && catCafe.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catCafe.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
                     case "art":
-                        if isRecommended && (i[7] as! Bool) && catArt.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catArt.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i[7] as? Bool ?? false) && catArt.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catArt.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
                     case "hotel":
-                        if isRecommended && (i[7] as! Bool) && catHotel.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catHotel.contains(i[1] as! String) { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i[7] as? Bool ?? false) && catHotel.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catHotel.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
 
                     default:
-                        if isRecommended && (i[7] as! Bool) {
+                        if isRecommended && (i[7] as? Bool ?? false) {
                             
                         }
                     }

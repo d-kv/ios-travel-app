@@ -11,8 +11,8 @@ import CoreLocation
 
 struct UserData {
     
-    var userName: String! = nil
-    var userImage: UIImage! = nil
+    var userName: String?
+    var userImage: UIImage?
     var achievements: Array<Int>? = nil
     
     init() {
@@ -36,9 +36,9 @@ class DataLoader {
     
     
     static func loadData() -> Bool {
-        let preferences = UserDefaults.standard
+        //let preferences = UserDefaults.standard
         
-        let data0 = [1, "Инструкция", "Что это такое?", "Some address", 57.2965039, 47.9360589, "Смахнешь влево - получишь карточки, смахнешь вправо - отдохни на браво. А карточки с подсветкой - наши избранные, имей ввиду", false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
+        let data0 = [1, String(localized: "instruction_title"), String(localized: "instruction_desc"), "Some address", 57.2965039, 47.9360589, String(localized: "instruction_text"), false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
 
         DI.poiData.placesList?.append(data0)
         
@@ -67,9 +67,9 @@ class DataLoader {
             switch response.statusCode {
             case 200: // success
                 
-                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
+                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
                     for i in jsonArray {
-                        let data7 = [i["id"] as! Int, i["category"] as! String, i["name"] as! String, i["url"] as! String, Double(i["latitude"] as! String)!, Double(i["longitude"] as! String)!, i["description"] as! String, i["isRecommended"] as! Bool, 4, i["phone"] as! String, i["availability"] as! String] as [Any]
+                        let data7 = [i["id"] as? Int ?? 0, i["category"] as? String ?? "", i["name"] as? String ?? "", i["url"] as? String ?? "", Double(i["latitude"] as? String ?? "") ?? 0, Double(i["longitude"] as? String ?? "") ?? 0, i["description"] as? String ?? "", i["isRecommended"] as? Bool ?? false, 4, i["phone"] as? String ?? "", i["availability"] as? String ?? ""] as [Any]
                         DI.poiData.placesList?.append(data7)
                     }
                     DispatchQueue.main.async {

@@ -19,10 +19,10 @@ class AuthService {
         
         var keys = NSDictionary()
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
-            keys = NSDictionary(contentsOfFile: path)!
+            keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
             
-            clientId = keys["CLIENT_ID"] as! String
-            callbackUrl = keys["CALLBACK_URI"] as! String
+            clientId = keys["CLIENT_ID"] as? String ?? ""
+            callbackUrl = keys["CALLBACK_URI"] as? String ?? ""
         }
         
         

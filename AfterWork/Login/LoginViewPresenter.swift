@@ -42,14 +42,14 @@ class LoginViewPresenter {
     
     // MARK: - Auth handler
     
-    private var credentials: TinkoffTokenPayload!
+    private var credentials: TinkoffTokenPayload?
     
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             credentials = try result.get()
-            AuthService.setSecret(key: "idToken", value: credentials.idToken)
-            AuthService.setSecret(key: "accessToken", value: credentials.accessToken)
-            AuthService.setSecret(key: "refreshToken", value: credentials.refreshToken!)
+            AuthService.setSecret(key: "idToken", value: credentials?.idToken ?? "")
+            AuthService.setSecret(key: "accessToken", value: credentials?.accessToken ?? "")
+            AuthService.setSecret(key: "refreshToken", value: credentials?.refreshToken ?? "")
 
             req()
             
@@ -89,14 +89,14 @@ class LoginViewPresenter {
             switch response.statusCode {
             case 200: // success
                 
-                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
+                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as! String)
-                    AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as! String)
-                    self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
-                    self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
-                    self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
-                    self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
+                    AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                    AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                    self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
+                    self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
+                    self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
+                    self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
                     DispatchQueue.main.async {
                         self.delegate?.TinkoffIDResolver(status: .waiting)
                         self.goToMain()
@@ -144,14 +144,14 @@ class LoginViewPresenter {
             switch response.statusCode {
             case 200: // success
                 
-                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
+                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as! String)
-                    AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as! String)
-                    self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
-                    self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
-                    self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
-                    self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
+                    AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                    AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                    self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
+                    self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
+                    self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
+                    self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
                     
                     AuthService.isAuthDebug = true
                     

@@ -19,10 +19,10 @@ class SettingsViewController: UIViewController {
             
     let achievementsView = UIView()
     
-    let signOutButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_leave"), color: UIColor(named: "LightGrayColor")!)
+    let signOutButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_leave"), color: UIColor(named: "LightGrayColor") ?? .white)
     
-    let resetRecommendButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_recomendations"), color: UIColor(named: "LightGrayColor")!)
-    let adminButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_admin"), color: UIColor(named: "LightGrayColor")!)
+    let resetRecommendButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_recomendations"), color: UIColor(named: "LightGrayColor") ?? .white)
+    let adminButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_admin"), color: UIColor(named: "LightGrayColor") ?? .white)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,7 @@ class SettingsViewController: UIViewController {
     
     func create() {
         let preferences = UserDefaults.standard
-        userName.text = preferences.string(forKey: "lastName")! + " " + preferences.string(forKey: "firstName")!
+        userName.text = (preferences.string(forKey: "lastName") ?? "Null") + " " + (preferences.string(forKey: "firstName") ?? "Null")
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
         userName.textAlignment = NSTextAlignment.justified
@@ -137,11 +137,11 @@ class SettingsViewController: UIViewController {
     @objc func signOutTap() {
         //SettingsViewPresenter.signOut()
         
-        let alert = UIAlertController(title: "Подтверждение", message: "Выйти из приложения?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { action in
+        let alert = UIAlertController(title: String(localized: "confirmation"), message: String(localized: "sign_out"), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: String(localized: "yes"), style: .destructive, handler: { action in
             DI.shared.getSettingsViewPresenter().signOut()
         }))
-        alert.addAction(UIAlertAction(title: "Нет", style: .default))
+        alert.addAction(UIAlertAction(title: String(localized: "no"), style: .default))
         self.present(alert, animated: true, completion: nil)
         
     }
@@ -169,52 +169,52 @@ class SettingsViewController: UIViewController {
         let eightthImage = UIButton()
         let ninethImage = UIButton()
         
-        zeroImage.setImage(UIImage(named: "bottleImage0")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        zeroImage.setImage(UIImage(named: "bottleImage0")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         zeroImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         zeroImage.tag = 0
         zeroImage.isHidden = true
         
-        firstImage.setImage(UIImage(named: "michleinAImage1")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        firstImage.setImage(UIImage(named: "michleinAImage1")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         firstImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         firstImage.tag = 1
         firstImage.isHidden = true
         
-        secondImage.setImage(UIImage(named: "gidImage2")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        secondImage.setImage(UIImage(named: "gidImage2")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         secondImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         secondImage.tag = 2
         secondImage.isHidden = true
         
-        thirdImage.setImage(UIImage(named: "greenImage3")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        thirdImage.setImage(UIImage(named: "greenImage3")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         thirdImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         thirdImage.tag = 3
         thirdImage.isHidden = true
         
-        fourthImage.setImage(UIImage(named: "pdrImage4")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        fourthImage.setImage(UIImage(named: "pdrImage4")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         fourthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         fourthImage.tag = 4
         fourthImage.isHidden = true
         
-        fivthImage.setImage(UIImage(named: "hrImage5")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        fivthImage.setImage(UIImage(named: "hrImage5")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         fivthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         fivthImage.tag = 5
         fivthImage.isHidden = true
         
-        sixthImage.setImage(UIImage(named: "armanImage6")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        sixthImage.setImage(UIImage(named: "armanImage6")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         sixthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         sixthImage.tag = 6
         sixthImage.isHidden = true
         
-        seventhImage.setImage(UIImage(named: "desicionImage7")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        seventhImage.setImage(UIImage(named: "desicionImage7")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         seventhImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         seventhImage.tag = 7
         seventhImage.isHidden = true
         
-        eightthImage.setImage(UIImage(named: "testerImage8")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        eightthImage.setImage(UIImage(named: "testerImage8")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         eightthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         eightthImage.tag = 8
         eightthImage.isHidden = true
         
-        ninethImage.setImage(UIImage(named: "deusVultImage9")?.withTintColor(UIColor(named: "YellowColor")!), for: .normal)
+        ninethImage.setImage(UIImage(named: "deusVultImage9")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         ninethImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         ninethImage.tag = 9
         ninethImage.isHidden = true
@@ -335,35 +335,35 @@ class SettingsViewController: UIViewController {
         let constraintsArray = [textViewConstraints, zeroImageConstraints, firstImageConstraints, secondImageConstraints, thirdImageConstraints, fourthImageConstraints, fivthImageConstraints, sixthImageConstraints, seventhImageConstraints, eightthImageConstraints, ninethImageConstraints].flatMap{$0}
         NSLayoutConstraint.activate(constraintsArray)
         
-        let userA = UserDefaults.standard.string(forKey: "achievements")!
+        let userA = UserDefaults.standard.string(forKey: "achievements") ?? ""
         for i in userA {
             if i == "0" { zeroImage.isHidden = false }
-            achievementsView.viewWithTag(Int(String(i))!)?.isHidden = false
+            achievementsView.viewWithTag(Int(String(i)) ?? 1)?.isHidden = false
         }
     }
     
     @objc func achievementTap(_ sender: UIButton) {
         switch sender.tag {
         case 0:
-            showAlert(title: "Хороший отдых", message: "из-за трясущихся рук промахиваетесь по кнопкам")
+            showAlert(title: String(localized: "achievements_good_title"), message: String(localized: "achievements_good_text"))
         case 1:
-            showAlert(title: "Инспектор Мишлен", message: "заслуженный оценщик заведений")
+            showAlert(title: String(localized: "achievements_inspector_title"), message: String(localized: "achievements_inspector_text"))
         case 2:
-            showAlert(title: "Гид", message: "провести за собой группу людей")
+            showAlert(title: String(localized: "achievements_guide_title"), message: String(localized: "achievements_guide_text"))
         case 3:
-            showAlert(title: "Истинный зеленый", message: "большинство отзывов негативные")
+            showAlert(title: String(localized: "achievements_green_title"), message: String(localized: "achievements_green_text"))
         case 4:
-            showAlert(title: "*****", message: "скачивать приложение только по необходимости или ставить негативную оценку")
+            showAlert(title: String(localized: "achievements_star_title"), message: String(localized: "achievements_star_text"))
         case 5:
-            showAlert(title: "HR", message: "просто и понятно - админ или разработчик")
+            showAlert(title: String(localized: "achievements_hr_title"), message: String(localized: "achievements_hr_text"))
         case 6:
-            showAlert(title: "Вайвай", message: "стать премиум пользователем")
+            showAlert(title: String(localized: "achievements_way_title"), message: String(localized: "achievements_way_text"))
         case 7:
-            showAlert(title: "Сама неопределенность", message: "иметь трудности с выбором")
+            showAlert(title: String(localized: "achievements_question_title"), message: String(localized: "achievements_question_text"))
         case 8:
-            showAlert(title: "Нахлебник", message: "участвовал в тестировании приложения")
+            showAlert(title: String(localized: "achievements_money_title"), message: String(localized: "achievements_money_text"))
         case 9:
-            showAlert(title: "Deus Vult", message: "не раскрывается")
+            showAlert(title: String(localized: "achievements_deusvult_title"), message: String(localized: "achievements_deusvult_text"))
         default: break
             //do nothing
         }

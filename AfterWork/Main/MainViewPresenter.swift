@@ -68,9 +68,13 @@ final class MainViewPresenter {
     func search(req: String) {
         let searchReq = req
         var newData = [[]]
-        for (index, element) in DI.poiData.placesList!.enumerated() {
+        for (index, element) in (DI.poiData.placesList ?? [[]]).enumerated() {
 
-            let newStr = (element[1] as! String) + (element[2] as! String) + (element[3] as! String) + (element[6] as! String) + (element[9] as! String)
+            let newStr = (element[1] as? String ?? "") +
+            (element[2] as? String ?? "") +
+            (element[3] as? String ?? "") +
+            (element[6] as? String ?? "")// +
+//            (element[9] as? String ?? "")
             if newStr.smartContains(searchReq) {
                 newData.append(element)
             }
@@ -87,8 +91,12 @@ final class MainViewPresenter {
     }
     private func cardSearch(categories: [String]) {
         var newData = [[]]
-        for (index, element) in DI.poiData.placesList!.enumerated() {
-            let newStr = (element[1] as! String) + (element[2] as! String) + (element[3] as! String) + (element[6] as! String) + (element[9] as! String)
+        for (index, element) in (DI.poiData.placesList ?? [[]]).enumerated() {
+            let newStr = (element[1] as? String ?? "") +
+            (element[2] as? String ?? "") +
+            (element[3] as? String ?? "") +
+            (element[6] as? String ?? "") //+
+//            (element[9] as? String ?? "")
             for i in categories {
                 if newStr.smartContains(i) {
                     newData.append(element)
@@ -112,9 +120,9 @@ final class MainViewPresenter {
         
         if idToken == "ID" {
             AuthService.isAuthDebug = true
-            print("okay debug")
+            print("")
         } else {
-            print("okay not")
+            print("")
         }
         
         if !AuthService.tinkoffId.isTinkoffAuthAvailable && !AuthService.isAuthDebug {
@@ -124,9 +132,9 @@ final class MainViewPresenter {
         } else if AuthService.isAuthDebug {
             
             if DataLoader.loadData() {
-                print("okay")
+                print("")
             } else {
-                print("okay")
+                print("")
             }
             
         } else {
@@ -151,7 +159,7 @@ final class MainViewPresenter {
 //            preferences.set(credentials.refreshToken, forKey: "refreshToken")
             AuthService.setSecret(key: "idToken", value: credentials.idToken)
             AuthService.setSecret(key: "accessToken", value: credentials.accessToken)
-            AuthService.setSecret(key: "refreshToken", value: credentials.refreshToken!)
+            AuthService.setSecret(key: "refreshToken", value: credentials.refreshToken ?? "")
             
             let url = URL(string: "http://82.146.33.253:8000/api/auth?tid_id=" + credentials.idToken + "&tid_accessToken=" + credentials.accessToken)!
             var request = URLRequest(url: url)
@@ -174,14 +182,14 @@ final class MainViewPresenter {
                 switch response.statusCode {
                 case 200: // success
                     
-                    if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)!.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>] {
+                    if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
                         
-                        AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as! String)
-                        AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as! String)
-                        self.preferences.set(jsonArray[0]["firstName"] as! String, forKey: "firstName")
-                        self.preferences.set(jsonArray[0]["lastName"] as! String, forKey: "lastName")
-                        self.preferences.set(jsonArray[0]["isAdmin"] as! Bool, forKey: "isAdmin")
-                        self.preferences.set(jsonArray[0]["achievements"] as! String, forKey: "achievements")
+                        AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                        AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                        self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
+                        self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
+                        self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
+                        self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
                         if !DataLoader.loadData() {
                             self.goToLogin()
                         }

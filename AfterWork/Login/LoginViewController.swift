@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         enterButton.setImage(UIImage(named: "TINIDbutton"), for: .normal)
         enterButton.addTarget(self, action: #selector(authButtonClicked), for: .touchUpInside)
         
-        alphaText.setTitle("alpha_test_" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String) + "_" +  (Bundle.main.infoDictionary?["CFBundleVersion"] as! String), for: .normal)
+        alphaText.setTitle("alpha_test_" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "") + "_" +  (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""), for: .normal)
         alphaText.addTarget(self, action: #selector(alphaTap), for: .touchUpInside)
     }
     
@@ -105,6 +105,7 @@ class LoginViewController: UIViewController {
         alert.addTextField { (textField) in
             textField.placeholder = "enter key"
             textField.textContentType = .password
+            textField.text = "50b058b183f17a54ac3cd66652a227ab"
         }
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { [weak alert] (_) in
@@ -112,11 +113,12 @@ class LoginViewController: UIViewController {
         }))
 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self, weak alert] (_) in
-            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
-            if textField.text != nil { loginViewPresenter.debug_req(TIN_accessToken: textField.text!) }
+            let textField = alert?.textFields?[0]
+            if textField?.text != nil { loginViewPresenter.debug_req(TIN_accessToken: textField?.text ?? "") }
             alert?.isEditing = false
             
         }))
+        
         self.present(alert, animated: true)
     }
     

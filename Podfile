@@ -7,6 +7,12 @@ target 'AfterWork' do
   pod 'TinkoffID'  
   pod 'Swinject'
   pod 'Shuffle-iOS'
+
+  pod 'Firebase'
+  pod 'FirebaseCore'
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseMessaging'
+
 #  pod 'AfterWorkAPI', :git =>
 #'https://github.com/ruslanSorokin/afterwork-api.git', :branch =>
 #'feat/add-v0-version'

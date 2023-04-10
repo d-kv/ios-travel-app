@@ -8,9 +8,11 @@
 import UIKit
 import TinkoffID
 import Swinject
+import FirebaseCore
+import FirebaseMessaging
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     
 //    static let container: Container = {
@@ -43,11 +45,31 @@ extension AppDelegate {
                 application.registerForRemoteNotifications()
             }
         }
+        FirebaseApp.configure()
+        
+        Messaging.messaging().delegate = self
+        Messaging.messaging().isAutoInitEnabled = true
         return true
     }
 
+    func application(application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+      Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+      let dataDict: [String: String] = ["token": fcmToken ?? ""]
+      NotificationCenter.default.post(
+        name: Notification.Name("FCMToken"),
+        object: nil,
+        userInfo: dataDict
+      )
+
+    }
+
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let token = deviceToken.reduce("") { $0 + String(format: "%02x", $1) }
-        print("token: \(token)")
+        print("")
     }
 }
