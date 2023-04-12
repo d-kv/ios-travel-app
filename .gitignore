@@ -5,7 +5,6 @@
 ## User settings
 ./xcuserdata
 .xcuserstate
-./Pods
 ./Keys.plist
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
@@ -58,7 +57,6 @@ playground.xcworkspace
 #
 https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-Pods/
 #
 # Add this line if you want to avoid checking in source code from the Xcode workspace
 # *.xcworkspace
@@ -93,7 +91,6 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
-Pods-AfterWork.xcscheme
 TinkoffID.xcscheme
 
 AfterWork/Keys.plist
