@@ -68,7 +68,7 @@ final class MainViewPresenter {
     func search(req: String) {
         let searchReq = req
         var newData = [[]]
-        for (index, element) in (DI.poiData.placesList ?? [[]]).enumerated() {
+        for (index, element) in (PlacesList.get()).enumerated() {
 
             let newStr = (element[1] as? String ?? "") +
             (element[2] as? String ?? "") +
@@ -80,7 +80,7 @@ final class MainViewPresenter {
             }
         }
         newData.remove(at: 0)
-        DI.poiData.placesListSearch = newData
+        PlacesListSearch.set(newData: newData)
         MapViewController.isSearching = true
         DispatchQueue.main.async {
             if let topVC = UIApplication.getTopViewController() {
@@ -91,7 +91,7 @@ final class MainViewPresenter {
     }
     private func cardSearch(categories: [String]) {
         var newData = [[]]
-        for (index, element) in (DI.poiData.placesList ?? [[]]).enumerated() {
+        for (index, element) in (PlacesList.get()).enumerated() {
             let newStr = (element[1] as? String ?? "") +
             (element[2] as? String ?? "") +
             (element[3] as? String ?? "") +
@@ -104,7 +104,7 @@ final class MainViewPresenter {
             }
         }
         newData.remove(at: 0)
-        DI.poiData.placesListSearch = newData
+        PlacesListSearch.set(newData: newData)
         CardsViewPresenter.isSearching = true
     }
     

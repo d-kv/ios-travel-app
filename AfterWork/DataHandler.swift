@@ -9,38 +9,48 @@ import Foundation
 import UIKit
 import CoreLocation
 
-struct UserData {
+class PlacesList {
     
-    var userName: String?
-    var userImage: UIImage?
-    var achievements: Array<Int>? = nil
-    
-    init() {
-        self.userName = ""
-        self.userImage = UIImage()
-        self.achievements = []
+    static func get() -> [[Any]] { return UserDefaults.standard.value(forKey: "placesList") as? [[Any]] ?? [[]] }
+    static func add(data: [Any]) {
+        var currentArray = UserDefaults.standard.value(forKey: "placesList") as? [[Any]]
+        currentArray?.append(data)
+        UserDefaults.standard.set(currentArray, forKey: "placesList")
     }
+    static func insert(data: [Any], at: Int) {
+        var currentArray = UserDefaults.standard.value(forKey: "placesList") as? [[Any]]
+        currentArray?.insert(data, at: at)
+        UserDefaults.standard.set(currentArray, forKey: "placesList")
+    }
+    static func set(newData: [[Any]]) { UserDefaults.standard.set(newData, forKey: "placesList") }
+    static func delete() { UserDefaults.standard.removeObject(forKey: "placesList") }
 }
 
-struct PoiData {
-    var placesList: Array<Array<Any>>? = nil
-    var placesListSearch: Array<Array<Any>>? = nil
+class PlacesListSearch {
     
-    init() {
-        self.placesList = []
-        self.placesListSearch = []
+    static func get() -> [[Any]] { return UserDefaults.standard.value(forKey: "placesListSearch") as? [[Any]] ?? [[]] }
+    static func add(data: [Any]) {
+        var currentArray = UserDefaults.standard.value(forKey: "placesListSearch") as? [[Any]]
+        currentArray?.append(data)
+        UserDefaults.standard.set(currentArray, forKey: "placesListSearch")
     }
+    static func insert(data: [Any], at: Int) {
+        var currentArray = UserDefaults.standard.value(forKey: "placesListSearch") as? [[Any]]
+        currentArray?.insert(data, at: at)
+        UserDefaults.standard.set(currentArray, forKey: "placesListSearch")
+    }
+    static func set(newData: [[Any]]) { UserDefaults.standard.set(newData, forKey: "placesListSearch") }
+    static func delete() { UserDefaults.standard.removeObject(forKey: "placesListSearch") }
 }
 
 class DataLoader {
-    
     
     static func loadData() -> Bool {
         //let preferences = UserDefaults.standard
         
         let data0 = [1, String(localized: "instruction_title"), String(localized: "instruction_desc"), "Some address", 57.2965039, 47.9360589, String(localized: "instruction_text"), false, 4, "+79991234060", "12:00 - 22:00"] as [Any]
 
-        DI.poiData.placesList?.append(data0)
+        PlacesList.add(data: data0)
         
         let location = DI.shared.getMainViewController().getLocation()
         let lat = String(location.latitude)
@@ -76,7 +86,8 @@ class DataLoader {
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
                     for i in jsonArray {
                         let data7 = [i["id"] as? Int ?? 0, i["category"] as? String ?? "", i["name"] as? String ?? "", i["url"] as? String ?? "", Double(i["latitude"] as? String ?? "") ?? 0, Double(i["longitude"] as? String ?? "") ?? 0, i["description"] as? String ?? "", i["isRecommended"] as? Bool ?? false, 4, i["phone"] as? String ?? "", i["availability"] as? String ?? ""] as [Any]
-                        DI.poiData.placesList?.append(data7)
+                        PlacesList.add(data: data7)
+                        
                     }
                     DispatchQueue.main.async {
                         if let topVC = UIApplication.getTopViewController() {
