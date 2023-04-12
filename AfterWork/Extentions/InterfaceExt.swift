@@ -31,7 +31,7 @@ class InterfaceExt {
         button.backgroundColor = backgroundColor
         button.layer.cornerRadius = cornerRadius
         button.setTitleColor(titleColor, for: .normal)
-        button.titleLabel!.font = font
+        button.titleLabel?.font = font
         
         return button
     }
@@ -75,7 +75,7 @@ class InterfaceExt {
     func card(fromData data: [Any]) -> SwipeCard {
         let card = SwipeCard()
     
-        let content = DI.shared.getInterfaceExt().basicCard(type: data[1] as! String, title: data[2] as! String, description: data[6] as! String, workHours: data[10] as! String, url: data[3] as! String, isRecommended: data[7] as! Bool)
+        let content = DI.shared.getInterfaceExt().basicCard(type: data[1] as? String ?? "", title: data[2] as? String ?? "", description: data[6] as? String ?? "", workHours: data[10] as? String ?? "", url: data[3] as? String ?? "", isRecommended: data[7] as? Bool ?? false)
         
         card.swipeDirections = [.left, .right]
         card.content = content
@@ -98,14 +98,14 @@ class InterfaceExt {
         let view = UIView()
         
         let typeText = self.frameTextView(text: type, font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0.5)
-        let nameText = self.frameTextView(text: title, font: UIFont(name: "Helvetica Neue Condensed Black", size: 36)!, lineHeightMultiple: 0.7)
-        let descriptionText = self.frameTextView(text: description, font: UIFont(name: "Helvetica Neue Medium", size: 14)!, lineHeightMultiple: 0)
+        let nameText = self.frameTextView(text: title, font: UIFont(name: "Helvetica Neue Condensed Black", size: 36) ?? .boldSystemFont(ofSize: 36), lineHeightMultiple: 0.7)
+        let descriptionText = self.frameTextView(text: description, font: UIFont(name: "Helvetica Neue Medium", size: 14) ?? .systemFont(ofSize: 14), lineHeightMultiple: 0)
         
         let viewRectangle = UIView()
         let hideRectangle = UIView()
         
         let workHouseTitle = self.frameTextView(text: String(localized: "cards_workhours"), font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
-        let workHouseText = self.frameTextView(text: workHours, font: UIFont(name: "Helvetica Neue Medium", size: 14)!, lineHeightMultiple: 0.5)
+        let workHouseText = self.frameTextView(text: workHours, font: UIFont(name: "Helvetica Neue Medium", size: 14) ?? .systemFont(ofSize: 14), lineHeightMultiple: 0.5)
         
         let urlTitle = self.frameTextView(text: String(localized: "cards_bill"), font: .boldSystemFont(ofSize: 28), lineHeightMultiple: 0.6)
         let urlText = UIButton()
@@ -123,7 +123,7 @@ class InterfaceExt {
         viewRectangle.layer.borderColor = UIColor.white.cgColor
         
         hideRectangle.layer.borderWidth = 2
-        hideRectangle.layer.borderColor = UIColor(named: "GreyColor")!.cgColor
+        hideRectangle.layer.borderColor = UIColor(named: "GreyColor")?.cgColor
         
         urlText.setTitle(url, for: .normal)
         urlText.setTitleColor(.tintColor, for: .normal)

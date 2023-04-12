@@ -93,11 +93,12 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
 
         // For use in foreground
         locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         
         DispatchQueue.background(background:  {
             if CLLocationManager.locationServicesEnabled() {
-                locationManager.delegate = self
-                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                //locationManager.delegate = self
+                
                 locationManager.startUpdatingLocation()
             }
         })
@@ -106,7 +107,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getLocation() -> CLLocationCoordinate2D {
-        return locationManager.location!.coordinate
+        return (locationManager.location ?? CLLocation(latitude: 0, longitude: 0)).coordinate
     }
     
     
@@ -187,7 +188,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @objc private func searchBarHandler() {
-        mainViewPresenter.search(req: searchBar.text!)
+        mainViewPresenter.search(req: searchBar.text ?? "")
     }
     
     func setUpConstraints() {

@@ -16,9 +16,9 @@ class MapDescViewController: UIViewController {
     private let bigView = UIView()
     
     let titleText = DI.shared.getInterfaceExt().frameTextView(text: "Пиццерия", font: .boldSystemFont(ofSize: 16), lineHeightMultiple: 0.6)
-    let nameText = DI.shared.getInterfaceExt().frameTextView(text: "Papa Jhones", font: UIFont(name: "Helvetica Neue Condensed Black", size: 36)!, lineHeightMultiple: 0.6)
+    let nameText = DI.shared.getInterfaceExt().frameTextView(text: "Papa Jhones", font: UIFont(name: "Helvetica Neue Condensed Black", size: 36) ?? .boldSystemFont(ofSize: 36), lineHeightMultiple: 0.6)
     private let lineView = UIView()
-    let descriptionText = DI.shared.getInterfaceExt().frameTextView(text: "Ъуй Пхзда Тест", font: UIFont(name: "Helvetica Neue Medium", size: 13)!, lineHeightMultiple: 0.5)
+    let descriptionText = DI.shared.getInterfaceExt().frameTextView(text: "Ъуй Пхзда Тест", font: UIFont(name: "Helvetica Neue Medium", size: 13) ?? .systemFont(ofSize: 13), lineHeightMultiple: 0.5)
     
     private let workHoursTitle = DI.shared.getInterfaceExt().frameTextView(text: "Часы работы", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
     let workHoursText = DI.shared.getInterfaceExt().frameTextView(text: "Ежедневно с 12:00 до 23:00", font: .systemFont(ofSize: 16), lineHeightMultiple: 0.6)
@@ -31,8 +31,8 @@ class MapDescViewController: UIViewController {
     private let urlTitle = DI.shared.getInterfaceExt().frameTextView(text: "Сайт", font: .boldSystemFont(ofSize: 24), lineHeightMultiple: 0.6)
     var urlText = UIButton()
     
-    private let taxiButton = DI.shared.getInterfaceExt().standardButton(title: "Такси", backgroundColor: UIColor(named: "YellowColor")!, cornerRadius: 15, titleColor: UIColor(named: "GreyColor")!, font: .systemFont(ofSize: 18))
-    private let pathButton = DI.shared.getInterfaceExt().standardButton(title: "Маршрут", backgroundColor: UIColor(named: "LightGrayColor")!, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 18))
+    private let taxiButton = DI.shared.getInterfaceExt().standardButton(title: "Такси", backgroundColor: UIColor(named: "YellowColor") ?? .yellow, cornerRadius: 15, titleColor: UIColor(named: "GreyColor") ?? .white, font: .systemFont(ofSize: 18))
+    private let pathButton = DI.shared.getInterfaceExt().standardButton(title: "Маршрут", backgroundColor: UIColor(named: "LightGrayColor") ?? .white, cornerRadius: 15, titleColor: .white, font: .systemFont(ofSize: 18))
     
     var artwork: Artwork? = nil
     var currentCoordinate: CLLocationCoordinate2D? = nil
@@ -229,7 +229,14 @@ class MapDescViewController: UIViewController {
     @objc private func taxiButtonTap() {
         let start = currentCoordinate
         let end = artwork?.coordinate
-        let defaultWebsiteURL = URL(string: "https://3.redirect.appmetrica.yandex.com/route?start-lat=" + String(start!.latitude) + "&start-lon=" + String(start!.longitude) + "&end-lat=" + String(end!.latitude) + "&end-lon=" + String(end!.longitude) + "&level=50&appmetrica_tracking_id=1178268795219780156")!
+        let defaultWebsiteURL = URL(string: "https://3.redirect.appmetrica.yandex.com/route?start-lat=" + String(start?.latitude ?? CLLocationDegrees(0))
+                                    + "&start-lon="
+                                    + String(start?.longitude ?? CLLocationDegrees(0))
+                                    + "&end-lat="
+                                    + String(end?.latitude ?? CLLocationDegrees(0))
+                                    + "&end-lon="
+                                    + String(end?.longitude ?? CLLocationDegrees(0))
+                                    + "&level=50&appmetrica_tracking_id=1178268795219780156")!
 
         UIApplication.shared.open(defaultWebsiteURL)
     }
@@ -242,11 +249,10 @@ class MapDescViewController: UIViewController {
     }
     
     @objc private func contactsTap() {
-        print("contactsTap")
-        DI.shared.getMapDescViewPresenter().callNumber(phoneNumber: contactsText.title(for: .normal)!)
+        presenter.callNumber(phoneNumber: contactsText.title(for: .normal) ?? "https://apple.com")
     }
     
     @objc private func websiteTap() {
-        DI.shared.getMapDescViewPresenter().openLink(website: urlText.title(for: .normal)!)
+        presenter.openLink(website: urlText.title(for: .normal) ?? "https://apple.com")
     }
 }

@@ -19,7 +19,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     
     let endText = UITextView()
     
-    var cards: Array<Array<Any>> = CardsViewPresenter.getCards()!
+    var cards: [[Any]] = CardsViewPresenter.getCards() ?? [[]]
     
     func numberOfCards(in cardStack: Shuffle_iOS.SwipeCardStack) -> Int {
     
@@ -42,17 +42,16 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         
         mapView.removeAnnotations(mapView.annotations)
         var currentAnnotationImage = UIImage(named: "marker")
-        if (cards[index + 1][7] as! Bool) { currentAnnotationImage =  UIImage(named: "markerTop") }
+        if (cards[index + 1][7] as? Bool ?? false) { currentAnnotationImage =  UIImage(named: "markerTop") }
         
         let artwork = Artwork(
             title: cards[index][2] as? String,
             locationName: cards[index][1] as? String,
             discipline: cards[index][1] as? String,
-            coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as! CLLocationDegrees, longitude: cards[index + 1][5] as! CLLocationDegrees), //cards[0][6]
+            coordinate: CLLocationCoordinate2D(latitude: cards[index + 1][4] as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: cards[index + 1][5] as? CLLocationDegrees ?? CLLocationDegrees(0)), //cards[0][6]
             image: currentAnnotationImage
         )
         mapView.addAnnotation(artwork)
-        print()
         
         let a = artwork.coordinate
         let b = mapView.userLocation.coordinate
@@ -69,12 +68,12 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
             sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
             
-            if (cards[index][7] as! Bool) { currentAnnotationImage =  UIImage(named: "markerTop") }
+            if (cards[index][7] as? Bool ?? false) { currentAnnotationImage =  UIImage(named: "markerTop") }
             let artwork = Artwork(
                 title: cards[index][2] as? String,
                 locationName: cards[index][1] as? String,
                 discipline: cards[index][1] as? String,
-                coordinate: CLLocationCoordinate2D(latitude: cards[index][4] as! CLLocationDegrees, longitude: cards[index][5] as! CLLocationDegrees), //cards[0][6]
+                coordinate: CLLocationCoordinate2D(latitude: cards[index][4] as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: cards[index][5] as? CLLocationDegrees ?? CLLocationDegrees(0)), //cards[0][6]
                 image: currentAnnotationImage
             )
             
@@ -83,10 +82,10 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         
         let gesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cardTap))
         gesture.numberOfTapsRequired = 1
-        cardStack.card(forIndexAt: index + 1)!.content!.isUserInteractionEnabled = true
-        cardStack.card(forIndexAt: index + 1)!.content!.addGestureRecognizer(gesture)
+        cardStack.card(forIndexAt: index + 1)?.content?.isUserInteractionEnabled = true
+        cardStack.card(forIndexAt: index + 1)?.content?.addGestureRecognizer(gesture)
         
-        (cardStack.card(forIndexAt: index + 1)!.content!.subviews[8] as! UIButton).addTarget(self, action: #selector(openLink), for: .touchUpInside)
+        (cardStack.card(forIndexAt: index + 1)?.content?.subviews[8] as? UIButton)?.addTarget(self, action: #selector(openLink), for: .touchUpInside)
         currentIndex = index
     }
     
@@ -100,7 +99,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         self.dismiss(animated: true)
         
         var currentAnnotationImage = UIImage(named: "marker")
-        if (cards[currentIndex + 1][7] as! Bool) { currentAnnotationImage =  UIImage(named: "markerTop") }
+        if (cards[currentIndex + 1][7] as? Bool ?? false) { currentAnnotationImage =  UIImage(named: "markerTop") }
                     
         let mapViewController = DI.shared.getMapViewController_Cards()
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
@@ -110,14 +109,14 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             title: cards[currentIndex][2] as? String,
             locationName: cards[currentIndex + 1][1] as? String,
             discipline: cards[currentIndex][1] as? String,
-            coordinate: CLLocationCoordinate2D(latitude: cards[currentIndex + 1][4] as! CLLocationDegrees, longitude: cards[currentIndex + 1][5] as! CLLocationDegrees), 
+            coordinate: CLLocationCoordinate2D(latitude: cards[currentIndex + 1][4] as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: cards[currentIndex + 1][5] as? CLLocationDegrees ?? CLLocationDegrees(0)),
             image: currentAnnotationImage
         )
         
         mapViewController.targetPoint = artwork
     }
     @objc private func openLink(_ sender: UIButton) {
-        if let url = URL(string: cards[currentIndex + 1][3] as! String) {
+        if let url = URL(string: cards[currentIndex + 1][3] as? String ?? "") {
             UIApplication.shared.open(url)
         }
     }
@@ -143,9 +142,9 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             
     }
     
-    @objc func tap(_ sender: UIButton) {
-        print("TAPAAAAA")
-    }
+//    @objc func tap(_ sender: UIButton) {
+//        print("TAPAAAAA")
+//    }
     
     // MARK: - View
     
@@ -167,7 +166,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         
         let style = NSMutableParagraphStyle()
         style.alignment = .center
-        let text = NSAttributedString(string: "Подборка пока что закончилась,\nзагляните позже", attributes: [NSAttributedString.Key.paragraphStyle:style, NSAttributedString.Key.font:UIFont(name: "Helvetica Neue", size: 28)!, NSAttributedString.Key.foregroundColor:UIColor(named: "LightGrayColor")!])
+        let text = NSAttributedString(string: "Подборка пока что закончилась,\nзагляните позже", attributes: [NSAttributedString.Key.paragraphStyle:style, NSAttributedString.Key.font:UIFont(name: "Helvetica Neue", size: 28) ?? .systemFont(ofSize: 28), NSAttributedString.Key.foregroundColor:UIColor(named: "LightGrayColor") ?? .black])
         endText.attributedText = text
     }
     
@@ -228,7 +227,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     var setRegionFlag = true
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let location = locations.last! as CLLocation
+        let location = (locations.last ?? CLLocation(latitude: 0, longitude: 0)) as CLLocation
         
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))

@@ -25,7 +25,6 @@ class MapDescViewPresenter {
     func openLink(website: String) {
         guard let url = URL(string: website),
             UIApplication.shared.canOpenURL(url) else {
-            print("openLink")
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
