@@ -47,9 +47,9 @@ class LoginViewPresenter {
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             credentials = try result.get()
-            AuthService.setSecret(key: "idToken", value: credentials?.idToken ?? "")
-            AuthService.setSecret(key: "accessToken", value: credentials?.accessToken ?? "")
-            AuthService.setSecret(key: "refreshToken", value: credentials?.refreshToken ?? "")
+            IAuthService.shared.setSecret(key: "idToken", value: credentials?.idToken ?? "")
+            IAuthService.shared.setSecret(key: "accessToken", value: credentials?.accessToken ?? "")
+            IAuthService.shared.setSecret(key: "refreshToken", value: credentials?.refreshToken ?? "")
 
             req()
             
@@ -68,8 +68,8 @@ class LoginViewPresenter {
     
     private func req() {
         
-        var idToken = AuthService.getSecret(key: "idToken")
-        var accessToken = AuthService.getSecret(key: "accessToken")
+        var idToken = IAuthService.shared.getSecret(key: "idToken")
+        var accessToken = IAuthService.shared.getSecret(key: "accessToken")
                 
         var host = ""
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
@@ -97,8 +97,8 @@ class LoginViewPresenter {
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                    AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                    IAuthService.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                    IAuthService.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                     self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                     self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                     self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
@@ -158,14 +158,14 @@ class LoginViewPresenter {
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                    AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                    IAuthService.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                    IAuthService.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                     self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                     self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                     self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
                     self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
                     
-                    AuthService.isAuthDebug = true
+                    IAuthService.shared.setIsAuthDebug(newValue: true)
                     
                     DispatchQueue.main.async {
                         self.delegate?.TinkoffIDResolver(status: .waiting)

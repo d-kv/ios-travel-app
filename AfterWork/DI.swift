@@ -56,7 +56,7 @@ class DI: DIProtocol {
     private let container: Container = {
         let container = Container()
 
-        container.register(AuthService.self) { _ in return AuthService() }
+        container.register(AuthService.self) { _ in return IAuthService() }
         container.register(InterfaceExt.self) { _ in return InterfaceExt() }
         
         container.register(MapDescViewController.self) { _ in return MapDescViewController() }

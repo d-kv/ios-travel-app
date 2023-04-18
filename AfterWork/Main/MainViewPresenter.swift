@@ -115,21 +115,21 @@ final class MainViewPresenter {
         self.delegate?.mainViewPresenter(self, isLoading: true)
         
         
-        var idToken = AuthService.getSecret(key: "idToken")
-        var refreshToken = AuthService.getSecret(key: "refreshToken")
+        var idToken = IAuthService.shared.getSecret(key: "idToken")
+        var refreshToken = IAuthService.shared.getSecret(key: "refreshToken")
         
         if idToken == "ID" {
-            AuthService.isAuthDebug = true
+            IAuthService.shared.setIsAuthDebug(newValue: true)
             print("")
         } else {
             print("")
         }
         
-        if !AuthService.tinkoffId.isTinkoffAuthAvailable && !AuthService.isAuthDebug {
+        if !IAuthService.shared.getTinkoffId().isTinkoffAuthAvailable && !IAuthService.shared.getIsAuthDebug() {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
             
-        } else if AuthService.isAuthDebug {
+        } else if IAuthService.shared.getIsAuthDebug() {
             
             if DataLoader.loadData() {
                 print("")
@@ -140,7 +140,7 @@ final class MainViewPresenter {
         } else {
             
             if idToken != "" {
-                AuthService.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
+                IAuthService.shared.getTinkoffId().obtainTokenPayload(using: refreshToken, handleRefreshToken)
             } else {
                 self.delegate?.mainViewPresenter(self, isLoading: false)
                 goToLogin()
@@ -157,9 +157,9 @@ final class MainViewPresenter {
 //            preferences.set(credentials.idToken, forKey: "idToken")
 //            preferences.set(credentials.accessToken, forKey: "accessToken")
 //            preferences.set(credentials.refreshToken, forKey: "refreshToken")
-            AuthService.setSecret(key: "idToken", value: credentials.idToken)
-            AuthService.setSecret(key: "accessToken", value: credentials.accessToken)
-            AuthService.setSecret(key: "refreshToken", value: credentials.refreshToken ?? "")
+            IAuthService.shared.setSecret(key: "idToken", value: credentials.idToken)
+            IAuthService.shared.setSecret(key: "accessToken", value: credentials.accessToken)
+            IAuthService.shared.setSecret(key: "refreshToken", value: credentials.refreshToken ?? "")
             
             var host = ""
             if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
@@ -190,8 +190,8 @@ final class MainViewPresenter {
                     
                     if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
                         
-                        AuthService.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                        AuthService.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                        IAuthService.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                        IAuthService.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                         self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                         self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                         self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
