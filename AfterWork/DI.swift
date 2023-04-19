@@ -75,10 +75,10 @@ class DI: DIProtocol {
         container.register(CardsViewPresenter.self) { _ in return CardsViewPresenter() }
         container.register(SettingsViewPresenter.self) { _ in return SettingsViewPresenter() }
         
-
         return container
     }()
         
-    static var poiData: PoiData = PoiData.init()
+    //static var poiData: PoiData = PoiData.init()
     static let userData: UserData = UserData.init()
+    
 }

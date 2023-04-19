@@ -34,12 +34,12 @@ class CardsViewPresenter {
         
     }
     static var isSearching: Bool = false
-    static func getCards() -> Array<Array<Any>>? {
+    static func getCards() -> [Places]? {
         if isSearching {
-            DI.poiData.placesListSearch?.insert([1, "Инструкция", "Что это такое?", "Some address", 57.2965039, 47.9360589, "Смахнешь влево - получишь карточки, смахнешь вправо - отдохни на браво. А карточки с подсветкой - наши избранные, имей ввиду", false, 4, "+79991234060", "12:00 - 22:00"] as [Any], at: 0)
-            return DI.poiData.placesListSearch
+            DataLoaderImpl.shared.placesSearch.insert(Places(id: 0, yaid: 0, category: String(localized: "instruction_title"), name: String(localized: "instruction_desc"), url: "", latitude: "", longitude: "", address: "", description: String(localized: "instruction_text"), isRecommended: false, phone: "", availability: ""), at: 0)
+            return DataLoaderImpl.shared.placesSearch
         } else {
-            return DI.poiData.placesList
+            return DataLoaderImpl.shared.places
         }
         
     }

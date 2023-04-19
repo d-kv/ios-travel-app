@@ -69,23 +69,24 @@ final class MapViewPresenter {
     static func setUpPoints(mapView: MKMapView, category: String, isRecommended: Bool, isSearching: Bool) {
         UIView.animate(withDuration: 1) { mapView.removeAnnotations(mapView.annotations) }
         
-        var tempData = DI.poiData.placesList ?? [[]]
-        if isSearching { tempData = DI.poiData.placesListSearch ?? [[]] }
+        var tempData = DataLoaderImpl.shared.places
+        if isSearching { tempData = DataLoaderImpl.shared.placesSearch }
         
         for i in tempData {
             var image = UIImage(named: "marker")
-            if i[7] as? Bool ?? false {
+            if i.isRecommended {
                 image = UIImage(named: "markerTop")
             }
             let artwork = Artwork(
-                title: i[2] as? String,
-                locationName: i[1] as? String,
-                discipline: "\(i[0])",
-                coordinate: CLLocationCoordinate2D(latitude: i[4] as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: i[5] as? CLLocationDegrees ?? CLLocationDegrees(0)),
+                title: i.name,
+                locationName: i.category,
+                discipline: "\(i.id)",
+                coordinate: CLLocationCoordinate2D(latitude: Double(i.latitude) as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: Double(i.longitude) as? CLLocationDegrees ?? CLLocationDegrees(0)),
                 image: image
             )
+            print(artwork)
                         
-            if !(i[1] as? String ?? "").isEqual("Инструкция") {
+            if !(i.name).isEqual("Инструкция") {
                 
                 let catCafe = ["bars", "cafe", "fast food", "restaurants", "sushi"]
                 let catArt = ["museum", "spa", "malls", "fallback services", "confectionary", "concert hall", "bars"]
@@ -94,24 +95,26 @@ final class MapViewPresenter {
                 UIView.animate(withDuration: 0.3) {
                     switch category {
                     case "all":
-                        if isRecommended && (i[7] as? Bool ?? false) { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i.isRecommended) { mapView.addAnnotation(artwork) }
                         else if !isRecommended { mapView.addAnnotation(artwork) }
                     case "food":
-                        if isRecommended && (i[7] as? Bool ?? false) && catCafe.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catCafe.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i.isRecommended) && catCafe.contains(i.name) { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catCafe.contains(i.name) { mapView.addAnnotation(artwork) }
                     case "art":
-                        if isRecommended && (i[7] as? Bool ?? false) && catArt.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catArt.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i.isRecommended) && catArt.contains(i.name) { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catArt.contains(i.name) { mapView.addAnnotation(artwork) }
                     case "hotel":
-                        if isRecommended && (i[7] as? Bool ?? false) && catHotel.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catHotel.contains(i[1] as? String ?? "") { mapView.addAnnotation(artwork) }
+                        if isRecommended && (i.isRecommended) && catHotel.contains(i.name) { mapView.addAnnotation(artwork) }
+                        else if !isRecommended && catHotel.contains(i.name) { mapView.addAnnotation(artwork) }
 
                     default:
-                        if isRecommended && (i[7] as? Bool ?? false) {
+                        if isRecommended && (i.isRecommended) {
                             
                         }
                     }
                 }
+            } else {
+                print("ZHOPA")
             }
             
         }

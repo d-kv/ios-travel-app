@@ -67,20 +67,19 @@ final class MainViewPresenter {
     
     func search(req: String) {
         let searchReq = req
-        var newData = [[]]
-        for (index, element) in (DI.poiData.placesList ?? [[]]).enumerated() {
-
-            let newStr = (element[1] as? String ?? "") +
-            (element[2] as? String ?? "") +
-            (element[3] as? String ?? "") +
-            (element[6] as? String ?? "")// +
-//            (element[9] as? String ?? "")
+        var newData = [Places]()
+        for (index, element) in (DataLoaderImpl.shared.places).enumerated() {
+            let element1 = element.category
+            let element2 = element.name
+            let element3 = element.url
+            let element4 = element.description
+            let newStr = element1 + element2 + element3 + element4
             if newStr.smartContains(searchReq) {
                 newData.append(element)
             }
         }
         newData.remove(at: 0)
-        DI.poiData.placesListSearch = newData
+        DataLoaderImpl.shared.places = newData
         MapViewController.isSearching = true
         DispatchQueue.main.async {
             if let topVC = UIApplication.getTopViewController() {
@@ -90,13 +89,13 @@ final class MainViewPresenter {
         
     }
     private func cardSearch(categories: [String]) {
-        var newData = [[]]
-        for (index, element) in (DI.poiData.placesList ?? [[]]).enumerated() {
-            let newStr = (element[1] as? String ?? "") +
-            (element[2] as? String ?? "") +
-            (element[3] as? String ?? "") +
-            (element[6] as? String ?? "") //+
-//            (element[9] as? String ?? "")
+        var newData = [Places]()
+        for (index, element) in (DataLoaderImpl.shared.places).enumerated() {
+            let element1 = element.category
+            let element2 = element.name
+            let element3 = element.url
+            let element4 = element.description
+            let newStr = element1 + element2 + element3 + element4
             for i in categories {
                 if newStr.smartContains(i) {
                     newData.append(element)
@@ -104,7 +103,7 @@ final class MainViewPresenter {
             }
         }
         newData.remove(at: 0)
-        DI.poiData.placesListSearch = newData
+        DataLoaderImpl.shared.placesSearch = newData
         CardsViewPresenter.isSearching = true
     }
     
@@ -113,7 +112,6 @@ final class MainViewPresenter {
     func enteredApp() {
         
         self.delegate?.mainViewPresenter(self, isLoading: true)
-        
         
         var idToken = CacheImpl.shared.getSecret(key: "idToken")
         var refreshToken = CacheImpl.shared.getSecret(key: "refreshToken")
@@ -131,7 +129,7 @@ final class MainViewPresenter {
             
         } else if AuthServiceImpl.shared.getIsAuthDebug() {
             
-            if DataLoader.loadData() {
+            if DataLoaderImpl.shared.loadData() {
                 print("")
             } else {
                 print("")
@@ -196,7 +194,7 @@ final class MainViewPresenter {
                         self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                         self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
                         self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
-                        if !DataLoader.loadData() {
+                        if !DataLoaderImpl.shared.loadData() {
                             self.goToLogin()
                         }
 

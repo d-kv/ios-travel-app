@@ -72,10 +72,10 @@ class InterfaceExt {
         return textView
     }
     
-    func card(fromData data: [Any]) -> SwipeCard {
+    func card(fromData data: Places) -> SwipeCard {
         let card = SwipeCard()
     
-        let content = DI.shared.getInterfaceExt().basicCard(type: data[1] as? String ?? "", title: data[2] as? String ?? "", description: data[6] as? String ?? "", workHours: data[10] as? String ?? "", url: data[3] as? String ?? "", isRecommended: data[7] as? Bool ?? false)
+        let content = DI.shared.getInterfaceExt().basicCard(type: data.category, title: data.name, description: data.description, workHours: data.availability, url: data.url, isRecommended: data.isRecommended)
         
         card.swipeDirections = [.left, .right]
         card.content = content
