@@ -17,13 +17,13 @@ final class SettingsViewPresenter {
         
     func signOut() {
         
-        DI.shared.getAuthSerivce().logOut(accessToken: AuthServiceImpl.shared.getSecret(key: "accessToken"), handler: handleSignOut)
+        DI.shared.getAuthSerivce().logOut(accessToken: CacheImpl.shared.getSecret(key: "accessToken"), handler: handleSignOut)
     }
     
     private func handleSignOut(_ result: Result<Void, Error>) {
-        AuthServiceImpl.shared.setSecret(key: "accessToken", value: "")
-        AuthServiceImpl.shared.setSecret(key: "refreshToken", value: "")
-        AuthServiceImpl.shared.setSecret(key: "idToken", value: "")
+        CacheImpl.shared.setSecret(key: "accessToken", value: "")
+        CacheImpl.shared.setSecret(key: "refreshToken", value: "")
+        CacheImpl.shared.setSecret(key: "idToken", value: "")
         
         let loginViewController = DI.shared.getLoginViewController()
         loginViewController.modalPresentationStyle = .fullScreen

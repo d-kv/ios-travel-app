@@ -47,9 +47,9 @@ class LoginViewPresenter {
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             credentials = try result.get()
-            AuthServiceImpl.shared.setSecret(key: "idToken", value: credentials?.idToken ?? "")
-            AuthServiceImpl.shared.setSecret(key: "accessToken", value: credentials?.accessToken ?? "")
-            AuthServiceImpl.shared.setSecret(key: "refreshToken", value: credentials?.refreshToken ?? "")
+            CacheImpl.shared.setSecret(key: "idToken", value: credentials?.idToken ?? "")
+            CacheImpl.shared.setSecret(key: "accessToken", value: credentials?.accessToken ?? "")
+            CacheImpl.shared.setSecret(key: "refreshToken", value: credentials?.refreshToken ?? "")
 
             req()
             
@@ -68,8 +68,8 @@ class LoginViewPresenter {
     
     private func req() {
         
-        var idToken = AuthServiceImpl.shared.getSecret(key: "idToken")
-        var accessToken = AuthServiceImpl.shared.getSecret(key: "accessToken")
+        var idToken = CacheImpl.shared.getSecret(key: "idToken")
+        var accessToken = CacheImpl.shared.getSecret(key: "accessToken")
                 
         var host = ""
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
@@ -97,8 +97,8 @@ class LoginViewPresenter {
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    AuthServiceImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                    AuthServiceImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                    CacheImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                    CacheImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                     self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                     self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                     self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
@@ -158,8 +158,8 @@ class LoginViewPresenter {
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    AuthServiceImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                    AuthServiceImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                    CacheImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                    CacheImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                     self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                     self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                     self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
