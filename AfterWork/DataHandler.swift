@@ -52,7 +52,7 @@ class DataLoader {
             host = keys["HOST"] as? String ?? ""
         }
         
-        let url = URL(string: host + "/api/getlocation?tid_id=" + IAuthService.shared.getSecret(key: "idToken") + "&tid_accessToken=" + IAuthService.shared.getSecret(key: "accessToken") + "&lat=" + lat + "&lng=" + lng)!
+        let url = URL(string: host + "/api/getlocation?tid_id=" + AuthServiceImpl.shared.getSecret(key: "idToken") + "&tid_accessToken=" + AuthServiceImpl.shared.getSecret(key: "accessToken") + "&lat=" + lat + "&lng=" + lng)!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"

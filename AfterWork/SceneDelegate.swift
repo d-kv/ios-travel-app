@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .dark
         
-        if IAuthService.shared.getSecret(key: "idToken") == ""  {
+        if AuthServiceImpl.shared.getSecret(key: "idToken") == ""  {
             let loginViewController = DI.shared.getLoginViewController()
             loginViewController.modalPresentationStyle = .fullScreen
             
@@ -37,10 +37,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        if IAuthService.shared.getTinkoffId().isTinkoffAuthAvailable {
-            _ = IAuthService.shared.getTinkoffId().handleCallbackUrl(firstUrl)
+        if AuthServiceImpl.shared.getTinkoffId().isTinkoffAuthAvailable {
+            _ = AuthServiceImpl.shared.getTinkoffId().handleCallbackUrl(firstUrl)
         } else {
-            _ = IAuthService.shared.getDebugTinkoffId().handleCallbackUrl(firstUrl)
+            _ = AuthServiceImpl.shared.getDebugTinkoffId().handleCallbackUrl(firstUrl)
         }
     }
 }
