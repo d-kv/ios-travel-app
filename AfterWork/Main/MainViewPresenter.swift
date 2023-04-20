@@ -194,15 +194,19 @@ final class MainViewPresenter {
                     
                     if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
                         
-                        CacheImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                        CacheImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
-                        self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
-                        self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
-                        self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
-                        self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
-                        if !DataLoaderImpl.shared.loadData() {
-                            self.goToLogin()
+                        if jsonArray.count > 0 {
+                            CacheImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                            CacheImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                            self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
+                            self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
+                            self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
+                            self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
+                            if !DataLoaderImpl.shared.loadData() {
+                                self.goToLogin()
+                            }
                         }
+                        
+                        
 
                         
                     } else {
