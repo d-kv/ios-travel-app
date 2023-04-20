@@ -164,6 +164,7 @@ class LoginViewPresenter {
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
+                    
                     self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
                     self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                     self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
