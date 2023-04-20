@@ -9,7 +9,6 @@ import Foundation
 import Swinject
 import TinkoffID
 
-//let interfaceExt = DI.container.resolve(InterfaceExt.self)!
 
 protocol DIProtocol {
     func getAuthSerivce() -> AuthService
@@ -116,8 +115,5 @@ class DI: DIProtocol {
 
         return factory.build()
     }()
-        
-    //static var poiData: PoiData = PoiData.init()
-    //static let userData: UserData = UserData.init()
     
 }

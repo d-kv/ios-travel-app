@@ -12,7 +12,6 @@ import MapKit
 
 class MapDescViewPresenter {
     
-    //weak var delegate: MapDescViewDelegate?
     
     func callNumber(phoneNumber: String) {
         let str = phoneNumber.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: "-", with: "")

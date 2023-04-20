@@ -209,7 +209,6 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         let endTextkConstraints = [
             endText.centerXAnchor.constraint(equalTo: cardStack.centerXAnchor),
             endText.centerYAnchor.constraint(equalTo: cardStack.centerYAnchor),
-            //endText.topAnchor.constraint(equalTo: view.topAnchor, constant: 130), //150
             endText.heightAnchor.constraint(equalToConstant: 150), //480
             endText.widthAnchor.constraint(equalToConstant: 300)
         ]

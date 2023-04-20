@@ -126,7 +126,6 @@ class MapDescViewController: UIViewController {
             workHoursTitle.topAnchor.constraint(equalTo: bigView.bottomAnchor, constant: 25),
             workHoursTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
             workHoursTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
-            //nameText.heightAnchor.constraint(equalToConstant: 30),
         ]
         
         workHoursText.translatesAutoresizingMaskIntoConstraints = false
@@ -134,7 +133,6 @@ class MapDescViewController: UIViewController {
             workHoursText.topAnchor.constraint(equalTo: workHoursTitle.bottomAnchor, constant: 0),
             workHoursText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
             workHoursText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
-            //workHoursText.heightAnchor.constraint(equalToConstant: 30),
         ]
         
         lineViewSecond.translatesAutoresizingMaskIntoConstraints = false
@@ -150,15 +148,12 @@ class MapDescViewController: UIViewController {
             contactsTitle.topAnchor.constraint(equalTo: lineViewSecond.bottomAnchor, constant: 25),
             contactsTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
             contactsTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
-            //nameText.heightAnchor.constraint(equalToConstant: 30),
         ]
         
         contactsText.translatesAutoresizingMaskIntoConstraints = false
         let contactsTextConstraints = [
             contactsText.topAnchor.constraint(equalTo: contactsTitle.bottomAnchor, constant: 0),
             contactsText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
-            //contactsText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
-            //workHoursText.heightAnchor.constraint(equalToConstant: 30),
         ]
         
         lineViewThird.translatesAutoresizingMaskIntoConstraints = false
@@ -174,7 +169,6 @@ class MapDescViewController: UIViewController {
             urlTitle.topAnchor.constraint(equalTo: lineViewThird.bottomAnchor, constant: 25),
             urlTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
             urlTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40),
-            //workHoursText.heightAnchor.constraint(equalToConstant: 30),
         ]
         
         urlText.translatesAutoresizingMaskIntoConstraints = false

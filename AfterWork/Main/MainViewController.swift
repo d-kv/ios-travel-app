@@ -9,10 +9,6 @@ import Foundation
 import UIKit
 import CoreLocation
 
-//import AfterWorkAPI
-//import NIO
-//import GRPC
-
 class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     let userImage = UIButton()
@@ -96,9 +92,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         
         DispatchQueue.background(background:  {
-            if CLLocationManager.locationServicesEnabled() {
-                //locationManager.delegate = self
-                
+            if CLLocationManager.locationServicesEnabled() {                
                 locationManager.startUpdatingLocation()
             }
         })
@@ -420,7 +414,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
         smallText.translatesAutoresizingMaskIntoConstraints = false
         let smallTextConstraints = [
             smallText.topAnchor.constraint(equalTo: bigText.bottomAnchor, constant: -15),
-            //bigText.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             smallText.leftAnchor.constraint(equalTo: personalRecommend.leftAnchor, constant: 10),
             smallText.widthAnchor.constraint(equalToConstant: 300),
             smallText.heightAnchor.constraint(equalToConstant: 50)
@@ -428,10 +421,8 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         let imageViewConstraints = [
-            //imageView.topAnchor.constraint(equalTo: personalRecommend.topAnchor, constant: 15),
             imageView.bottomAnchor.constraint(equalTo: personalRecommend.bottomAnchor, constant: -20),
             imageView.rightAnchor.constraint(equalTo: personalRecommend.rightAnchor, constant: -20),
-            //bigText.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 270),
             imageView.heightAnchor.constraint(equalToConstant: 44)
         ]

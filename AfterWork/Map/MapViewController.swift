@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import MapKit
 
-//let interfaceExt = DI.container.resolve(InterfaceExt.self)!
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     // MARK: - Main
@@ -88,16 +87,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if targetPoint != nil {
             
             let a = targetPoint?.coordinate
-            //let b = mapView.userLocation.coordinate
-            //let apoint = MKMapPoint(a)
-            //let bpoint = MKMapPoint(b)
+
             mapView.addAnnotation(targetPoint ?? Artwork(title: "", locationName: "", discipline: "", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0), image: .add))
             segmentControl.isHidden = true
             recomendButton.isHidden = true
             
             mapView.centerToLocation(CLLocation(latitude: a?.latitude ?? CLLocationDegrees(0), longitude: a?.longitude ?? CLLocationDegrees(0)), regionRadius: CLLocationDistance(10000))
         } else {
-            //mapView.addAnnotation(artwork)
             MapViewPresenter.setUpPoints(mapView: mapView, category: "all", isRecommended: false, isSearching: MapViewController.isSearching)
             taxiButton.isHidden = true
             wayButton.isHidden = true
@@ -148,7 +144,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let recomendButtonConstraints = [
             recomendButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
             recomendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            //recomendButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             recomendButton.heightAnchor.constraint(equalToConstant: 50),
             recomendButton.widthAnchor.constraint(equalToConstant: 50)
         ]
@@ -282,7 +277,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             return
         }
         if targetPoint == nil {
-            //let currentData = DI.poiData.placesList?.filter { $0[0] as? Int == Int(artwork.discipline ?? "")}[0]
             let currentData = DataLoaderImpl.shared.places.filter { $0.id == Int(artwork.discipline ?? "") }[0]
             
             DI.shared.getMapViewPresenter().goToDesc(type: currentData.category, name: currentData.name, description: currentData.description, workHours: currentData.availability, contacts: currentData.phone, url: currentData.url, artwork: artwork, currentCoords: mapView.userLocation.coordinate, isRecommended: currentData.isRecommended)

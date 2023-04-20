@@ -63,7 +63,6 @@ class ArtworkView: MKAnnotationView {
             }
             
             let btn = UIButton(type: .detailDisclosure)
-            //btn.addTarget(self, action: #selector(tap), for: .touchUpInside)
             canShowCallout = true
             calloutOffset = CGPoint(x: 0, y: 0)
             rightCalloutAccessoryView = btn

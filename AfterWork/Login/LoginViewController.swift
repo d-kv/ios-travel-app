@@ -56,7 +56,6 @@ class LoginViewController: UIViewController {
         let bigTextConstraints = [
             bigText.topAnchor.constraint(equalTo: view.topAnchor, constant: 240),
             bigText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //logos.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             bigText.widthAnchor.constraint(equalToConstant: 270),
             bigText.heightAnchor.constraint(equalToConstant: 80)
         ]
@@ -65,7 +64,6 @@ class LoginViewController: UIViewController {
         let smallTextConstraints = [
             smallText.topAnchor.constraint(equalTo: bigText.bottomAnchor, constant: 0),
             smallText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //logos.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             smallText.widthAnchor.constraint(equalToConstant: 270),
             smallText.heightAnchor.constraint(equalToConstant: 20)
         ]
@@ -81,7 +79,6 @@ class LoginViewController: UIViewController {
         alphaText.translatesAutoresizingMaskIntoConstraints = false
         let alphaTextConstraints = [
             alphaText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //alphaText.widthAnchor.constraint(equalToConstant: 270),
             alphaText.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
         ]
         

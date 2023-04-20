@@ -21,7 +21,6 @@ final class MapViewPresenter {
     static func goToMain() {
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.dismiss(animated: true)
-        //sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
         
     }
     
@@ -44,7 +43,6 @@ final class MapViewPresenter {
             mapDescViewController.descriptionText.text = description
             mapDescViewController.descriptionText.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1)
             mapDescViewController.workHoursText.text = workHours
-            //mapDescViewController.contactsText.text = contacts
             mapDescViewController.contactsText.setTitle(contacts, for: .normal)
             mapDescViewController.urlText.setTitle(url, for: .normal)
             mapDescViewController.artwork = artwork

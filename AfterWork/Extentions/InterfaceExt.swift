@@ -41,7 +41,6 @@ class InterfaceExt {
         
         textView.text = text
         textView.contentInsetAdjustmentBehavior = .automatic
-        //textView.center = view.center
         textView.textAlignment = NSTextAlignment.justified
         textView.textColor = textColor
         textView.backgroundColor = .clear
@@ -196,7 +195,6 @@ class InterfaceExt {
         let urlTextConstraints = [
             urlText.topAnchor.constraint(equalTo: urlTitle.bottomAnchor, constant: 10),
             urlText.leftAnchor.constraint(equalTo: urlTitle.leftAnchor, constant: 6),
-            //urlText.widthAnchor.constraint(equalToConstant: 200),
             urlText.heightAnchor.constraint(equalToConstant: 20)
         ]
         

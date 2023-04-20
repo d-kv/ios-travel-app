@@ -135,7 +135,6 @@ class SettingsViewController: UIViewController {
     // MARK: - Button actions
     
     @objc func signOutTap() {
-        //SettingsViewPresenter.signOut()
         
         let alert = UIAlertController(title: String(localized: "confirmation"), message: String(localized: "sign_out"), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: String(localized: "yes"), style: .destructive, handler: { action in
@@ -272,7 +271,6 @@ class SettingsViewController: UIViewController {
             thirdImage.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 5),
             thirdImage.heightAnchor.constraint(equalToConstant: 50),
             thirdImage.widthAnchor.constraint(equalToConstant: 50),
-            //thirdImage.rightAnchor.constraint(equalTo: secondImage.rightAnchor, constant: 20),
             thirdImage.leftAnchor.constraint(equalTo: secondImage.rightAnchor, constant: 15)
         ]
         
