@@ -36,11 +36,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let firstUrl = URLContexts.first?.url else {
             return
         }
+        let authService = DI.shared.getAuthSerivce()
         
-        if AuthServiceImpl.shared.getTinkoffId().isTinkoffAuthAvailable {
-            _ = AuthServiceImpl.shared.getTinkoffId().handleCallbackUrl(firstUrl)
+        if authService.getTinkoffId().isTinkoffAuthAvailable {
+            _ = authService.getTinkoffId().handleCallbackUrl(firstUrl)
         } else {
-            _ = AuthServiceImpl.shared.getDebugTinkoffId().handleCallbackUrl(firstUrl)
+            _ = authService.getDebugTinkoffId().handleCallbackUrl(firstUrl)
         }
     }
 }

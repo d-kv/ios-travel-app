@@ -13,9 +13,6 @@ protocol AuthService {
     func refreshToken(refreshToken: String, handler: @escaping SignInCompletion)
     func logOut(accessToken: String, handler: @escaping SignOutCompletion)
     
-//    func getSecret(key: String) -> String
-//    func setSecret(key: String, value: String)
-    
     func getTinkoffId() -> ITinkoffID
     func getDebugTinkoffId() -> TinkoffID.ITinkoffID
     
@@ -25,7 +22,7 @@ protocol AuthService {
 
 class AuthServiceImpl: AuthService {
     
-    static let shared = AuthServiceImpl()
+    //static let shared = AuthServiceImpl()
     
     func tinkoffIDAuth(handler: @escaping TinkoffID.SignInCompletion) {
         if tinkoffId.isTinkoffAuthAvailable { tinkoffId.startTinkoffAuth(handler) }
@@ -41,25 +38,6 @@ class AuthServiceImpl: AuthService {
         if tinkoffId.isTinkoffAuthAvailable { tinkoffId.signOut(with: accessToken, tokenTypeHint: .access, completion: handler) }
         else { debugTinkoffId.signOut(with: accessToken, tokenTypeHint: .access, completion: handler) }
     }
-    
-//    func getSecret(key: String) -> String {
-//        var secret = ""
-//
-//        let keychainItemIdToken = [kSecClass: kSecClassGenericPassword, kSecReturnAttributes: true,
-//                              kSecReturnData: true, kSecAttrAccount: key] as CFDictionary
-//        var refIdToken: AnyObject?
-//        let statusIdToken = SecItemCopyMatching(keychainItemIdToken, &refIdToken)
-//        if let result = refIdToken as? NSDictionary, let passwordData = result[kSecValueData] as? Data {
-//            let str = String(decoding: passwordData, as: UTF8.self)
-//            secret = str
-//        }
-//        return secret
-//    }
-//
-//    func setSecret(key: String, value: String) {
-//        SecItemDelete([kSecClass: kSecClassGenericPassword, kSecAttrAccount: key] as CFDictionary)
-//        SecItemAdd([kSecValueData: value.data(using: .utf8), kSecClass: kSecClassGenericPassword, kSecAttrAccount: key] as CFDictionary, nil)
-//    }
     
     func getTinkoffId() -> TinkoffID.ITinkoffID {
         return tinkoffId

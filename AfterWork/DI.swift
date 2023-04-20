@@ -7,6 +7,7 @@
 
 import Foundation
 import Swinject
+import TinkoffID
 
 //let interfaceExt = DI.container.resolve(InterfaceExt.self)!
 
@@ -74,11 +75,11 @@ class DI: DIProtocol {
         container.register(MainViewPresenter.self) { _ in return MainViewPresenter() }
         container.register(CardsViewPresenter.self) { _ in return CardsViewPresenter() }
         container.register(SettingsViewPresenter.self) { _ in return SettingsViewPresenter() }
-        
+                
         return container
     }()
         
     //static var poiData: PoiData = PoiData.init()
-    static let userData: UserData = UserData.init()
+    //static let userData: UserData = UserData.init()
     
 }

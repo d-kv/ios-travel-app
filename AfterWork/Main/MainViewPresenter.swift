@@ -18,6 +18,8 @@ protocol MainViewPresenterDelegate: AnyObject {
 final class MainViewPresenter {
     weak var delegate: MainViewPresenterDelegate?
     
+    let authService = DI.shared.getAuthSerivce()
+    
     func openSettings() {
         let settingsViewController = DI.shared.getSettingsViewController()
         
@@ -117,17 +119,17 @@ final class MainViewPresenter {
         var refreshToken = CacheImpl.shared.getSecret(key: "refreshToken")
         
         if idToken == "ID" {
-            AuthServiceImpl.shared.setIsAuthDebug(newValue: true)
+            authService.setIsAuthDebug(newValue: true)
             print("")
         } else {
             print("")
         }
         
-        if !AuthServiceImpl.shared.getTinkoffId().isTinkoffAuthAvailable && !AuthServiceImpl.shared.getIsAuthDebug() {
+        if !authService.getTinkoffId().isTinkoffAuthAvailable && !authService.getIsAuthDebug() {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
             
-        } else if AuthServiceImpl.shared.getIsAuthDebug() {
+        } else if authService.getIsAuthDebug() {
             
             if DataLoaderImpl.shared.loadData() {
                 print("")
@@ -138,7 +140,7 @@ final class MainViewPresenter {
         } else {
             
             if idToken != "" {
-                AuthServiceImpl.shared.getTinkoffId().obtainTokenPayload(using: refreshToken, handleRefreshToken)
+                authService.getTinkoffId().obtainTokenPayload(using: refreshToken, handleRefreshToken)
             } else {
                 self.delegate?.mainViewPresenter(self, isLoading: false)
                 goToLogin()

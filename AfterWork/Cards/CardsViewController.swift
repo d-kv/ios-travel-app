@@ -41,15 +41,18 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
     func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
         
         mapView.removeAnnotations(mapView.annotations)
+        
         var currentAnnotationImage = UIImage(named: "marker")
-        if cards[index + 1].isRecommended { currentAnnotationImage =  UIImage(named: "markerTop") }
-        //if (cards[index + 1][7] as? Bool ?? false) { currentAnnotationImage =  UIImage(named: "markerTop") }
+        let currentCard = cards[index]
+        let nextCard = cards[index + 1]
+        
+        if nextCard.isRecommended { currentAnnotationImage =  UIImage(named: "markerTop") }
         
         let artwork = Artwork(
-            title: cards[index].name,
-            locationName: cards[index].category,
-            discipline: cards[index].category,
-            coordinate: CLLocationCoordinate2D(latitude: Double(cards[index + 1].latitude) as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: Double(cards[index + 1].longitude) as? CLLocationDegrees ?? CLLocationDegrees(0)), //cards[0][6]
+            title: currentCard.name,
+            locationName: currentCard.category,
+            discipline: currentCard.category,
+            coordinate: CLLocationCoordinate2D(latitude: Double(nextCard.latitude) ?? CLLocationDegrees(0), longitude: Double(nextCard.longitude) ?? CLLocationDegrees(0)), //cards[0][6]
             image: currentAnnotationImage
         )
         mapView.addAnnotation(artwork)
@@ -69,13 +72,12 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
             sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
             
-            if (cards[index].isRecommended) { currentAnnotationImage =  UIImage(named: "markerTop") }
-            //if (cards[index].is as? Bool ?? false) { currentAnnotationImage =  UIImage(named: "markerTop") }
+            if (currentCard.isRecommended) { currentAnnotationImage =  UIImage(named: "markerTop") }
             let artwork = Artwork(
-                title: cards[index].name,
-                locationName: cards[index].category,
-                discipline: cards[index].category,
-                coordinate: CLLocationCoordinate2D(latitude: Double(cards[index].latitude) as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: Double(cards[index].longitude) as? CLLocationDegrees ?? CLLocationDegrees(0)), //cards[0][6]
+                title: currentCard.name,
+                locationName: currentCard.category,
+                discipline: currentCard.category,
+                coordinate: CLLocationCoordinate2D(latitude: Double(currentCard.latitude) ?? CLLocationDegrees(0), longitude: Double(currentCard.longitude) ?? CLLocationDegrees(0)), //cards[0][6]
                 image: currentAnnotationImage
             )
             

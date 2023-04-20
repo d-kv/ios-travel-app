@@ -23,7 +23,10 @@ class LoginViewPresenter {
 
     weak var delegate: LoginViewPresenterDelegate?
     
-    let preferences = UserDefaults.standard
+    private let authService = DI.shared.getAuthSerivce()
+    private let cache = CacheImpl.shared
+    
+    private let preferences = UserDefaults.standard
     
     @objc func authButtonClicked() {
         delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
@@ -47,9 +50,9 @@ class LoginViewPresenter {
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             credentials = try result.get()
-            CacheImpl.shared.setSecret(key: "idToken", value: credentials?.idToken ?? "")
-            CacheImpl.shared.setSecret(key: "accessToken", value: credentials?.accessToken ?? "")
-            CacheImpl.shared.setSecret(key: "refreshToken", value: credentials?.refreshToken ?? "")
+            cache.setSecret(key: "idToken", value: credentials?.idToken ?? "")
+            cache.setSecret(key: "accessToken", value: credentials?.accessToken ?? "")
+            cache.setSecret(key: "refreshToken", value: credentials?.refreshToken ?? "")
 
             req()
             
@@ -68,8 +71,8 @@ class LoginViewPresenter {
     
     private func req() {
         
-        var idToken = CacheImpl.shared.getSecret(key: "idToken")
-        var accessToken = CacheImpl.shared.getSecret(key: "accessToken")
+        var idToken = cache.getSecret(key: "idToken")
+        var accessToken = cache.getSecret(key: "accessToken")
                 
         var host = ""
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
@@ -97,8 +100,8 @@ class LoginViewPresenter {
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    CacheImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                    CacheImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                    self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                    self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                     self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                     self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                     self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
@@ -158,14 +161,14 @@ class LoginViewPresenter {
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    CacheImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                    CacheImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                    self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                    self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                     self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                     self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                     self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
                     self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
                     
-                    AuthServiceImpl.shared.setIsAuthDebug(newValue: true)
+                    self.authService.setIsAuthDebug(newValue: true)
                     
                     DispatchQueue.main.async {
                         self.delegate?.TinkoffIDResolver(status: .waiting)
