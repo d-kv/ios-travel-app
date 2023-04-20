@@ -11,7 +11,7 @@
 		5C00507D29CB4B4A00ACAB27 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C00507C29CB4B4A00ACAB27 /* Keys.plist */; };
 		5C00508029CC5F0600ACAB27 /* MapDescViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00507F29CC5F0600ACAB27 /* MapDescViewPresenter.swift */; };
 		5C00508229CC5F1300ACAB27 /* MapDescViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00508129CC5F1300ACAB27 /* MapDescViewController.swift */; };
-		5C740FCD29C8E94C00DB9A05 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C740FCC29C8E94C00DB9A05 /* DataHandler.swift */; };
+		5C740FCD29C8E94C00DB9A05 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C740FCC29C8E94C00DB9A05 /* DataLoader.swift */; };
 		5C79C04E29A2CC0E00106F20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79C04D29A2CC0E00106F20 /* AppDelegate.swift */; };
 		5C79C05029A2CC0E00106F20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79C04F29A2CC0E00106F20 /* SceneDelegate.swift */; };
 		5C79C05729A2CC0E00106F20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C79C05629A2CC0E00106F20 /* Assets.xcassets */; };
@@ -20,6 +20,7 @@
 		5C8B0BA529C1B3D80045F7BD /* CardsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B0BA429C1B3D80045F7BD /* CardsViewPresenter.swift */; };
 		5C8B0BA729C1B3E20045F7BD /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B0BA629C1B3E20045F7BD /* CardsViewController.swift */; };
 		5C8B0BAB29C1C98D0045F7BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5C8B0BAD29C1C98D0045F7BD /* Localizable.strings */; };
+		5C9A759E29EFCA4100551887 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9A759D29EFCA4100551887 /* Cache.swift */; };
 		5C9B9C9929BB4D9C0019DA8A /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B9C9829BB4D9C0019DA8A /* ArtworkView.swift */; };
 		5C9B9C9B29C057290019DA8A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B9C9A29C057290019DA8A /* AuthService.swift */; };
 		5CC1C8F629E548390096BF64 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5CC1C8F529E548390096BF64 /* GoogleService-Info.plist */; };
@@ -41,7 +42,7 @@
 		5C00507C29CB4B4A00ACAB27 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		5C00507F29CC5F0600ACAB27 /* MapDescViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDescViewPresenter.swift; sourceTree = "<group>"; };
 		5C00508129CC5F1300ACAB27 /* MapDescViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDescViewController.swift; sourceTree = "<group>"; };
-		5C740FCC29C8E94C00DB9A05 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		5C740FCC29C8E94C00DB9A05 /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		5C79C04A29A2CC0E00106F20 /* AfterWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AfterWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C79C04D29A2CC0E00106F20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C79C04F29A2CC0E00106F20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 		5C8B0BA829C1C91A0045F7BD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5C8B0BAC29C1C98D0045F7BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5C8B0BAE29C1C9920045F7BD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5C9A759D29EFCA4100551887 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		5C9B9C9829BB4D9C0019DA8A /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		5C9B9C9A29C057290019DA8A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		5CC1C8F229DC1FC50096BF64 /* AfterWork.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AfterWork.entitlements; sourceTree = "<group>"; };
@@ -140,9 +142,9 @@
 				5C79C04D29A2CC0E00106F20 /* AppDelegate.swift */,
 				5C79C04F29A2CC0E00106F20 /* SceneDelegate.swift */,
 				5C740FCB29C8E8F600DB9A05 /* Extentions */,
+				5C9A759F29EFCA4C00551887 /* Data */,
 				5CD20B5C29C894F300FB1BFF /* DI.swift */,
 				5C9B9C9A29C057290019DA8A /* AuthService.swift */,
-				5C740FCC29C8E94C00DB9A05 /* DataHandler.swift */,
 				5C79C05629A2CC0E00106F20 /* Assets.xcassets */,
 				5C79C05829A2CC0E00106F20 /* LaunchScreen.storyboard */,
 				5C79C05B29A2CC0E00106F20 /* Info.plist */,
@@ -160,6 +162,15 @@
 				5C8B0BA629C1B3E20045F7BD /* CardsViewController.swift */,
 			);
 			path = Cards;
+			sourceTree = "<group>";
+		};
+		5C9A759F29EFCA4C00551887 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5C9A759D29EFCA4100551887 /* Cache.swift */,
+				5C740FCC29C8E94C00DB9A05 /* DataLoader.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		5CEA164829B0EC3900F89006 /* Login */ = {
@@ -330,9 +341,10 @@
 				5CEA165729B0ED1F00F89006 /* MainViewController.swift in Sources */,
 				5C8B0BA229C1AFF80045F7BD /* InterfaceExt.swift in Sources */,
 				5CEA166929B0EDAF00F89006 /* SettingsViewController.swift in Sources */,
-				5C740FCD29C8E94C00DB9A05 /* DataHandler.swift in Sources */,
+				5C740FCD29C8E94C00DB9A05 /* DataLoader.swift in Sources */,
 				5C79C04E29A2CC0E00106F20 /* AppDelegate.swift in Sources */,
 				5CEA166529B0ED9800F89006 /* MapViewController.swift in Sources */,
+				5C9A759E29EFCA4100551887 /* Cache.swift in Sources */,
 				5CD20B5D29C894F300FB1BFF /* DI.swift in Sources */,
 				5CEA166329B0ED8F00F89006 /* MapViewPresenter.swift in Sources */,
 				5CEA165529B0ED1300F89006 /* MainViewPresenter.swift in Sources */,
