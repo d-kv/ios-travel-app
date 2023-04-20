@@ -62,7 +62,7 @@ final class MainViewPresenter {
     func goToLogin() {
         let loginViewController = DI.shared.getLoginViewController()
         loginViewController.modalPresentationStyle = .fullScreen
-        
+
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
     }
@@ -115,8 +115,12 @@ final class MainViewPresenter {
         
         self.delegate?.mainViewPresenter(self, isLoading: true)
         
-        var idToken = CacheImpl.shared.getSecret(key: "idToken")
-        var refreshToken = CacheImpl.shared.getSecret(key: "refreshToken")
+        let cache = CacheImpl.shared
+        
+        let authService = DI.shared.getAuthSerivce()
+        
+        var idToken = cache.getSecret(key: "idToken")
+        var refreshToken = cache.getSecret(key: "refreshToken")
         
         if idToken == "ID" {
             authService.setIsAuthDebug(newValue: true)
@@ -125,7 +129,7 @@ final class MainViewPresenter {
             print("")
         }
         
-        if !authService.getTinkoffId().isTinkoffAuthAvailable && !authService.getIsAuthDebug() {
+        if !DI.tinkoffId.isTinkoffAuthAvailable && !authService.getIsAuthDebug() {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
             
@@ -140,7 +144,7 @@ final class MainViewPresenter {
         } else {
             
             if idToken != "" {
-                authService.getTinkoffId().obtainTokenPayload(using: refreshToken, handleRefreshToken)
+                DI.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
             } else {
                 self.delegate?.mainViewPresenter(self, isLoading: false)
                 goToLogin()

@@ -45,7 +45,7 @@ class DataLoaderImpl: DataLoader {
             place = try decoder.decode(Places.self, from: json)
             places.append(place)
         } catch {
-            print("debugerror: \(error)")
+            print("")
         }
         
         return place
@@ -79,16 +79,17 @@ class DataLoaderImpl: DataLoader {
                 error == nil
             else {                                                               // check for fundamental networking error
                 DispatchQueue.main.async {
-                    if let topVC = UIApplication.getTopViewController() {
-                        topVC.present(DI.shared.getLoginViewController(), animated: true)
-                    }
+                    let loginViewController = DI.shared.getLoginViewController()
+                    loginViewController.modalPresentationStyle = .fullScreen
+                    
+                    let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+                    sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
                 }
                 return
             }
 
             switch response.statusCode {
             case 200: // success
-                    
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
                     for i in jsonArray {
                         let newData = try? JSONSerialization.data(withJSONObject: i)
@@ -102,17 +103,21 @@ class DataLoaderImpl: DataLoader {
                 
                 } else {
                     DispatchQueue.main.async {
-                        if let topVC = UIApplication.getTopViewController() {
-                            topVC.present(DI.shared.getLoginViewController(), animated: true)
-                        }
+                        let loginViewController = DI.shared.getLoginViewController()
+                        loginViewController.modalPresentationStyle = .fullScreen
+                        
+                        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+                        sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
                     }
                 }
                 
             default:
                 DispatchQueue.main.async {
-                    if let topVC = UIApplication.getTopViewController() {
-                        topVC.present(DI.shared.getLoginViewController(), animated: true)
-                    }
+                    let loginViewController = DI.shared.getLoginViewController()
+                    loginViewController.modalPresentationStyle = .fullScreen
+                    
+                    let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+                    sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
                 }
             }
         }

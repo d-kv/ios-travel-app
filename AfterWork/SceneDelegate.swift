@@ -38,10 +38,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         let authService = DI.shared.getAuthSerivce()
         
-        if authService.getTinkoffId().isTinkoffAuthAvailable {
-            _ = authService.getTinkoffId().handleCallbackUrl(firstUrl)
+        if DI.tinkoffId.isTinkoffAuthAvailable {
+            _ = DI.tinkoffId.handleCallbackUrl(firstUrl)
         } else {
-            _ = authService.getDebugTinkoffId().handleCallbackUrl(firstUrl)
+            _ = DI.debugTinkoffId.handleCallbackUrl(firstUrl)
         }
     }
 }

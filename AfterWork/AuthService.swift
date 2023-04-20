@@ -13,8 +13,8 @@ protocol AuthService {
     func refreshToken(refreshToken: String, handler: @escaping SignInCompletion)
     func logOut(accessToken: String, handler: @escaping SignOutCompletion)
     
-    func getTinkoffId() -> ITinkoffID
-    func getDebugTinkoffId() -> TinkoffID.ITinkoffID
+    //func getTinkoffId() -> ITinkoffID
+    //func getDebugTinkoffId() -> TinkoffID.ITinkoffID
     
     func getIsAuthDebug() -> Bool
     func setIsAuthDebug(newValue: Bool)
@@ -25,27 +25,27 @@ class AuthServiceImpl: AuthService {
     //static let shared = AuthServiceImpl()
     
     func tinkoffIDAuth(handler: @escaping TinkoffID.SignInCompletion) {
-        if tinkoffId.isTinkoffAuthAvailable { tinkoffId.startTinkoffAuth(handler) }
-        else { debugTinkoffId.startTinkoffAuth(handler) }
+        if DI.tinkoffId.isTinkoffAuthAvailable { DI.tinkoffId.startTinkoffAuth(handler) }
+        else { DI.debugTinkoffId.startTinkoffAuth(handler) }
     }
     
     func refreshToken(refreshToken: String, handler: @escaping TinkoffID.SignInCompletion) {
-        if tinkoffId.isTinkoffAuthAvailable { tinkoffId.obtainTokenPayload(using: refreshToken, handler) }
-        else { debugTinkoffId.obtainTokenPayload(using: refreshToken, handler) }
+        if DI.tinkoffId.isTinkoffAuthAvailable { DI.tinkoffId.obtainTokenPayload(using: refreshToken, handler) }
+        else { DI.debugTinkoffId.obtainTokenPayload(using: refreshToken, handler) }
     }
     
     func logOut(accessToken: String, handler: @escaping TinkoffID.SignOutCompletion) {
-        if tinkoffId.isTinkoffAuthAvailable { tinkoffId.signOut(with: accessToken, tokenTypeHint: .access, completion: handler) }
-        else { debugTinkoffId.signOut(with: accessToken, tokenTypeHint: .access, completion: handler) }
+        if DI.tinkoffId.isTinkoffAuthAvailable { DI.tinkoffId.signOut(with: accessToken, tokenTypeHint: .access, completion: handler) }
+        else { DI.debugTinkoffId.signOut(with: accessToken, tokenTypeHint: .access, completion: handler) }
     }
     
-    func getTinkoffId() -> TinkoffID.ITinkoffID {
-        return tinkoffId
-    }
+//    func getTinkoffId() -> TinkoffID.ITinkoffID {
+//        return tinkoffId
+//    }
     
-    func getDebugTinkoffId() -> TinkoffID.ITinkoffID {
-        return debugTinkoffId
-    }
+//    func getDebugTinkoffId() -> TinkoffID.ITinkoffID {
+//        return debugTinkoffId
+//    }
     
     func getIsAuthDebug() -> Bool {
         return isAuthDebug
@@ -57,41 +57,41 @@ class AuthServiceImpl: AuthService {
     
     private var isAuthDebug = false
 
-    private var tinkoffId: ITinkoffID = {
+//    private var tinkoffId: ITinkoffID = {
+//
+//        var clientId = ""
+//        var callbackUrl = ""
+//
+//        var keys = NSDictionary()
+//        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+//            keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
+//
+//            clientId = keys["CLIENT_ID"] as? String ?? ""
+//            callbackUrl = keys["CALLBACK_URI"] as? String ?? ""
+//        }
+//
+//
+//        let factory = TinkoffIDFactory(
+//            clientId: clientId,
+//            callbackUrl: callbackUrl
+//        )
+//
+//        return factory.build()
+//    }()
 
-        var clientId = ""
-        var callbackUrl = ""
-
-        var keys = NSDictionary()
-        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
-            keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
-
-            clientId = keys["CLIENT_ID"] as? String ?? ""
-            callbackUrl = keys["CALLBACK_URI"] as? String ?? ""
-        }
-
-
-        let factory = TinkoffIDFactory(
-            clientId: clientId,
-            callbackUrl: callbackUrl
-        )
-
-        return factory.build()
-    }()
-
-    private var debugTinkoffId: ITinkoffID = {
-        let callbackUrl = "afterwork://"
-
-        let configuration = DebugConfiguration(
-            canRefreshTokens: true,
-            canLogout: true
-        )
-
-        let factory = DebugTinkoffIDFactory(
-            callbackUrl: callbackUrl,
-            configuration: configuration
-        )
-
-        return factory.build()
-    }()
+//    private var debugTinkoffId: ITinkoffID = {
+//        let callbackUrl = "afterwork://"
+//
+//        let configuration = DebugConfiguration(
+//            canRefreshTokens: true,
+//            canLogout: true
+//        )
+//
+//        let factory = DebugTinkoffIDFactory(
+//            callbackUrl: callbackUrl,
+//            configuration: configuration
+//        )
+//
+//        return factory.build()
+//    }()
 }

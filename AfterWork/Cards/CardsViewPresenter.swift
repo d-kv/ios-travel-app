@@ -39,7 +39,6 @@ class CardsViewPresenter {
             DataLoaderImpl.shared.placesSearch.insert(Places(id: 0, yaid: 0, category: String(localized: "instruction_title"), name: String(localized: "instruction_desc"), url: "", latitude: "", longitude: "", address: "", description: String(localized: "instruction_text"), isRecommended: false, phone: "", availability: ""), at: 0)
             return DataLoaderImpl.shared.placesSearch
         } else {
-            print("debug5: \(DataLoaderImpl.shared.places)")
             return DataLoaderImpl.shared.places
         }
         

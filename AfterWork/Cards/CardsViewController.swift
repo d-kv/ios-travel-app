@@ -48,11 +48,13 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         
         if nextCard.isRecommended { currentAnnotationImage =  UIImage(named: "markerTop") }
         
+        let coordinate = CLLocationCoordinate2D(latitude: Double(nextCard.latitude) ?? 0, longitude: Double(nextCard.longitude) ?? 0)
+        
         let artwork = Artwork(
             title: currentCard.name,
             locationName: currentCard.category,
             discipline: currentCard.category,
-            coordinate: CLLocationCoordinate2D(latitude: Double(nextCard.latitude) ?? CLLocationDegrees(0), longitude: Double(nextCard.longitude) ?? CLLocationDegrees(0)), //cards[0][6]
+            coordinate: coordinate, //cards[0][6]
             image: currentAnnotationImage
         )
         mapView.addAnnotation(artwork)
@@ -72,12 +74,14 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
             let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
             sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
             
+            let coordinate = CLLocationCoordinate2D(latitude: Double(currentCard.latitude) ?? 0, longitude: Double(currentCard.longitude) ?? 0)
+            
             if (currentCard.isRecommended) { currentAnnotationImage =  UIImage(named: "markerTop") }
             let artwork = Artwork(
                 title: currentCard.name,
                 locationName: currentCard.category,
                 discipline: currentCard.category,
-                coordinate: CLLocationCoordinate2D(latitude: Double(currentCard.latitude) ?? CLLocationDegrees(0), longitude: Double(currentCard.longitude) ?? CLLocationDegrees(0)), //cards[0][6]
+                coordinate: coordinate, //cards[0][6]
                 image: currentAnnotationImage
             )
             
@@ -109,11 +113,14 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
         
+        let nextCard = cards[currentIndex + 1]
+        let coordinate = CLLocationCoordinate2D(latitude: Double(nextCard.latitude) ?? 0, longitude: Double(nextCard.longitude) ?? 0)
+        
         let artwork = Artwork(
             title: cards[currentIndex].name,
             locationName: cards[currentIndex + 1].category,
             discipline: cards[currentIndex].category,
-            coordinate: CLLocationCoordinate2D(latitude: Double(cards[currentIndex + 1].latitude) as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: Double(cards[currentIndex + 1].longitude) as? CLLocationDegrees ?? CLLocationDegrees(0)),
+            coordinate: coordinate,
             image: currentAnnotationImage
         )
         
@@ -145,10 +152,6 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         super.viewWillAppear(animated)
             
     }
-    
-//    @objc func tap(_ sender: UIButton) {
-//        print("TAPAAAAA")
-//    }
     
     // MARK: - View
     

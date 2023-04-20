@@ -77,14 +77,16 @@ final class MapViewPresenter {
             if i.isRecommended {
                 image = UIImage(named: "markerTop")
             }
+            
+            
+            let coordinate = CLLocationCoordinate2D(latitude: Double(i.latitude) ?? 0, longitude: Double(i.longitude) ?? 0)
             let artwork = Artwork(
                 title: i.name,
                 locationName: i.category,
                 discipline: "\(i.id)",
-                coordinate: CLLocationCoordinate2D(latitude: Double(i.latitude) as? CLLocationDegrees ?? CLLocationDegrees(0), longitude: Double(i.longitude) as? CLLocationDegrees ?? CLLocationDegrees(0)),
+                coordinate: coordinate,
                 image: image
             )
-            print(artwork)
                         
             if !(i.name).isEqual("Инструкция") {
                 
@@ -113,8 +115,6 @@ final class MapViewPresenter {
                         }
                     }
                 }
-            } else {
-                print("ZHOPA")
             }
             
         }

@@ -78,6 +78,44 @@ class DI: DIProtocol {
                 
         return container
     }()
+    
+    static let tinkoffId: ITinkoffID = {
+
+        var clientId = ""
+        var callbackUrl = ""
+
+        var keys = NSDictionary()
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
+
+            clientId = keys["CLIENT_ID"] as? String ?? ""
+            callbackUrl = keys["CALLBACK_URI"] as? String ?? ""
+        }
+
+
+        let factory = TinkoffIDFactory(
+            clientId: clientId,
+            callbackUrl: callbackUrl
+        )
+
+        return factory.build()
+    }()
+    
+    static var debugTinkoffId: ITinkoffID = {
+        let callbackUrl = "afterwork://"
+
+        let configuration = DebugConfiguration(
+            canRefreshTokens: true,
+            canLogout: true
+        )
+
+        let factory = DebugTinkoffIDFactory(
+            callbackUrl: callbackUrl,
+            configuration: configuration
+        )
+
+        return factory.build()
+    }()
         
     //static var poiData: PoiData = PoiData.init()
     //static let userData: UserData = UserData.init()

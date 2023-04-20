@@ -292,7 +292,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
         //print("didSelectAnnotationTapped")
-        //print("ZHOPA1")
         
     }
     

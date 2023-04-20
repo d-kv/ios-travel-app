@@ -99,16 +99,19 @@ class LoginViewPresenter {
             case 200: // success
                 
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
-
-                    self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                    self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
-                    self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
-                    self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
-                    self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
-                    self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
-                    DispatchQueue.main.async {
-                        self.delegate?.TinkoffIDResolver(status: .waiting)
-                        self.goToMain()
+                    if jsonArray.count > 0 {
+                        self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                        self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                        self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
+                        self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
+                        self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
+                        self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
+                        DispatchQueue.main.async {
+                            self.delegate?.TinkoffIDResolver(status: .waiting)
+                            self.goToMain()
+                        }
+                    } else {
+                        DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
                     }
                 } else {
                     
