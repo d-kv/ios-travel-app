@@ -9,7 +9,17 @@ import Foundation
 import UIKit
 import Shuffle_iOS
 
-class InterfaceExt {
+protocol InterfaceExtProtocol {
+    func lightGreyButton(title: String, color: UIColor) -> UIButton
+    func standardButton(title: String, backgroundColor: UIColor, cornerRadius: CGFloat, titleColor: UIColor, font: UIFont) -> UIButton
+    func standardTextView(text: String, textColor: UIColor, font: UIFont) -> UITextView
+    func frameTextView(text: String, font: UIFont, lineHeightMultiple: CGFloat) -> UITextView
+    func card(fromData data: Places) -> SwipeCard
+    func basicCard(type: String, title: String, description: String, workHours: String, url: String, isRecommended: Bool) -> UIView
+    func worstPrice(price: Int) -> UIView 
+}
+
+class InterfaceExt: InterfaceExtProtocol {
     
     func lightGreyButton(title: String, color: UIColor) -> UIButton {
         

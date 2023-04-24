@@ -14,8 +14,16 @@ protocol MainViewPresenterDelegate: AnyObject {
                             isLoading: Bool)
 }
 
+protocol MainViewPresenterProtocol {
+    func openSettings()
+    func goToMap()
+    func goToCards(type: String)
+    func goToLogin()
+    func search(req: String)
+    func enteredApp()
+}
 
-final class MainViewPresenter {
+final class MainViewPresenter: MainViewPresenterProtocol {
     weak var delegate: MainViewPresenterDelegate?
     
     let authService = DI.shared.getAuthSerivce()

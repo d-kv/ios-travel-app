@@ -11,6 +11,7 @@ import TinkoffID
 
 protocol SettingsViewPresenterDelegate: AnyObject {
     func settingsViewPresenter(isLoading: Bool)
+    func signOut()
 }
 
 final class SettingsViewPresenter {
