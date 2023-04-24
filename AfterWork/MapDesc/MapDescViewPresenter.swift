@@ -9,8 +9,13 @@ import Foundation
 import UIKit
 import MapKit
 
+protocol MapDescViewPresenterProtocol {
+    func callNumber(phoneNumber: String)
+    func openLink(website: String)
+}
 
-class MapDescViewPresenter {
+
+class MapDescViewPresenter: MapDescViewPresenterProtocol {
     
     
     func callNumber(phoneNumber: String) {

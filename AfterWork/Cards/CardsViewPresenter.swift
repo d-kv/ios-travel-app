@@ -9,7 +9,13 @@ import Foundation
 import UIKit
 import MapKit
 
-class CardsViewPresenter {
+protocol CardsViewPresenterProtocol {
+    func goToMain()
+    func setUpLocation(locationManager: CLLocationManager)
+    static func getCards() -> [Places]?
+}
+
+class CardsViewPresenter: CardsViewPresenterProtocol {
     
     private let controller = DI.shared.getCardsViewController()
 

@@ -14,7 +14,7 @@ import TinkoffID
 protocol LoginViewPresenterDelegate: AnyObject {
     func loginViewPresenter(_ reposViewModel: LoginViewPresenter,
                             isLoading: Bool)
-    func TinkoffIDResolver(status: StatusCodes) // 0 - waiting; 1 - auth process; 2 - success login; 3 - login canceled; 4 - login failed; 5 - some mistake
+    func TinkoffIDResolver(status: StatusCodes)
 }
 
 // MARK: - Main methods and Class
@@ -200,15 +200,9 @@ enum StatusCodes {
     case failedToObtainToken
     case failedToRefreshCredentials
     case unknownError
-    case someError//                case 404: // some error
-    case failTID//                case 401: // failed to auth TID
-    case serverError//                case 500: // server error
-    case notTester//                case 207: // not tester
-    case blocked//                case 403: // blocked
+    case someError
+    case failTID
+    case serverError
+    case notTester
+    case blocked
 }
-
-//                case 404: // some error
-//                case 401: // failed to auth TID
-//                case 500: // server error
-//                case 207: // not tester
-//                case 403: // blocked
