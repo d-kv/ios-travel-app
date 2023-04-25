@@ -94,7 +94,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             mapView.centerToLocation(CLLocation(latitude: a?.latitude ?? CLLocationDegrees(0), longitude: a?.longitude ?? CLLocationDegrees(0)), regionRadius: CLLocationDistance(10000))
         } else {
-            MapViewPresenter.setUpPoints(mapView: mapView, category: "all", isRecommended: false, isSearching: MapViewController.isSearching)
+            MapViewPresenter.setUpPoints(mapView: mapView, category: .all, isRecommended: false, isSearching: MapViewController.isSearching)
             taxiButton.isHidden = true
             wayButton.isHidden = true
         }
@@ -186,20 +186,27 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
-        case 0:
-            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: false, isSearching: MapViewController.isSearching) }
-            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: true, isSearching: MapViewController.isSearching) }
-        case 1:
-            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: false, isSearching: MapViewController.isSearching) }
-            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: true, isSearching: MapViewController.isSearching) }
-        case 2:
-            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: false, isSearching: MapViewController.isSearching) }
-            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: true, isSearching: MapViewController.isSearching) }
-        case 3:
-            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false, isSearching: MapViewController.isSearching) }
-            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true, isSearching: MapViewController.isSearching) }
+        case segment.all.rawValue:
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: .all, isRecommended: false, isSearching: MapViewController.isSearching) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: .all, isRecommended: true, isSearching: MapViewController.isSearching) }
+        case segment.food.rawValue:
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: .food, isRecommended: false, isSearching: MapViewController.isSearching) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: .food, isRecommended: true, isSearching: MapViewController.isSearching) }
+        case segment.art.rawValue:
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: .art, isRecommended: false, isSearching: MapViewController.isSearching) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: .art, isRecommended: true, isSearching: MapViewController.isSearching) }
+        case segment.hotel.rawValue:
+            if self.segmentControl.backgroundColor == .white { MapViewPresenter.setUpPoints(mapView: self.mapView, category: .hotel, isRecommended: false, isSearching: MapViewController.isSearching) }
+            else { MapViewPresenter.setUpPoints(mapView: self.mapView, category: .hotel, isRecommended: true, isSearching: MapViewController.isSearching) }
         default:
             print("")
+        }
+        
+        enum segment: Int {
+            case all = 0
+            case food = 1
+            case art = 2
+            case hotel = 3
         }
 
     }
@@ -208,14 +215,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         UIView.animate(withDuration: 0.3) {
             if self.segmentControl.backgroundColor == .white {
                 switch self.segmentControl.selectedSegmentIndex {
-                case 0:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: true, isSearching: MapViewController.isSearching)
-                case 1:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: true, isSearching: MapViewController.isSearching)
-                case 2:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: true, isSearching: MapViewController.isSearching)
-                case 3:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: true, isSearching: MapViewController.isSearching)
+                case segment.all.rawValue:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: .all, isRecommended: true, isSearching: MapViewController.isSearching)
+                case segment.food.rawValue:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: .food, isRecommended: true, isSearching: MapViewController.isSearching)
+                case segment.art.rawValue:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: .art, isRecommended: true, isSearching: MapViewController.isSearching)
+                case segment.hotel.rawValue:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: .hotel, isRecommended: true, isSearching: MapViewController.isSearching)
                 default:
                     print("")
                 }
@@ -228,14 +235,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
             } else {
                 switch self.segmentControl.selectedSegmentIndex {
-                case 0:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "all", isRecommended: false, isSearching: MapViewController.isSearching)
-                case 1:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "food", isRecommended: false, isSearching: MapViewController.isSearching)
-                case 2:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "art", isRecommended: false, isSearching: MapViewController.isSearching)
-                case 3:
-                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: "hotel", isRecommended: false, isSearching: MapViewController.isSearching)
+                case segment.all.rawValue:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: .all, isRecommended: false, isSearching: MapViewController.isSearching)
+                case segment.food.rawValue:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: .food, isRecommended: false, isSearching: MapViewController.isSearching)
+                case segment.art.rawValue:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: .art, isRecommended: false, isSearching: MapViewController.isSearching)
+                case segment.hotel.rawValue:
+                    MapViewPresenter.setUpPoints(mapView: self.mapView, category: .hotel, isRecommended: false, isSearching: MapViewController.isSearching)
                 default:
                     print("")
                 }
@@ -247,6 +254,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "LightGrayColor") ?? .white], for: .normal)
 
             }
+        }
+        
+        enum segment: Int {
+            case all = 0
+            case food = 1
+            case art = 2
+            case hotel = 3
         }
         
     }

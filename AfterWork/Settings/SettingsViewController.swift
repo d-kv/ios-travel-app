@@ -345,29 +345,29 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func achievementTap(_ sender: UIButton) {
+        let enums = achievementsEnums.self
         switch sender.tag {
-        case 0:
+        case enums.good.rawValue:
             showAlert(title: String(localized: "achievements_good_title"), message: String(localized: "achievements_good_text"))
-        case 1:
+        case enums.inspector.rawValue:
             showAlert(title: String(localized: "achievements_inspector_title"), message: String(localized: "achievements_inspector_text"))
-        case 2:
+        case enums.guide.rawValue:
             showAlert(title: String(localized: "achievements_guide_title"), message: String(localized: "achievements_guide_text"))
-        case 3:
+        case enums.green.rawValue:
             showAlert(title: String(localized: "achievements_green_title"), message: String(localized: "achievements_green_text"))
-        case 4:
+        case enums.star.rawValue:
             showAlert(title: String(localized: "achievements_star_title"), message: String(localized: "achievements_star_text"))
-        case 5:
+        case enums.hr.rawValue:
             showAlert(title: String(localized: "achievements_hr_title"), message: String(localized: "achievements_hr_text"))
-        case 6:
+        case enums.way.rawValue:
             showAlert(title: String(localized: "achievements_way_title"), message: String(localized: "achievements_way_text"))
-        case 7:
+        case enums.question.rawValue:
             showAlert(title: String(localized: "achievements_question_title"), message: String(localized: "achievements_question_text"))
-        case 8:
+        case enums.money.rawValue:
             showAlert(title: String(localized: "achievements_money_title"), message: String(localized: "achievements_money_text"))
-        case 9:
+        case enums.deusvult.rawValue:
             showAlert(title: String(localized: "achievements_deusvult_title"), message: String(localized: "achievements_deusvult_text"))
         default: break
-            //do nothing
         }
     }
     
@@ -375,6 +375,19 @@ class SettingsViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private enum achievementsEnums: Int {
+        case good = 0
+        case inspector = 1
+        case guide = 2
+        case green = 3
+        case star = 4
+        case hr = 5
+        case way = 6
+        case question = 7
+        case money = 8
+        case deusvult = 9
     }
     
 }
