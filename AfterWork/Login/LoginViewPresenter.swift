@@ -25,9 +25,7 @@ class LoginViewPresenter {
     
     private let authService = DI.shared.getAuthSerivce()
     private let cache = CacheImpl.shared
-    
-    private let preferences = UserDefaults.standard
-    
+        
     @objc func authButtonClicked() {
         delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
         DI.shared.getAuthSerivce().tinkoffIDAuth(handler: handleSignInResult)
@@ -102,10 +100,10 @@ class LoginViewPresenter {
                     if jsonArray.count > 0 {
                         self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
                         self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
-                        self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
-                        self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
-                        self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
-                        self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
+                        self.cache.setPreferences(data: jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
+                        self.cache.setPreferences(data: jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
+                        self.cache.setPreferences(data: jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
+                        self.cache.setPreferences(data: jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
                         DispatchQueue.main.async {
                             self.delegate?.TinkoffIDResolver(status: .waiting)
                             self.goToMain()
@@ -167,10 +165,10 @@ class LoginViewPresenter {
                     
                     self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
                     self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
-                    self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
-                    self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
-                    self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
-                    self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
+                    self.cache.setPreferences(data: jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
+                    self.cache.setPreferences(data: jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
+                    self.cache.setPreferences(data: jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
+                    self.cache.setPreferences(data: jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
                     
                     self.authService.setIsAuthDebug(newValue: true)
                     

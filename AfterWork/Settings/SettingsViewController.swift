@@ -42,8 +42,8 @@ class SettingsViewController: UIViewController {
     // MARK: - Constraints
     
     func create() {
-        let preferences = UserDefaults.standard
-        userName.text = (preferences.string(forKey: "lastName") ?? "Null") + " " + (preferences.string(forKey: "firstName") ?? "Null")
+        let cache = CacheImpl.shared
+        userName.text = (cache.getPreferences(forKey: "lastName")) + " " + (cache.getPreferences(forKey: "firstName"))
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
         userName.textAlignment = NSTextAlignment.justified
@@ -63,7 +63,7 @@ class SettingsViewController: UIViewController {
         signOutButton.setTitleColor(.red, for: .normal)
         signOutButton.addTarget(self, action: #selector(signOutTap), for: .touchUpInside)
         
-        if preferences.bool(forKey: "isAdmin") {
+        if cache.getPreferencesBool(forKey: "isAdmin") {
             adminButton.addTarget(self, action: #selector(adminTap), for: .touchUpInside)
         } else {
             adminButton.isHidden = true

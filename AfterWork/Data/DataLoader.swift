@@ -35,21 +35,12 @@ class DataLoaderImpl: DataLoader {
     
     static let shared = DataLoaderImpl()
     
+    var cache = CacheImpl.shared
+    
     var places = [Places]()
     var placesSearch = [Places]()
     
-    private func parse(json: Data) -> Places {
-        let decoder = JSONDecoder()
-        var place = Places(id: 0, yaid: 0, category: "", name: "", url: "", latitude: "", longitude: "", address: "", description: "", isRecommended: false, phone: "", availability: "")
-        do {
-            place = try decoder.decode(Places.self, from: json)
-            places.append(place)
-        } catch {
-            print("")
-        }
-        
-        return place
-    }
+    
     
     func loadData() -> Bool {
         
@@ -93,7 +84,7 @@ class DataLoaderImpl: DataLoader {
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
                     for i in jsonArray {
                         let newData = try? JSONSerialization.data(withJSONObject: i)
-                        self.parse(json: newData ?? Data())
+                        self.places.append(self.cache.parse(json: newData ?? Data()))
                     }
                     DispatchQueue.main.async {
                         if let topVC = UIApplication.getTopViewController() {
