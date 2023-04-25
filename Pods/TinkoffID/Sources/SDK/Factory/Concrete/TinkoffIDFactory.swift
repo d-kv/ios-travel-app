@@ -21,15 +21,15 @@ import UIKit
 
 /// Реализация фабрики `ITinkoffID` по умолчанию
 public final class TinkoffIDFactory: ITinkoffIDFactory {
-    
+
     // Dependencies
     private let clientId: String
     private let callbackUrl: String
     private let appConfiguration: TargetAppConfiguration
     private let environmentConfiguration: EnvironmentConfiguration
-    
+
     // MARK: - Initialization
-    
+
     /// Создаёт новый экземпляр класса
     ///
     /// - Parameters:
@@ -50,7 +50,7 @@ public final class TinkoffIDFactory: ITinkoffIDFactory {
             environmentConfiguration: environment
         )
     }
-    
+
     /// Создаёт новый экземпляр класса
     ///
     /// - Parameters:
@@ -69,9 +69,9 @@ public final class TinkoffIDFactory: ITinkoffIDFactory {
         self.environmentConfiguration = environmentConfiguration
         self.appConfiguration = appConfiguration
     }
-    
+
     // MARK: - ITinkoffIDFactory
-    
+
     public func build() -> ITinkoffID {
         let urlSchemeBuilder = URLSchemeBuilder(baseUrlString: appConfiguration.authUrl)
         let appLauncher = URLSchemeAppLauncher(
@@ -79,24 +79,24 @@ public final class TinkoffIDFactory: ITinkoffIDFactory {
             builder: urlSchemeBuilder,
             router: UIApplication.shared
         )
-        
+
         let requestBuilder = RequestBuilder(baseUrl: environmentConfiguration.apiBaseUrl)
         let api = API(
             requestBuilder: requestBuilder,
             requestProcessor: URLSession.shared,
             responseDispatcher: DispatchQueue.main
         )
-        
+
         let codeVerifierGenerator = RFC7636PKCECodeVerifierGenerator()
         let codeChallengeDerivator = RFC7636PKCECodeChallengeDerivator()
-        
+
         let payloadGenerator = PKCEPayloadGenerator(
             codeVerifierGenerator: codeVerifierGenerator,
             codeChallengeDerivator: codeChallengeDerivator
         )
-        
+
         let callbackUrlParser = CallbackURLParser()
-        
+
         return TinkoffID(
             payloadGenerator: payloadGenerator,
             appLauncher: appLauncher,

@@ -9,21 +9,20 @@ import Foundation
 import Swinject
 import TinkoffID
 
-
 protocol DIProtocol {
     func getAuthSerivce() -> AuthService
     func getInterfaceExt() -> InterfaceExt
-    
+
     func getMainViewController() -> MainViewController
     func getMainViewPresenter() -> MainViewPresenter
-    
+
     func getMapDescViewController() -> MapDescViewController
     func getMapDescViewPresenter() -> MapDescViewPresenter
-    
+
     func getMapViewController_Cards() -> MapViewController
     func getMapViewController_Map() -> MapViewController
     func getMapViewPresenter() -> MapViewPresenter
-    
+
     func getLoginViewController() -> LoginViewController
     func getSettingsViewController() -> SettingsViewController
     func getCardsViewController() -> CardsViewController
@@ -31,37 +30,37 @@ protocol DIProtocol {
 }
 
 class DI: DIProtocol {
-    
+
     func getAuthSerivce() -> AuthService { return container.resolve(AuthService.self)! }
     func getInterfaceExt() -> InterfaceExt { return container.resolve(InterfaceExt.self)! }
-    
+
     func getMapDescViewController() -> MapDescViewController { return container.resolve(MapDescViewController.self)! }
     func getMapDescViewPresenter() -> MapDescViewPresenter { return container.resolve(MapDescViewPresenter.self)! }
-    
+
     func getMapViewController_Cards() -> MapViewController { return container.resolve(MapViewController.self, name: "Cards")!}
     func getMapViewController_Map() -> MapViewController { return container.resolve(MapViewController.self, name: "Map")!}
     func getMapViewPresenter() -> MapViewPresenter { return container.resolve(MapViewPresenter.self)!}
-    
+
     func getMainViewController() -> MainViewController { return container.resolve(MainViewController.self)!}
     func getLoginViewController() -> LoginViewController { return container.resolve(LoginViewController.self)!}
     func getSettingsViewController() -> SettingsViewController { return container.resolve(SettingsViewController.self)!}
     func getCardsViewController() -> CardsViewController { return container.resolve(CardsViewController.self)!}
-    
+
     func getMainViewPresenter() -> MainViewPresenter { return container.resolve(MainViewPresenter.self)!}
     func getCardsViewPresenter() -> CardsViewPresenter { return container.resolve(CardsViewPresenter.self)!}
     func getSettingsViewPresenter() -> SettingsViewPresenter { return container.resolve(SettingsViewPresenter.self)!}
-    
+
     static let shared = DI()
-    
+
     private let container: Container = {
         let container = Container()
 
         container.register(AuthService.self) { _ in return AuthServiceImpl() }
         container.register(InterfaceExt.self) { _ in return InterfaceExt() }
-        
+
         container.register(MapDescViewController.self) { _ in return MapDescViewController() }
         container.register(MapDescViewPresenter.self) { _ in return MapDescViewPresenter() }
-        
+
         container.register(MapViewController.self, name: "Cards") { _ in return MapViewController() }
         container.register(MapViewController.self, name: "Map") { _ in return MapViewController() }
         container.register(MapViewPresenter.self) { _ in return MapViewPresenter() }
@@ -74,10 +73,10 @@ class DI: DIProtocol {
         container.register(MainViewPresenter.self) { _ in return MainViewPresenter() }
         container.register(CardsViewPresenter.self) { _ in return CardsViewPresenter() }
         container.register(SettingsViewPresenter.self) { _ in return SettingsViewPresenter() }
-                
+
         return container
     }()
-    
+
     static let tinkoffId: ITinkoffID = {
 
         var clientId = ""
@@ -91,7 +90,6 @@ class DI: DIProtocol {
             callbackUrl = keys["CALLBACK_URI"] as? String ?? ""
         }
 
-
         let factory = TinkoffIDFactory(
             clientId: clientId,
             callbackUrl: callbackUrl
@@ -99,7 +97,7 @@ class DI: DIProtocol {
 
         return factory.build()
     }()
-    
+
     static var debugTinkoffId: ITinkoffID = {
         let callbackUrl = "afterwork://"
 
@@ -115,5 +113,5 @@ class DI: DIProtocol {
 
         return factory.build()
     }()
-    
+
 }

@@ -20,7 +20,7 @@ import Foundation
 
 /// Конструктор запросов
 protocol IRequestBuilder {
-    
+
     /// Возвращает запрос на получение токена
     /// - Parameters:
     ///   - code: Код, полученный от приложения Тинькофф
@@ -31,13 +31,13 @@ protocol IRequestBuilder {
                            _ clientId: String,
                            _ codeVerifier: String,
                            _ redirectUri: String) throws -> URLRequest
-    
+
     /// Возвращает запрос на обновление токена
     /// - Parameters:
     ///   - refreshToken: `Refresh token`, полученный с обновляемыми авторизационными данными
     ///   - clientId: Идентификатор авторизуемого приложения
     func buildTokenRequest(with refreshToken: String, clientId: String) throws -> URLRequest
-    
+
     /// Возвращает запрос на инвалидацию токена
     /// - Parameters:
     ///   - token: Значение токена

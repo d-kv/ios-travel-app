@@ -22,7 +22,7 @@ import Foundation
 public protocol TargetAppConfiguration {
     /// URL-схема, используемая для определения установлено ли заданное приложение
     var urlScheme: String { get }
-    
+
     /// Ссылка для проведения авторизации
     var authUrl: String { get }
 }

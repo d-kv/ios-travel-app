@@ -19,42 +19,42 @@
 import Foundation
 
 final class DebugTinkoffID: ITinkoffID {
-    
+
     enum Error: Swift.Error {
         case logoutForbidden
     }
-    
+
     enum DebugAppResult: String {
         case success
         case failure
         case unavailable
         case cancelled
     }
-    
+
     // Dependencies
     private let appLauncher: IDebugAppLauncher
     private let canRefreshTokens: Bool
     private let canLogout: Bool
-    
+
     // State
     private var completion: SignInCompletion?
-    
+
     init(appLauncher: IDebugAppLauncher, canRefreshTokens: Bool, canLogout: Bool) {
         self.appLauncher = appLauncher
         self.canRefreshTokens = canRefreshTokens
         self.canLogout = canLogout
     }
-    
+
     var isTinkoffAuthAvailable: Bool {
         appLauncher.canLaunchDebugApp
     }
-    
+
     func startTinkoffAuth(_ completion: @escaping SignInCompletion) {
         self.completion = completion
-        
+
         appLauncher.launchDebugApp()
     }
-    
+
     func handleCallbackUrl(_ url: URL) -> Bool {
         switch resolveDebugAppResult(url) {
         case .success:
@@ -68,10 +68,10 @@ final class DebugTinkoffID: ITinkoffID {
         default:
             return false
         }
-        
+
         return true
     }
-    
+
     func obtainTokenPayload(using refreshToken: String, _ completion: @escaping (Result<TinkoffTokenPayload, TinkoffAuthError>) -> Void) {
         DispatchQueue.main.async {
             if self.canRefreshTokens {
@@ -81,7 +81,7 @@ final class DebugTinkoffID: ITinkoffID {
             }
         }
     }
-    
+
     func signOut(with token: String, tokenTypeHint: SignOutTokenTypeHint, completion: @escaping SignOutCompletion) {
         DispatchQueue.main.async {
             if self.canLogout {
@@ -91,9 +91,9 @@ final class DebugTinkoffID: ITinkoffID {
             }
         }
     }
-    
+
     // MARK: - Private
-    
+
     private func resolveDebugAppResult(_ url: URL) -> DebugAppResult? {
         URLComponents(url: url, resolvingAgainstBaseURL: true)?
             .queryItems?
@@ -101,7 +101,7 @@ final class DebugTinkoffID: ITinkoffID {
             .flatMap { $0.value }
             .flatMap(DebugAppResult.init(rawValue: ))
     }
-    
+
     private func finish(with result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         DispatchQueue.main.async {
             self.completion?(result)

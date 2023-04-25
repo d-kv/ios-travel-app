@@ -22,29 +22,29 @@ protocol LoginViewPresenterDelegate: AnyObject {
 class LoginViewPresenter {
 
     weak var delegate: LoginViewPresenterDelegate?
-    
+
     private let authService = DI.shared.getAuthSerivce()
     private let cache = CacheImpl.shared
-        
+
     @objc func authButtonClicked() {
         delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
         DI.shared.getAuthSerivce().tinkoffIDAuth(handler: handleSignInResult)
     }
-    
+
     private func goToMain() {
         let mainViewController = DI.shared.getMainViewController()
-        
+
         mainViewController.modalPresentationStyle = .fullScreen
-        
+
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(mainViewController, animated: true)
         sceneDelegate.window!.rootViewController?.dismiss(animated: true)
     }
-    
+
     // MARK: - Auth handler
-    
+
     private var credentials: TinkoffTokenPayload?
-    
+
     private func handleSignInResult(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             credentials = try result.get()
@@ -53,7 +53,7 @@ class LoginViewPresenter {
             cache.setSecret(key: "refreshToken", value: credentials?.refreshToken ?? "")
 
             req()
-            
+
         } catch TinkoffAuthError.cancelledByUser {
             delegate?.TinkoffIDResolver(status: StatusCodes.cancelledByUser)
         } catch TinkoffAuthError.failedToLaunchApp {
@@ -66,23 +66,23 @@ class LoginViewPresenter {
             delegate?.TinkoffIDResolver(status: StatusCodes.unknownError)
         }
     }
-    
+
     private func req() {
-        
+
         var idToken = cache.getSecret(key: "idToken")
         var accessToken = cache.getSecret(key: "accessToken")
-                
+
         var host = ""
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
             host = keys["HOST"] as? String ?? ""
         }
-        
+
         let url = URL(string: host + "/api/auth?tid_id=" + idToken + "&tid_accessToken=" + accessToken)!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
-        
+
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let data = data,
@@ -95,8 +95,8 @@ class LoginViewPresenter {
 
             switch response.statusCode {
             case 200: // success
-                
-                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
+
+                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options: .allowFragments) as? [Dictionary<String, Any>] {
                     if jsonArray.count > 0 {
                         self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
                         self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
@@ -112,7 +112,7 @@ class LoginViewPresenter {
                         DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
                     }
                 } else {
-                    
+
                     DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
                 }
             case 404:
@@ -131,22 +131,22 @@ class LoginViewPresenter {
         }
 
         task.resume()
-        
+
     }
-    
+
     func debug_req(TIN_accessToken: String) {
-        
+
         var host = ""
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
             host = keys["HOST"] as? String ?? ""
         }
-        
+
         let url = URL(string: host + "/api/auth?tid_id=ID&tid_accessToken=" + TIN_accessToken + "&debug=1")!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
-        
+
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let data = data,
@@ -159,19 +159,18 @@ class LoginViewPresenter {
 
             switch response.statusCode {
             case 200: // success
-                
-                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
 
-                    
+                if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options: .allowFragments) as? [Dictionary<String, Any>] {
+
                     self.cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
                     self.cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                     self.cache.setPreferences(data: jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                     self.cache.setPreferences(data: jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                     self.cache.setPreferences(data: jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
                     self.cache.setPreferences(data: jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
-                    
+
                     self.authService.setIsAuthDebug(newValue: true)
-                    
+
                     DispatchQueue.main.async {
                         self.delegate?.TinkoffIDResolver(status: .waiting)
                         self.goToMain()
@@ -185,7 +184,7 @@ class LoginViewPresenter {
         }
 
         task.resume()
-        
+
     }
 }
 

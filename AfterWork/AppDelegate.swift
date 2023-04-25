@@ -24,13 +24,13 @@ extension AppDelegate {
             .badge, .sound, .alert
         ]) { granted, _ in
             guard granted else { return }
-          
+
             DispatchQueue.main.async {
                 application.registerForRemoteNotifications()
             }
         }
         FirebaseApp.configure()
-        
+
         Messaging.messaging().delegate = self
         Messaging.messaging().isAutoInitEnabled = true
         return true
@@ -40,7 +40,7 @@ extension AppDelegate {
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
       Messaging.messaging().apnsToken = deviceToken
     }
-    
+
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
       let dataDict: [String: String] = ["token": fcmToken ?? ""]
       NotificationCenter.default.post(
@@ -51,8 +51,7 @@ extension AppDelegate {
 
     }
 
-    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        //let token = deviceToken.reduce("") { $0 + String(format: "%02x", $1) }
+        // let token = deviceToken.reduce("") { $0 + String(format: "%02x", $1) }
     }
 }

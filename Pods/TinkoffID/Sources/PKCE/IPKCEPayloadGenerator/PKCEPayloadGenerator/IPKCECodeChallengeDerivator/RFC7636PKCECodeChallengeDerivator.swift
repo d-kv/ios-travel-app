@@ -23,22 +23,22 @@ import CommonCrypto
 /// https://tools.ietf.org/html/rfc7636#section-4.2
 final class RFC7636PKCECodeChallengeDerivator: IPKCECodeChallengeDerivator {
     var codeChallengeMethod = "S256"
-    
+
     enum Error: Swift.Error {
         case serializationError
     }
-    
+
     func deriveCodeChallenge(using codeVerifier: String) throws -> String {
         guard let codeVerifierBytes = codeVerifier.data(using: .ascii) else {
             throw Error.serializationError
         }
-        
+
         var buffer = [UInt8](repeating: .zero, count: Int(CC_SHA256_DIGEST_LENGTH))
-        
+
         codeVerifierBytes.withUnsafeBytes {
             _ = CC_SHA256($0, CC_LONG(codeVerifierBytes.count), &buffer)
         }
-        
+
         return Data(buffer)
             .base64EncodedString()
             .safeBase64

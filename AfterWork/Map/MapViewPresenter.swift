@@ -13,22 +13,28 @@ protocol MapViewPresenterDelegate: AnyObject {
     func switchedPoint(target: Artwork, isSwitched: Bool)
 }
 
-
 final class MapViewPresenter {
-    
+
     weak var delegate: MapViewPresenterDelegate?
-    
+
     static func goToMain() {
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.dismiss(animated: true)
-        
+
     }
-    
+
     func calculateDistance(mapView: MKMapView) {
-        
-        delegate?.switchedPoint(target: mapView.annotations[0] as? Artwork ?? Artwork(title: "", locationName: "", discipline: "", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0), image: .add), isSwitched: true)
+
+        delegate?.switchedPoint(
+            target: mapView.annotations[0] as? Artwork ?? Artwork(
+                title: "", locationName: "", discipline: "",
+                coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0),
+                image: .add
+            ),
+            isSwitched: true
+        )
     }
-    
+
     func goToDesc(type: String, name: String, description: String, workHours: String, contacts: String, url: String, artwork: Artwork, currentCoords: CLLocationCoordinate2D, isRecommended: Bool) {
         // todo
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
@@ -48,41 +54,40 @@ final class MapViewPresenter {
             mapDescViewController.artwork = artwork
             mapDescViewController.currentCoordinate = currentCoords
             mapDescViewController.isRecomended = isRecommended
-            
+
             topController.present(mapDescViewController, animated: true, completion: nil)
-            
+
         }
     }
-    
+
     static func setUpLocation(locationManager: CLLocationManager) {
         DispatchQueue.background(background: {
-            if (CLLocationManager.locationServicesEnabled()) {
-                
+            if CLLocationManager.locationServicesEnabled() {
+
                 locationManager.requestAlwaysAuthorization()
                 locationManager.startUpdatingLocation()
             }
         })
     }
-    
+
     enum categories {
         case all
         case food
         case art
         case hotel
     }
-    
+
     static func setUpPoints(mapView: MKMapView, category: categories, isRecommended: Bool, isSearching: Bool) {
-        
+
         var tempData = DataLoaderImpl.shared.places
         if isSearching { tempData = DataLoaderImpl.shared.placesSearch }
-        
+
         for i in tempData {
             var image = UIImage(named: "marker")
             if i.isRecommended {
                 image = UIImage(named: "markerTop")
             }
-            
-            
+
             let coordinate = CLLocationCoordinate2D(latitude: Double(i.latitude) ?? 0, longitude: Double(i.longitude) ?? 0)
             let artwork = Artwork(
                 title: i.name,
@@ -91,13 +96,13 @@ final class MapViewPresenter {
                 coordinate: coordinate,
                 image: image
             )
-                        
+
             if !(i.name).isEqual("Инструкция") {
-                
+
                 let catCafe = ["bars", "cafe", "fast food", "restaurants", "sushi"]
                 let catArt = ["museum", "spa", "malls", "fallback services", "confectionary", "concert hall", "bars"]
                 let catHotel = ["hotels"]
-                
+
                 switch category {
                 case .all:
                     if isRecommended && (i.isRecommended) { mapView.addAnnotation(artwork) }

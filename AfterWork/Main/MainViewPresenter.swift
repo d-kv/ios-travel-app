@@ -31,19 +31,18 @@ protocol MainViewPresenterProtocol {
     func enteredApp()
 }
 
-
 final class MainViewPresenter: MainViewPresenterProtocol {
     weak var delegate: MainViewPresenterDelegate?
-    
+
     let authService = DI.shared.getAuthSerivce()
-    
+
     func openSettings() {
         let settingsViewController = DI.shared.getSettingsViewController()
-        
+
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(settingsViewController, animated: true)
     }
-    
+
     func goToMap() {
         MapViewController.isSearching = false
         let mapViewController = DI.shared.getMapViewController_Map()
@@ -51,14 +50,14 @@ final class MainViewPresenter: MainViewPresenterProtocol {
 
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(mapViewController, animated: true)
-        
+
     }
-    
+
     func goToCards(type: typeSwitch) {
         switch type {
         case .cafe:
             cardSearch(categories: ["bars", "cafe", "fast food"])
-            
+
         case .rest:
             cardSearch(categories: ["restaurants", "sushi"])
         case .hotel:
@@ -70,12 +69,12 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         }
         let cardsViewController = DI.shared.getCardsViewController()
         cardsViewController.modalPresentationStyle = .fullScreen
-        
+
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(cardsViewController, animated: true)
 
     }
-    
+
     func goToLogin() {
         let loginViewController = DI.shared.getLoginViewController()
         loginViewController.modalPresentationStyle = .fullScreen
@@ -83,7 +82,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
     }
-    
+
     func search(req: String) {
         let searchReq = req
         var newData = [Places]()
@@ -105,7 +104,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                 topVC.present(DI.shared.getMapViewController_Map(), animated: true)
             }
         }
-        
+
     }
     private func cardSearch(categories: [String]) {
         var newData = [Places]()
@@ -125,51 +124,39 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         DataLoaderImpl.shared.placesSearch = newData
         CardsViewPresenter.isSearching = true
     }
-    
-    
+
     func enteredApp() {
-        
+
         self.delegate?.mainViewPresenter(self, isLoading: true)
-        
+
         let cache = CacheImpl.shared
-        
+
         let authService = DI.shared.getAuthSerivce()
-        
+
         var idToken = cache.getSecret(key: "idToken")
         var refreshToken = cache.getSecret(key: "refreshToken")
-        
+
         if idToken == "ID" {
             authService.setIsAuthDebug(newValue: true)
-            print("")
-        } else {
-            print("")
         }
-        
+
         if !DI.tinkoffId.isTinkoffAuthAvailable && !authService.getIsAuthDebug() {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()
-            
         } else if authService.getIsAuthDebug() {
-            
-            if DataLoaderImpl.shared.loadData() {
-                print("")
-            } else {
-                print("")
-            }
-            
+            DataLoaderImpl.shared.loadData()
         } else {
-            
+
             if idToken != "" {
                 DI.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
             } else {
                 self.delegate?.mainViewPresenter(self, isLoading: false)
                 goToLogin()
             }
-            
+
         }
     }
-    
-    
+
     private func handleRefreshToken(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             let credentials = try result.get()
@@ -178,18 +165,18 @@ final class MainViewPresenter: MainViewPresenterProtocol {
             cache.setSecret(key: "idToken", value: credentials.idToken)
             cache.setSecret(key: "accessToken", value: credentials.accessToken)
             cache.setSecret(key: "refreshToken", value: credentials.refreshToken ?? "")
-            
+
             var host = ""
             if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
                 let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
                 host = keys["HOST"] as? String ?? ""
             }
-            
+
             let url = URL(string: host + "/api/auth?tid_id=" + credentials.idToken + "&tid_accessToken=" + credentials.accessToken)!
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
             request.httpMethod = "POST"
-            
+
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 guard
                     let data = data,
@@ -205,9 +192,10 @@ final class MainViewPresenter: MainViewPresenterProtocol {
 
                 switch response.statusCode {
                 case 200: // success
-                    
-                    if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
-                        
+
+                    if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?
+                        .data(using: .utf8) ?? Data(), options: .allowFragments) as? [Dictionary<String, Any>] {
+
                         if jsonArray.count > 0 {
                             cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
                             cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
@@ -219,17 +207,14 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                                 self.goToLogin()
                             }
                         }
-                        
-                        
 
-                        
                     } else {
                         DispatchQueue.main.async {
                             self.delegate?.mainViewPresenter(self, isLoading: false)
                             self.goToLogin()
                         }
                     }
-                    
+
                 default:
                     DispatchQueue.main.async {
                         self.delegate?.mainViewPresenter(self, isLoading: false)
@@ -239,7 +224,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
             }
 
             task.resume()
-            
+
         } catch {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()

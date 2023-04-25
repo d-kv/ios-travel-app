@@ -22,7 +22,7 @@ import UIKit
 public struct DebugConfiguration {
     let canRefreshTokens: Bool
     let canLogout: Bool
-    
+
     public init(canRefreshTokens: Bool, canLogout: Bool) {
         self.canRefreshTokens = canRefreshTokens
         self.canLogout = canLogout
@@ -30,19 +30,19 @@ public struct DebugConfiguration {
 }
 
 public final class DebugTinkoffIDFactory: ITinkoffIDFactory {
-    
+
     private let callbackUrl: String
     private let configuration: DebugConfiguration
-    
+
     public init(callbackUrl: String, configuration: DebugConfiguration) {
         self.callbackUrl = callbackUrl
         self.configuration = configuration
     }
-    
+
     public func build() -> ITinkoffID {
         let router = UIApplication.shared
         let appLauncher = DebugAppLauncher(urlScheme: "tinkoffiddebug://?callbackUrl=\(callbackUrl)", router: router)
-        
+
         return DebugTinkoffID(
             appLauncher: appLauncher,
             canRefreshTokens: configuration.canRefreshTokens,

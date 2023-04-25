@@ -20,7 +20,7 @@ import Foundation
 
 /// Абстракция фабрики `ITinkoffID`
 public protocol ITinkoffIDFactory {
-    
+
     /// Создаёт новый экземпляр `ITinkoffID`
     func build() -> ITinkoffID
 }

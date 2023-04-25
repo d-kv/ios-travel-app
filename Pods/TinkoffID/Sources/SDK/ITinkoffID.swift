@@ -26,7 +26,7 @@ public protocol ITinkoffAuthInitiator {
     /// Возвращает `true` если есть возможность авторизоваться в приложении
     /// Если флаг `false`, то вызов `signIn` приведет к открытию App Store
     var isTinkoffAuthAvailable: Bool { get }
-    
+
     /// Инициирует вход
     /// - Parameter completion: Блок с авторизационными данными или ошибкой. Всегда вызывается на главном потоке
     func startTinkoffAuth(_ completion: @escaping SignInCompletion)
@@ -40,7 +40,7 @@ public protocol ITinkoffAuthCallbackHandler {
 
 /// Объект, позволяющий обновить авторизационные данные
 public protocol ITinkoffCredentialsRefresher {
-    
+
     /// Обновляет авторизационные данные
     /// - Parameters:
     ///   - refreshToken: `Refresh token`, полученный с обновляемыми авторизационными данными
@@ -51,7 +51,7 @@ public protocol ITinkoffCredentialsRefresher {
 
 /// Объект, инициирующий отзыв авторизации по `access` или `refresh` токену
 public protocol ITinkoffSignOutInitiator {
-    
+
     /// Отзывает авторизацию по заданному токену
     /// - Parameters:
     ///   - token: Токен

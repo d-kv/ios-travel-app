@@ -13,36 +13,42 @@ class LoginViewController: UIViewController {
     let enterButton = UIButton()
     let bigText = DI.shared.getInterfaceExt().standardTextView(text: String(localized: "login_big"), textColor: .white, font: .boldSystemFont(ofSize: 30))
     let smallText = DI.shared.getInterfaceExt().standardTextView(text: String(localized: "login_small"), textColor: .gray, font: .systemFont(ofSize: 12))
-    let loginViewPresenter:LoginViewPresenter = LoginViewPresenter()
+    let loginViewPresenter: LoginViewPresenter = LoginViewPresenter()
     let alphaText = UIButton()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.loginViewPresenter.delegate = self
-        
+
         creation()
         constraints()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         view.backgroundColor = UIColor(named: "GreyColor")
     }
-    
+
     @objc func authButtonClicked() {
         loginViewPresenter.authButtonClicked()
     }
-    
+
     func creation() {
         enterButton.setImage(UIImage(named: "TINIDbutton"), for: .normal)
         enterButton.addTarget(self, action: #selector(authButtonClicked), for: .touchUpInside)
-        
-        alphaText.setTitle("alpha_test_" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "") + "_" +  (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""), for: .normal)
+
+        alphaText.setTitle(
+            "alpha_test_" +
+            (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
+            + "_" +
+            (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""),
+            for: .normal
+        )
         alphaText.addTarget(self, action: #selector(alphaTap), for: .touchUpInside)
     }
-    
+
     func constraints() {
         logos.translatesAutoresizingMaskIntoConstraints = false
         let logosConstraints = [
@@ -51,7 +57,7 @@ class LoginViewController: UIViewController {
             logos.widthAnchor.constraint(equalToConstant: 215),
             logos.heightAnchor.constraint(equalToConstant: 100)
         ]
-        
+
         bigText.translatesAutoresizingMaskIntoConstraints = false
         let bigTextConstraints = [
             bigText.topAnchor.constraint(equalTo: view.topAnchor, constant: 240),
@@ -59,7 +65,7 @@ class LoginViewController: UIViewController {
             bigText.widthAnchor.constraint(equalToConstant: 270),
             bigText.heightAnchor.constraint(equalToConstant: 80)
         ]
-        
+
         smallText.translatesAutoresizingMaskIntoConstraints = false
         let smallTextConstraints = [
             smallText.topAnchor.constraint(equalTo: bigText.bottomAnchor, constant: 0),
@@ -75,27 +81,27 @@ class LoginViewController: UIViewController {
             enterButton.widthAnchor.constraint(equalToConstant: 270),
             enterButton.heightAnchor.constraint(equalToConstant: 55)
         ]
-        
+
         alphaText.translatesAutoresizingMaskIntoConstraints = false
         let alphaTextConstraints = [
             alphaText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alphaText.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
         ]
-        
+
         view.addSubview(logos)
         view.addSubview(bigText)
         view.addSubview(smallText)
         view.addSubview(enterButton)
         view.addSubview(alphaText)
-        
-        let constraintsArray = [logosConstraints, bigTextConstraints, smallTextConstraints, enterButtonConstraints, alphaTextConstraints].flatMap{$0}
+
+        let constraintsArray = [logosConstraints, bigTextConstraints, smallTextConstraints, enterButtonConstraints, alphaTextConstraints].flatMap {$0}
         NSLayoutConstraint.activate(constraintsArray)
     }
-    
+
     @objc func alphaTap() {
         alphaAlert()
     }
-    
+
     func alphaAlert() {
         let alert = UIAlertController(title: "DEBUG", message: "Enter a key to enter debug mode", preferredStyle: .alert)
 
@@ -104,7 +110,7 @@ class LoginViewController: UIViewController {
             textField.textContentType = .password
             textField.text = "50b058b183f17a54ac3cd66652a227ab"
         }
-        
+
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { [weak alert] (_) in
             alert?.dismiss(animated: true)
         }))
@@ -113,18 +119,18 @@ class LoginViewController: UIViewController {
             let textField = alert?.textFields?[0]
             if textField?.text != nil { loginViewPresenter.debug_req(TIN_accessToken: textField?.text ?? "") }
             alert?.isEditing = false
-            
+
         }))
-        
+
         self.present(alert, animated: true)
     }
-    
+
     func showAlert(text: String!) {
         let alert = UIAlertController(title: "Что-то не так...", message: text, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ок", style: .default))
         self.present(alert, animated: true, completion: nil)
     }
-    
+
 }
 
 extension LoginViewController: LoginViewPresenterDelegate {
@@ -170,11 +176,9 @@ extension LoginViewController: LoginViewPresenterDelegate {
         }
 
     }
-    
-    func loginViewPresenter(_ reposViewModel: LoginViewPresenter, isLoading: Bool) {
-        if isLoading { self.view.showBlurLoader() }
-        else { self.view.removeBluerLoader() }
-    }
-    
-}
 
+    func loginViewPresenter(_ reposViewModel: LoginViewPresenter, isLoading: Bool) {
+        if isLoading { self.view.showBlurLoader() } else { self.view.removeBluerLoader() }
+    }
+
+}

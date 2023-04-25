@@ -20,7 +20,7 @@ import Foundation
 
 /// Описывает объект, создающий `PKCECodePayload`'ы
 protocol IPKCEPayloadGenerator {
-    
+
     /// Создает и возвращает новый `PKCECodePayload`
     func generatePayload() throws -> PKCECodePayload
 }
