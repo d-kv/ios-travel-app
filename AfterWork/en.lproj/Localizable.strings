@@ -60,3 +60,15 @@
 "instruction_title" = "Instruction";
 "instruction_desc" = "What is it?";
 "instruction_text" = "Swipe left - you'll get cards, swipe right - rest on bravo. And the illuminated cards are our favorites, keep in mind";
+
+"error_failedToLaunch" = "TINKOFF: Cant open Tinkoff app";
+"error_cancelledByUser" = "TINKOFF: Sign in cancelled";
+"error_unavailable" = "TINKOFF: В данный момент невозможно выполнить вход";
+"error_failedToObtainToken" = "TINKOFF: An unknown error has occurred (Token)";
+"error_failedToRefreshCredentials" = "TINKOFF: An unknown error has occurred (Update)";
+"error_unknownError" = "TINKOFF: An unknown error has occurred";
+"error_someError" = "An unknown error has occurred, please try again later";
+"error_failTID" = "An error occurred while receiving data, please try again later";
+"error_serverError" = "An unknown error has occurred, please try again later";
+"error_notTester" = "Unfortunately, the application is currently being tested";
+"error_blocked" = "Your account is frozen, contact the developer";

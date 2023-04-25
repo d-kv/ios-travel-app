@@ -136,36 +136,36 @@ extension LoginViewController: LoginViewPresenterDelegate {
             self.view.showBlurLoader()
         case .failedToLaunch:
             self.view.removeBluerLoader()
-            showAlert(text: "TINKOFF: Невозможно открыть приложение Tinkoff")
+            showAlert(text: String(localized: "error_failedToLaunch"))
         case .cancelledByUser:
             self.view.removeBluerLoader()
-            showAlert(text: "TINKOFF: Вход отменен")
+            showAlert(text: String(localized: "error_cancelledByUser"))
         case .unavailable:
             self.view.removeBluerLoader()
-            showAlert(text: "TINKOFF: В данный момент невозможно выполнить вход")
+            showAlert(text: String(localized: "error_unavailable"))
         case .failedToObtainToken:
             self.view.removeBluerLoader()
-            showAlert(text: "TINKOFF: Произошла неизвестная ошибка (Токен)")
+            showAlert(text: String(localized: "error_failedToObtainToken"))
         case .failedToRefreshCredentials:
             self.view.removeBluerLoader()
-            showAlert(text: "TINKOFF: Произошла неизвестная ошибка (Обновление)")
+            showAlert(text: String(localized: "error_failedToRefreshCredentials"))
         case .unknownError:
-            showAlert(text: "TINKOFF: Произошла неизвестная ошибка (Токен)")
+            showAlert(text: String(localized: "error_unknownError"))
             self.view.removeBluerLoader()
         case .someError:
-            showAlert(text: "Произошла неизвестная ошибка, повторите попытку позже")
+            showAlert(text: String(localized: "error_someError"))
             self.view.removeBluerLoader()
         case .failTID:
-            showAlert(text: "Произошла ошибка с получением данных, повторите попытку позже")
+            showAlert(text: String(localized: "error_failTID"))
             self.view.removeBluerLoader()
         case .serverError:
-            showAlert(text: "Произошла неизвестная ошибка, повторите попытку позже")
+            showAlert(text: String(localized: "error_serverError"))
             self.view.removeBluerLoader()
         case .notTester:
-            showAlert(text: "К сожалению, в данный момент проходит тестирование приложения")
+            showAlert(text: String(localized: "error_notTester"))
             self.view.removeBluerLoader()
         case .blocked:
-            showAlert(text: "Ваш аккаунт заморожен, обратитесь к разработчику")
+            showAlert(text: String(localized: "error_blocked"))
             self.view.removeBluerLoader()
         }
 
