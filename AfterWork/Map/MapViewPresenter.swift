@@ -72,7 +72,6 @@ final class MapViewPresenter {
     }
     
     static func setUpPoints(mapView: MKMapView, category: categories, isRecommended: Bool, isSearching: Bool) {
-        UIView.animate(withDuration: 1) { mapView.removeAnnotations(mapView.annotations) }
         
         var tempData = DataLoaderImpl.shared.places
         if isSearching { tempData = DataLoaderImpl.shared.placesSearch }
