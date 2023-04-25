@@ -14,14 +14,23 @@ protocol MainViewPresenterDelegate: AnyObject {
                             isLoading: Bool)
 }
 
+enum typeSwitch {
+    case cafe
+    case rest
+    case hotel
+    case culture
+    case all
+}
+
 protocol MainViewPresenterProtocol {
     func openSettings()
     func goToMap()
-    func goToCards(type: String)
+    func goToCards(type: typeSwitch)
     func goToLogin()
     func search(req: String)
     func enteredApp()
 }
+
 
 final class MainViewPresenter: MainViewPresenterProtocol {
     weak var delegate: MainViewPresenterDelegate?
@@ -45,26 +54,26 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         
     }
     
-    func goToCards(type: String) {
+    func goToCards(type: typeSwitch) {
         switch type {
-        case "cafe":
+        case .cafe:
             cardSearch(categories: ["bars", "cafe", "fast food"])
             
-        case "rest":
+        case .rest:
             cardSearch(categories: ["restaurants", "sushi"])
-        case "hotel":
+        case .hotel:
             cardSearch(categories: ["hotels"])
-        case "culture":
+        case .culture:
             cardSearch(categories: ["museum", "spa", "malls", "fallback services", "confectionary", "concert hall"])
-        default:
+        case .all:
             CardsViewPresenter.isSearching = false
-            
         }
         let cardsViewController = DI.shared.getCardsViewController()
         cardsViewController.modalPresentationStyle = .fullScreen
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
         sceneDelegate.window!.rootViewController?.present(cardsViewController, animated: true)
+
     }
     
     func goToLogin() {

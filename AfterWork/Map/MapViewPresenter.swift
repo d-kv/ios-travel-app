@@ -64,7 +64,14 @@ final class MapViewPresenter {
         })
     }
     
-    static func setUpPoints(mapView: MKMapView, category: String, isRecommended: Bool, isSearching: Bool) {
+    enum categories {
+        case all
+        case food
+        case art
+        case hotel
+    }
+    
+    static func setUpPoints(mapView: MKMapView, category: categories, isRecommended: Bool, isSearching: Bool) {
         UIView.animate(withDuration: 1) { mapView.removeAnnotations(mapView.annotations) }
         
         var tempData = DataLoaderImpl.shared.places
@@ -92,30 +99,21 @@ final class MapViewPresenter {
                 let catArt = ["museum", "spa", "malls", "fallback services", "confectionary", "concert hall", "bars"]
                 let catHotel = ["hotels"]
                 
-                UIView.animate(withDuration: 0.3) {
-                    switch category {
-                    case "all":
-                        if isRecommended && (i.isRecommended) { mapView.addAnnotation(artwork) }
-                        else if !isRecommended { mapView.addAnnotation(artwork) }
-                    case "food":
-                        if isRecommended && (i.isRecommended) && catCafe.contains(i.name) { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catCafe.contains(i.name) { mapView.addAnnotation(artwork) }
-                    case "art":
-                        if isRecommended && (i.isRecommended) && catArt.contains(i.name) { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catArt.contains(i.name) { mapView.addAnnotation(artwork) }
-                    case "hotel":
-                        if isRecommended && (i.isRecommended) && catHotel.contains(i.name) { mapView.addAnnotation(artwork) }
-                        else if !isRecommended && catHotel.contains(i.name) { mapView.addAnnotation(artwork) }
-
-                    default:
-                        if isRecommended && (i.isRecommended) {
-                            
-                        }
-                    }
+                switch category {
+                case .all:
+                    if isRecommended && (i.isRecommended) { mapView.addAnnotation(artwork) }
+                    else if !isRecommended { mapView.addAnnotation(artwork) }
+                case .food:
+                    if isRecommended && (i.isRecommended) && catCafe.contains(i.name) { mapView.addAnnotation(artwork) }
+                    else if !isRecommended && catCafe.contains(i.name) { mapView.addAnnotation(artwork) }
+                case .art:
+                    if isRecommended && (i.isRecommended) && catArt.contains(i.name) { mapView.addAnnotation(artwork) }
+                    else if !isRecommended && catArt.contains(i.name) { mapView.addAnnotation(artwork) }
+                case .hotel:
+                    if isRecommended && (i.isRecommended) && catHotel.contains(i.name) { mapView.addAnnotation(artwork) }
+                    else if !isRecommended && catHotel.contains(i.name) { mapView.addAnnotation(artwork) }
                 }
             }
-            
         }
-        
     }
 }

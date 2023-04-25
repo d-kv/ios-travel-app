@@ -60,27 +60,27 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     @objc private func bigRecommendTap() {
         self.bigRecommend.showAnimation {}
-        mainViewPresenter.goToCards(type: "cafe")
+        mainViewPresenter.goToCards(type: .cafe)
     }
     
     @objc private func centerRecommendTap() {
         self.centerRecommend.showAnimation {}
-        mainViewPresenter.goToCards(type: "hotel")
+        mainViewPresenter.goToCards(type: .hotel)
     }
     
     @objc private func leftRecommendTap() {
         self.leftRecommend.showAnimation {}
-        mainViewPresenter.goToCards(type: "rest")
+        mainViewPresenter.goToCards(type: .rest)
     }
     
     @objc private func rightRecommendTap() {
         self.rightRecommend.showAnimation {}
-        mainViewPresenter.goToCards(type: "culture")
+        mainViewPresenter.goToCards(type: .culture)
     }
     
     @objc private func personalRecommendTap() {
         self.personalRecommend.showAnimation {}
-        mainViewPresenter.goToCards(type: "")
+        mainViewPresenter.goToCards(type: .all)
     }
     
     private func setUpLocation(locationManager: CLLocationManager) {
