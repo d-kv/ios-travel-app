@@ -25,7 +25,7 @@ extension TinkoffApp: TargetAppConfiguration {
             return "tinkoffbank://"
         }
     }
-    
+
     public var authUrl: String {
         switch self {
         case .bank:

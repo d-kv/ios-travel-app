@@ -7,7 +7,7 @@ target 'AfterWork' do
   pod 'TinkoffID'  
   pod 'Swinject'
   pod 'Shuffle-iOS'
-
+  
   pod 'Firebase'
   pod 'FirebaseCore'
   pod 'FirebaseAnalytics'

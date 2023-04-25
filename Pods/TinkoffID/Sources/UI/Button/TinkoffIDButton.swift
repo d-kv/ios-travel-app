@@ -55,13 +55,13 @@ final class TinkoffIDButton: UIButton {
         view.layer.borderColor = UIColor.white.cgColor
         return view
     }()
-    
+
     override var isHighlighted: Bool {
         didSet {
             updateAppearanceForCurrentState()
         }
     }
-    
+
     init(configuration: TinkoffIDButtonConfiguration, title: String? = nil, badge: String? = nil) {
         self.size = configuration.size
         self.colorStyle = configuration.colorStyle
@@ -69,12 +69,12 @@ final class TinkoffIDButton: UIButton {
         self.font = configuration.font
         self.badge = badge
         self.title = title ?? ""
-        
+
         super.init(frame: .zero)
-        
+
         didInitialize()
     }
-    
+
     required init?(coder: NSCoder) {
         self.size = .medium
         self.colorStyle = .default
@@ -82,14 +82,14 @@ final class TinkoffIDButton: UIButton {
         self.font = UIFont.systemFont(ofSize: 15)
         self.badge = nil
         self.title = ""
-        
+
         super.init(coder: coder)
 
         self.setTitle(defaultTitle, for: .normal)
-        
+
         didInitialize()
     }
-    
+
     override var intrinsicContentSize: CGSize {
         if badge != nil {
             return CGSize(
@@ -123,7 +123,7 @@ final class TinkoffIDButton: UIButton {
             addIconBorder()
         }
     }
-    
+
     // MARK: - Private
 
     private func layoutWithBadge() {
@@ -187,16 +187,16 @@ final class TinkoffIDButton: UIButton {
         imageBorder.center = imageView!.center
         imageBorder.layer.cornerRadius = imageBorder.frame.height/2
     }
-    
+
     private func didInitialize() {
         configure()
         updateAppearanceForCurrentState()
     }
-    
+
     private func configure() {
         // Title
         titleLabel?.sizeToFit()
-        
+
         // Image
         imageView?.contentMode = .scaleAspectFit
 
@@ -245,7 +245,7 @@ final class TinkoffIDButton: UIButton {
         setImage(size.image, for: .normal)
         setImage(size.image, for: .highlighted)
     }
-    
+
     private func updateAppearanceForCurrentState() {
         backgroundColor = colorStyle.backgroundColorFor(state: state)
     }
@@ -266,7 +266,7 @@ private extension TinkoffIDButtonSize {
             return 60
         }
     }
-    
+
     /// Шрифт
     var titleFontSize: CGFloat {
         switch self {
@@ -303,7 +303,7 @@ private extension TinkoffIDButtonSize {
                 .imageNamed("idLogoL")
         }
     }
-    
+
     /// Отступы по горизонтали
     var contentHorizontalPadding: CGFloat {
         switch self {
@@ -315,7 +315,7 @@ private extension TinkoffIDButtonSize {
             return 60
         }
     }
-    
+
     /// Отступы по вертикали
     var contentVerticalPadding: CGFloat {
         switch self {
@@ -361,7 +361,6 @@ private extension TinkoffIDButtonSize {
             return 4
         }
     }
-
 
     /// Шрифт кэшбэка
     var badgeFontSize: CGFloat {

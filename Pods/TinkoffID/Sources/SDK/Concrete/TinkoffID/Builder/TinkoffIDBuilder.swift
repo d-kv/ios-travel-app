@@ -23,7 +23,7 @@ import UIKit
 public final class TinkoffIDBuilder {
     // Dependenices
     private let factory: TinkoffIDFactory
-    
+
     public convenience init(clientId: String,
                             callbackUrl: String,
                             app: TinkoffApp = .bank,
@@ -35,7 +35,7 @@ public final class TinkoffIDBuilder {
             environmentConfiguration: environment
         )
     }
-    
+
     public init(clientId: String,
                 callbackUrl: String,
                 appConfiguration: TargetAppConfiguration,
@@ -47,7 +47,7 @@ public final class TinkoffIDBuilder {
             environmentConfiguration: environmentConfiguration
         )
     }
-    
+
     public func build() -> ITinkoffID {
         factory.build()
     }

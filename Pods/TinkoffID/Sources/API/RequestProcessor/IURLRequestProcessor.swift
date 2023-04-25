@@ -20,7 +20,7 @@ import Foundation
 
 /// Объект, выполняющий сетевые запросы
 protocol IURLRequestProcessor {
-    
+
     /// Выполняет сетевой запрос
     /// - Parameters:
     ///   - request: Запрос
@@ -29,17 +29,17 @@ protocol IURLRequestProcessor {
 }
 
 extension URLSession: IURLRequestProcessor {
-    
+
     enum Error: Swift.Error {
         case unknown
     }
-    
+
     func process(_ request: URLRequest, completion: @escaping (Result<Data, Swift.Error>) -> Void) {
-        dataTask(with: request) { data, response, error in
+        dataTask(with: request) { data, _, error in
             guard let data = data else {
                 return completion(.failure(error ?? Error.unknown))
             }
-            
+
             completion(.success(data))
         }.resume()
     }

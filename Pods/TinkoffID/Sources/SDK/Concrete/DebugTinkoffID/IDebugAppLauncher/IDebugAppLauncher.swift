@@ -9,10 +9,10 @@ import Foundation
 
 /// Объект, запускающий приложение для отладки
 protocol IDebugAppLauncher {
-    
+
     /// Возвращает `true` если запуск приложения возможен
     var canLaunchDebugApp: Bool { get }
-    
+
     /// Запускает приложение для отладки
     func launchDebugApp()
 }

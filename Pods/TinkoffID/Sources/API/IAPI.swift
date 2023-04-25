@@ -20,7 +20,7 @@ import Foundation
 
 /// Объект, взаимодействующий с авторизационным API
 protocol IAPI {
-    
+
     /// Получает авторизационные данные
     /// - Parameters:
     ///   - code: Код, полученный от приложения Тинькофф
@@ -33,7 +33,7 @@ protocol IAPI {
                            codeVerifier: String,
                            redirectUri: String,
                            completion: @escaping (Result<TinkoffTokenPayload, Error>) -> Void)
-    
+
     /// Обновляет имеющиеся авторизационные данные
     /// - Parameters:
     ///   - refreshToken: `Refresh token`, полученный с обновляемыми авторизационными данными
@@ -42,7 +42,7 @@ protocol IAPI {
     func obtainCredentials(with refreshToken: String,
                            clientId: String,
                            completion: @escaping (Result<TinkoffTokenPayload, Error>) -> Void)
-    
+
     /// Выполняет инвалидацию токена
     /// - Parameters:
     ///   - token: Значение токена

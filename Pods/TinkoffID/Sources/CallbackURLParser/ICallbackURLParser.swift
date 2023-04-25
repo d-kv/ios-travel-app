@@ -30,7 +30,7 @@ enum CallbackURLParseResult: Equatable {
 
 /// Парсер URL обратного вызова
 protocol ICallbackURLParser {
-    
+
     /// Обрабатывает переданный URL и возвращает соотвествующий `CallbackURLParseResult`
     func parse(_ url: URL) -> CallbackURLParseResult?
 }

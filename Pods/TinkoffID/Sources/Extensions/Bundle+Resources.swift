@@ -29,13 +29,13 @@ extension Bundle {
             .flatMap(Bundle.init(url:))
         #endif
     }
-    
+
     func imageNamed(_ name: String) -> UIImage? {
         UIImage(named: name,
                 in: self,
                 compatibleWith: nil)
     }
-    
+
     func localizedString(_ key: String) -> String {
         localizedString(forKey: key, value: nil, table: "TinkoffID")
     }

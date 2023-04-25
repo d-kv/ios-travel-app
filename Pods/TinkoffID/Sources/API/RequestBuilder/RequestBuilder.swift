@@ -19,12 +19,12 @@
 import Foundation
 
 final class RequestBuilder: IRequestBuilder {
-    
+
     enum Endpoint: String {
         case token = "/auth/token"
         case revoke = "/auth/revoke"
     }
-    
+
     enum Param: String {
         case code
         case clientId = "client_id"
@@ -36,24 +36,24 @@ final class RequestBuilder: IRequestBuilder {
         case tokenTypeHint = "token_type_hint"
         case refreshToken = "refresh_token"
     }
-    
+
     enum Header: String {
         case authorization = "Authorization"
         case noAdapter = "X-SSO-No-Adapter"
     }
-    
+
     enum Error: Swift.Error {
         case unableToInitializeRequestUrl
     }
-    
+
     private let baseUrl: String
-    
+
     init(baseUrl: String) {
         self.baseUrl = baseUrl
     }
-    
+
     // MARK: - IRequestBuilder
-    
+
     func buildTokenRequest(with code: String,
                            _ clientId: String,
                            _ codeVerifier: String,
@@ -64,13 +64,13 @@ final class RequestBuilder: IRequestBuilder {
             .redirectUri: redirectUri
         ])
     }
-    
+
     func buildTokenRequest(with refreshToken: String, clientId: String) throws -> URLRequest {
         try buildTokenRequest(clientId: clientId, grantType: .grantTypeRefreshToken, bodyParams: [
-            .refreshToken : refreshToken
+            .refreshToken: refreshToken
         ])
     }
-    
+
     func buildSignOutRequest(with token: String,
                              _ tokenTypeHint: String,
                              _ clientId: String) throws -> URLRequest {
@@ -78,48 +78,48 @@ final class RequestBuilder: IRequestBuilder {
             .token: token,
             .tokenTypeHint: tokenTypeHint
         ]
-        
+
         let headers: [String: String] = [
             Header.authorization.rawValue: getAuthorizationHeaderValue(for: clientId)
         ]
-        
+
         return try buildRequest(for: .revoke,
                                 bodyParams,
                                 headers)
     }
-    
+
     // MARK: - Private
-    
+
     private func getAuthorizationHeaderValue(for clientId: String) -> String {
         return String(format: .authorizationHeaderFormat, Data((clientId + ":").utf8).base64EncodedString())
     }
-    
+
     private func buildTokenRequest(clientId: String, grantType: String, bodyParams: [Param: String]) throws -> URLRequest {
         var params = bodyParams
-        
+
         params[.clientId] = clientId
         params[.grantType] = grantType
-        
+
         let headers: [String: String] = [
             Header.authorization.rawValue: getAuthorizationHeaderValue(for: clientId),
             Header.noAdapter.rawValue: String(true)
         ]
-        
+
         return try buildRequest(for: .token,
                                 params,
                                 headers)
     }
-    
+
     private func buildRequest(for endpoint: Endpoint,
                               _ bodyParams: [Param: String],
                               _ headers: [String: String]) throws -> URLRequest {
         guard let url = URL(string: baseUrl + endpoint.rawValue) else { throw Error.unableToInitializeRequestUrl }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = .httpMethod
         request.httpBody = bodyParams.httpBody
         request.allHTTPHeaderFields = headers
-        
+
         return request
     }
 }

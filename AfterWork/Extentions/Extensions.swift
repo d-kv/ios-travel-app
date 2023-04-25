@@ -40,7 +40,7 @@ class BlurLoader: UIView {
 
 extension String {
     func smartContains(_ other: String) -> Bool {
-        let array : [String] = other.lowercased().components(separatedBy: " ").filter { !$0.isEmpty }
+        let array: [String] = other.lowercased().components(separatedBy: " ").filter { !$0.isEmpty }
         return array.reduce(true) { !$0 ? false : (self.lowercased().range(of: $1) != nil ) }
     }
 }
@@ -63,7 +63,7 @@ extension UIView {
                        options: .curveLinear,
                        animations: { [weak self] in
                             self?.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
-        }) {  (done) in
+        }) {  (_) in
             UIView.animate(withDuration: 0.1,
                            delay: 0,
                            options: .curveLinear,
@@ -88,7 +88,7 @@ extension UITextView {
         paragraphStyle.lineSpacing = lineSpacing
         paragraphStyle.lineHeightMultiple = lineHeightMultiple
 
-        let attributedString:NSMutableAttributedString
+        let attributedString: NSMutableAttributedString
         if let labelattributedText = self.attributedText {
             attributedString = NSMutableAttributedString(attributedString: labelattributedText)
         } else {
@@ -96,7 +96,7 @@ extension UITextView {
         }
 
         // Line spacing attribute
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
 
         self.attributedText = attributedString
     }
@@ -116,7 +116,7 @@ extension UIViewController {
 
 extension UIImage {
 
-    func imageResize (sizeChange:CGSize)-> UIImage{
+    func imageResize (sizeChange: CGSize) -> UIImage {
 
         let hasAlpha = true
         let scale: CGFloat = 0.0 // Use scale factor of main screen
@@ -149,7 +149,7 @@ extension UIApplication {
 
 extension DispatchQueue {
 
-    static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
+    static func background(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
         DispatchQueue.global(qos: .background).async {
             background?()
             if let completion = completion {

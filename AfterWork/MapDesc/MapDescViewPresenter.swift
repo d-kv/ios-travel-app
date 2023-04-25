@@ -14,10 +14,8 @@ protocol MapDescViewPresenterProtocol {
     func openLink(website: String)
 }
 
-
 class MapDescViewPresenter: MapDescViewPresenterProtocol {
-    
-    
+
     func callNumber(phoneNumber: String) {
         let str = phoneNumber.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: "-", with: "")
         guard let url = URL(string: "tel://\(str)"),

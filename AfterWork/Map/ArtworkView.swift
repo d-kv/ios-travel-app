@@ -16,7 +16,7 @@ class Artwork: NSObject, MKAnnotation {
     let discipline: String?
     let coordinate: CLLocationCoordinate2D
     let image: UIImage?
-    
+
     var mapItem: MKMapItem? {
       guard let location = locationName else {
         return nil
@@ -31,7 +31,6 @@ class Artwork: NSObject, MKAnnotation {
       return mapItem
     }
 
-    
     init ( title: String?,
         locationName: String?,
         discipline: String?,
@@ -43,35 +42,33 @@ class Artwork: NSObject, MKAnnotation {
         self.coordinate = coordinate
         self.image = image
 
-        
         super.init()
-        
+
     }
     var subtitle: String? {
         return locationName
     }
-    
+
 }
 
 class ArtworkView: MKAnnotationView {
-    
+
     override var annotation: MKAnnotation? {
-        
+
         willSet {
             guard let artwork = newValue as? Artwork else {
                 return
             }
-            
+
             let btn = UIButton(type: .detailDisclosure)
             canShowCallout = true
             calloutOffset = CGPoint(x: 0, y: 0)
             rightCalloutAccessoryView = btn
-            
 
             image = artwork.image
-            
+
         }
-        
+
     }
 
 }

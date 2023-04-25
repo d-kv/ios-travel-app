@@ -22,36 +22,36 @@ final class TinkoffIDCompactButton: UIButton {
 
     /// Высота кнопки
     private var size: CGFloat { 56 }
-    
+
     /// Изображение
     private var image: UIImage? {
         Bundle.resourcesBundle?
             .imageNamed("logo")
     }
-    
+
     private let colorStyle: TinkoffIDButtonColorStyle
-    
+
     override var isHighlighted: Bool {
         didSet {
             updateAppearanceForCurrentState()
         }
     }
-    
+
     init(colorStyle: TinkoffIDButtonColorStyle) {
         self.colorStyle = colorStyle
-        
+
         super.init(frame: .zero)
 
         didInitialize()
     }
-    
+
     required init?(coder: NSCoder) {
         self.colorStyle = .default
-        
+
         super.init(coder: coder)
         didInitialize()
     }
-    
+
     override var intrinsicContentSize: CGSize {
         CGSize(width: size, height: size)
     }
@@ -63,14 +63,14 @@ final class TinkoffIDCompactButton: UIButton {
     }
 
     // MARK: - Private
-    
+
     private func didInitialize() {
         configure()
         updateAppearanceForCurrentState()
     }
-    
+
     private func configure() {
-        
+
         // Image
         imageView?.contentMode = .scaleToFill
         setImage(image, for: .normal)
@@ -82,7 +82,7 @@ final class TinkoffIDCompactButton: UIButton {
 
         contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
     }
-    
+
     private func updateAppearanceForCurrentState() {
         backgroundColor = colorStyle.backgroundColorFor(state: state)
     }

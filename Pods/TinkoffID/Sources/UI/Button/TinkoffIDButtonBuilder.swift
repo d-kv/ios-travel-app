@@ -74,7 +74,7 @@ public enum TinkoffIDButtonColorStyle {
 
 /// Сборщик кнопки входа через Тинькофф
 public final class TinkoffIDButtonBuilder {
-    
+
     /// Создает прямоугольную кнопку входа через Тинькофф
     /// - Parameter configuration: Конфигурация кнопки
     /// - Parameter title: Текст кнопки
