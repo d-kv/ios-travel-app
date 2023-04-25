@@ -126,7 +126,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         CardsViewPresenter.isSearching = true
     }
     
-    let preferences = UserDefaults.standard
     
     func enteredApp() {
         
@@ -174,13 +173,11 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     private func handleRefreshToken(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             let credentials = try result.get()
-            
-//            preferences.set(credentials.idToken, forKey: "idToken")
-//            preferences.set(credentials.accessToken, forKey: "accessToken")
-//            preferences.set(credentials.refreshToken, forKey: "refreshToken")
-            CacheImpl.shared.setSecret(key: "idToken", value: credentials.idToken)
-            CacheImpl.shared.setSecret(key: "accessToken", value: credentials.accessToken)
-            CacheImpl.shared.setSecret(key: "refreshToken", value: credentials.refreshToken ?? "")
+            let cache = CacheImpl.shared
+
+            cache.setSecret(key: "idToken", value: credentials.idToken)
+            cache.setSecret(key: "accessToken", value: credentials.accessToken)
+            cache.setSecret(key: "refreshToken", value: credentials.refreshToken ?? "")
             
             var host = ""
             if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
@@ -212,12 +209,12 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                     if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?.data(using: .utf8) ?? Data(), options : .allowFragments) as? [Dictionary<String,Any>] {
                         
                         if jsonArray.count > 0 {
-                            CacheImpl.shared.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                            CacheImpl.shared.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
-                            self.preferences.set(jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
-                            self.preferences.set(jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
-                            self.preferences.set(jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
-                            self.preferences.set(jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
+                            cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
+                            cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                            cache.setPreferences(data: jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
+                            cache.setPreferences(data: jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
+                            cache.setPreferences(data: jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
+                            cache.setPreferences(data: jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
                             if !DataLoaderImpl.shared.loadData() {
                                 self.goToLogin()
                             }
