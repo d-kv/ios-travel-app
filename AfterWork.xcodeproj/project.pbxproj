@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03AE371F7C854A16BF987679 /* Pods_AfterWork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58DDDC07D83E5A03F9769AD /* Pods_AfterWork.framework */; };
 		4480DCD629F8C3BC008003C3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4480DCD529F8C3BC008003C3 /* Category.swift */; };
+		4480DCDE29F8C4AC008003C3 /* CategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4480DCDD29F8C4AC008003C3 /* CategoryTests.swift */; };
 		5C00507D29CB4B4A00ACAB27 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C00507C29CB4B4A00ACAB27 /* Keys.plist */; };
 		5C00508029CC5F0600ACAB27 /* MapDescViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00507F29CC5F0600ACAB27 /* MapDescViewPresenter.swift */; };
 		5C00508229CC5F1300ACAB27 /* MapDescViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00508129CC5F1300ACAB27 /* MapDescViewController.swift */; };
@@ -37,9 +38,21 @@
 		5CEA166D29B100A300F89006 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA166C29B100A300F89006 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4480DCDF29F8C4AC008003C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C79C04229A2CC0E00106F20 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C79C04929A2CC0E00106F20;
+			remoteInfo = AfterWork;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		04FCA0DBEA835D320963FF76 /* Pods-AfterWork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AfterWork.release.xcconfig"; path = "Target Support Files/Pods-AfterWork/Pods-AfterWork.release.xcconfig"; sourceTree = "<group>"; };
 		4480DCD529F8C3BC008003C3 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		4480DCDB29F8C4AC008003C3 /* AfterWorkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AfterWorkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4480DCDD29F8C4AC008003C3 /* CategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTests.swift; sourceTree = "<group>"; };
 		51E646FFED6F174D7D120410 /* Pods-AfterWork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AfterWork.debug.xcconfig"; path = "Target Support Files/Pods-AfterWork/Pods-AfterWork.debug.xcconfig"; sourceTree = "<group>"; };
 		5C00507C29CB4B4A00ACAB27 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		5C00507F29CC5F0600ACAB27 /* MapDescViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDescViewPresenter.swift; sourceTree = "<group>"; };
@@ -76,6 +89,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4480DCD829F8C4AC008003C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5C79C04729A2CC0E00106F20 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -103,6 +123,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		4480DCDC29F8C4AC008003C3 /* AfterWorkTests */ = {
+			isa = PBXGroup;
+			children = (
+				4480DCDD29F8C4AC008003C3 /* CategoryTests.swift */,
+			);
+			path = AfterWorkTests;
+			sourceTree = "<group>";
+		};
 		5C00507E29CC5EE500ACAB27 /* MapDesc */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				5C79C04C29A2CC0E00106F20 /* AfterWork */,
+				4480DCDC29F8C4AC008003C3 /* AfterWorkTests */,
 				5C79C04B29A2CC0E00106F20 /* Products */,
 				BC1E22CB3A64F718854F022E /* Pods */,
 				043C4C7973DB497B3047BA87 /* Frameworks */,
@@ -135,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				5C79C04A29A2CC0E00106F20 /* AfterWork.app */,
+				4480DCDB29F8C4AC008003C3 /* AfterWorkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,6 +263,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4480DCDA29F8C4AC008003C3 /* AfterWorkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4480DCE129F8C4AC008003C3 /* Build configuration list for PBXNativeTarget "AfterWorkTests" */;
+			buildPhases = (
+				4480DCD729F8C4AC008003C3 /* Sources */,
+				4480DCD829F8C4AC008003C3 /* Frameworks */,
+				4480DCD929F8C4AC008003C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4480DCE029F8C4AC008003C3 /* PBXTargetDependency */,
+			);
+			name = AfterWorkTests;
+			productName = AfterWorkTests;
+			productReference = 4480DCDB29F8C4AC008003C3 /* AfterWorkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5C79C04929A2CC0E00106F20 /* AfterWork */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C79C05E29A2CC0E00106F20 /* Build configuration list for PBXNativeTarget "AfterWork" */;
@@ -259,9 +307,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					4480DCDA29F8C4AC008003C3 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 5C79C04929A2CC0E00106F20;
+					};
 					5C79C04929A2CC0E00106F20 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -282,11 +334,19 @@
 			projectRoot = "";
 			targets = (
 				5C79C04929A2CC0E00106F20 /* AfterWork */,
+				4480DCDA29F8C4AC008003C3 /* AfterWorkTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4480DCD929F8C4AC008003C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5C79C04829A2CC0E00106F20 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -344,6 +404,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4480DCD729F8C4AC008003C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4480DCDE29F8C4AC008003C3 /* CategoryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5C79C04629A2CC0E00106F20 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -375,6 +443,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4480DCE029F8C4AC008003C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C79C04929A2CC0E00106F20 /* AfterWork */;
+			targetProxy = 4480DCDF29F8C4AC008003C3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		5C79C05829A2CC0E00106F20 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -397,6 +473,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4480DCE229F8C4AC008003C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.AfterWorkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AfterWork.app/AfterWork";
+			};
+			name = Debug;
+		};
+		4480DCE329F8C4AC008003C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.AfterWorkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AfterWork.app/AfterWork";
+			};
+			name = Release;
+		};
 		5C79C05C29A2CC0E00106F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -596,6 +712,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4480DCE129F8C4AC008003C3 /* Build configuration list for PBXNativeTarget "AfterWorkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4480DCE229F8C4AC008003C3 /* Debug */,
+				4480DCE329F8C4AC008003C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5C79C04529A2CC0E00106F20 /* Build configuration list for PBXProject "AfterWork" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
