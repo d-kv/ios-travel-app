@@ -18,7 +18,7 @@ final class SettingsViewPresenter {
 
     func signOut() {
 
-        DI.shared.getAuthSerivce().logOut(accessToken: CacheImpl.shared.getSecret(key: "accessToken"), handler: handleSignOut)
+        DI.shared.getAuthService().logOut(accessToken: CacheImpl.shared.getSecret(key: "accessToken"), handler: handleSignOut)
     }
 
     private func handleSignOut(_ result: Result<Void, Error>) {

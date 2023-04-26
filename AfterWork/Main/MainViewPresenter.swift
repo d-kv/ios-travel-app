@@ -34,7 +34,7 @@ protocol MainViewPresenterProtocol {
 final class MainViewPresenter: MainViewPresenterProtocol {
     weak var delegate: MainViewPresenterDelegate?
 
-    let authService = DI.shared.getAuthSerivce()
+    let authService = DI.shared.getAuthService()
 
     func openSettings() {
         let settingsViewController = DI.shared.getSettingsViewController()
@@ -131,7 +131,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
 
         let cache = CacheImpl.shared
 
-        let authService = DI.shared.getAuthSerivce()
+        let authService = DI.shared.getAuthService()
 
         var idToken = cache.getSecret(key: "idToken")
         var refreshToken = cache.getSecret(key: "refreshToken")

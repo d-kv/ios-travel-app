@@ -19,7 +19,7 @@ class SettingsViewController: UIViewController {
 
     let signOutButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_leave"), color: UIColor(named: "LightGrayColor") ?? .white)
 
-    let resetRecommendButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_recomendations"), color: UIColor(named: "LightGrayColor") ?? .white)
+    let resetRecommendButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_recommendations"), color: UIColor(named: "LightGrayColor") ?? .white)
     let adminButton = DI.shared.getInterfaceExt().lightGreyButton(title: String(localized: "settings_admin"), color: UIColor(named: "LightGrayColor") ?? .white)
 
     override func viewDidLoad() {
@@ -166,7 +166,7 @@ class SettingsViewController: UIViewController {
         let sixthImage = UIButton()
         let seventhImage = UIButton()
         let eightthImage = UIButton()
-        let ninethImage = UIButton()
+        let ninthImage = UIButton()
 
         zeroImage.setImage(UIImage(named: "bottleImage0")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         zeroImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
@@ -203,7 +203,7 @@ class SettingsViewController: UIViewController {
         sixthImage.tag = 6
         sixthImage.isHidden = true
 
-        seventhImage.setImage(UIImage(named: "desicionImage7")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
+        seventhImage.setImage(UIImage(named: "decisionImage7")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         seventhImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         seventhImage.tag = 7
         seventhImage.isHidden = true
@@ -213,10 +213,10 @@ class SettingsViewController: UIViewController {
         eightthImage.tag = 8
         eightthImage.isHidden = true
 
-        ninethImage.setImage(UIImage(named: "deusVultImage9")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
-        ninethImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
-        ninethImage.tag = 9
-        ninethImage.isHidden = true
+        ninthImage.setImage(UIImage(named: "deusVultImage9")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
+        ninthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
+        ninthImage.tag = 9
+        ninthImage.isHidden = true
 
         textView.text = String(localized: "settings_achievements")
         textView.contentInsetAdjustmentBehavior = .automatic
@@ -309,12 +309,12 @@ class SettingsViewController: UIViewController {
             eightthImage.leftAnchor.constraint(equalTo: seventhImage.rightAnchor, constant: 15)
         ]
 
-        ninethImage.translatesAutoresizingMaskIntoConstraints = false
-        let ninethImageConstraints = [
-            ninethImage.bottomAnchor.constraint(equalTo: achievementsView.bottomAnchor, constant: -10),
-            ninethImage.heightAnchor.constraint(equalToConstant: 50),
-            ninethImage.widthAnchor.constraint(equalToConstant: 50),
-            ninethImage.leftAnchor.constraint(equalTo: eightthImage.rightAnchor, constant: 15)
+        ninthImage.translatesAutoresizingMaskIntoConstraints = false
+        let ninthImageConstraints = [
+            ninthImage.bottomAnchor.constraint(equalTo: achievementsView.bottomAnchor, constant: -10),
+            ninthImage.heightAnchor.constraint(equalToConstant: 50),
+            ninthImage.widthAnchor.constraint(equalToConstant: 50),
+            ninthImage.leftAnchor.constraint(equalTo: eightthImage.rightAnchor, constant: 15)
         ]
 
         achievementsView.addSubview(textView)
@@ -327,9 +327,9 @@ class SettingsViewController: UIViewController {
         achievementsView.addSubview(sixthImage)
         achievementsView.addSubview(seventhImage)
         achievementsView.addSubview(eightthImage)
-        achievementsView.addSubview(ninethImage)
+        achievementsView.addSubview(ninthImage)
 
-        let constraintsArray = [textViewConstraints, zeroImageConstraints, firstImageConstraints, secondImageConstraints, thirdImageConstraints, fourthImageConstraints, fivthImageConstraints, sixthImageConstraints, seventhImageConstraints, eightthImageConstraints, ninethImageConstraints].flatMap {$0}
+        let constraintsArray = [textViewConstraints, zeroImageConstraints, firstImageConstraints, secondImageConstraints, thirdImageConstraints, fourthImageConstraints, fivthImageConstraints, sixthImageConstraints, seventhImageConstraints, eightthImageConstraints, ninthImageConstraints].flatMap {$0}
         NSLayoutConstraint.activate(constraintsArray)
 
         let userA = UserDefaults.standard.string(forKey: "achievements") ?? ""
