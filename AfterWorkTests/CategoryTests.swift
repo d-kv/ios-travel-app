@@ -67,4 +67,24 @@ class CategoryTest: XCTestCase {
 
     }
 
+    func testPerformanceEncoding() throws {
+        let encoder = JSONEncoder()
+
+        self.measure {
+            _ = try? encoder.encode(initialCategory)
+        }
+    }
+
+    func testPerformanceDecoding() throws {
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+
+        let JSONCategory = try encoder.encode(initialCategory)
+
+        self.measure {
+            // Put the code you want to measure the time of here.
+            _ = try? decoder.decode(Category.self, from: JSONCategory)
+        }
+    }
+
 }
