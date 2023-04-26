@@ -13,4 +13,4 @@ repos:
     rev: v1.13.7
     hooks:
       - id: typos
-        args: []
+        args: [--exclude=*.xcodeproj, --exclude=Pods]
