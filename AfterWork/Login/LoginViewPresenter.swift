@@ -23,12 +23,12 @@ class LoginViewPresenter {
 
     weak var delegate: LoginViewPresenterDelegate?
 
-    private let authService = DI.shared.getAuthSerivce()
+    private let authService = DI.shared.getAuthService()
     private let cache = CacheImpl.shared
 
     @objc func authButtonClicked() {
         delegate?.TinkoffIDResolver(status: StatusCodes.proceed)
-        DI.shared.getAuthSerivce().tinkoffIDAuth(handler: handleSignInResult)
+        DI.shared.getAuthService().tinkoffIDAuth(handler: handleSignInResult)
     }
 
     private func goToMain() {

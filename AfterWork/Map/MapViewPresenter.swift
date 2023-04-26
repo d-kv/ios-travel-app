@@ -53,7 +53,7 @@ final class MapViewPresenter {
             mapDescViewController.urlText.setTitle(url, for: .normal)
             mapDescViewController.artwork = artwork
             mapDescViewController.currentCoordinate = currentCoords
-            mapDescViewController.isRecomended = isRecommended
+            mapDescViewController.isRecommended = isRecommended
 
             topController.present(mapDescViewController, animated: true, completion: nil)
 

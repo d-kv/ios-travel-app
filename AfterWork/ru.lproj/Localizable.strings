@@ -1,9 +1,9 @@
-/* 
+/*
   Localizable.strings
   AfterWork
 
   Created by Евгений Парфененков on 15.03.2023.
-  
+
 */
 
 "login_big" = "Вход с помощью Tinkoff ID";
@@ -22,7 +22,7 @@
 
 "settings_achievements" = "Достижения";
 "settings_admin" = "Админ-панель";
-"settings_recomendations" = "Сбросить рекомендации";
+"settings_recommendations" = "Сбросить рекомендации";
 "settings_leave" = "Выйти из аккаунта";
 
 "map_taxi" = "Такси";

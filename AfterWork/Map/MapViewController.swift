@@ -31,7 +31,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         font: .systemFont(ofSize: 16)
     )
 
-    let recomendButton = UIButton()
+    let recommendButton = UIButton()
     let segmentControl = UISegmentedControl(items: ["Все", "Еда", "Досуг", "Отель"])
 
     var locationManager: CLLocationManager?
@@ -100,7 +100,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
             mapView.addAnnotation(targetPoint ?? Artwork(title: "", locationName: "", discipline: "", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0), image: .add))
             segmentControl.isHidden = true
-            recomendButton.isHidden = true
+            recommendButton.isHidden = true
 
             mapView.centerToLocation(CLLocation(latitude: a?.latitude ?? CLLocationDegrees(0), longitude: a?.longitude ?? CLLocationDegrees(0)), regionRadius: CLLocationDistance(10000))
         } else {
@@ -150,18 +150,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             wayButton.heightAnchor.constraint(equalToConstant: 50)
         ]
 
-        recomendButton.translatesAutoresizingMaskIntoConstraints = false
-        let recomendButtonConstraints = [
-            recomendButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
-            recomendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            recomendButton.heightAnchor.constraint(equalToConstant: 50),
-            recomendButton.widthAnchor.constraint(equalToConstant: 50)
+        recommendButton.translatesAutoresizingMaskIntoConstraints = false
+        let recommendButtonConstraints = [
+            recommendButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
+            recommendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            recommendButton.heightAnchor.constraint(equalToConstant: 50),
+            recommendButton.widthAnchor.constraint(equalToConstant: 50)
         ]
 
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
         let segmentControlConstraints = [
             segmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
-            segmentControl.rightAnchor.constraint(equalTo: recomendButton.leftAnchor, constant: -10),
+            segmentControl.rightAnchor.constraint(equalTo: recommendButton.leftAnchor, constant: -10),
             segmentControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             segmentControl.heightAnchor.constraint(equalToConstant: 50)
         ]
@@ -170,18 +170,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         view.addSubview(backButton)
         view.addSubview(taxiButton)
         view.addSubview(wayButton)
-        view.addSubview(recomendButton)
+        view.addSubview(recommendButton)
         view.addSubview(segmentControl)
 
-        let constraintsArray = [mapViewConstraints, backButtonConstraints, taxiButtonConstraints, wayButtonConstraints, recomendButtonConstraints, segmentControlConstraints].flatMap {$0}
+        let constraintsArray = [mapViewConstraints, backButtonConstraints, taxiButtonConstraints, wayButtonConstraints, recommendButtonConstraints, segmentControlConstraints].flatMap {$0}
         NSLayoutConstraint.activate(constraintsArray)
     }
 
     func setUpSegment() {
-        recomendButton.backgroundColor = UIColor(named: "LightGrayColor")
-        recomendButton.layer.cornerRadius = 10
-        recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
-        recomendButton.addTarget(self, action: #selector(recomendTap), for: .touchUpInside)
+        recommendButton.backgroundColor = UIColor(named: "LightGrayColor")
+        recommendButton.layer.cornerRadius = 10
+        recommendButton.setImage(UIImage(named: "starImage")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+        recommendButton.addTarget(self, action: #selector(recommendTap), for: .touchUpInside)
 
         segmentControl.selectedSegmentTintColor = UIColor(named: "LightGrayColor")
         segmentControl.selectedSegmentIndex = 0
@@ -229,7 +229,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
     }
 
-    @objc func recomendTap() {
+    @objc func recommendTap() {
         UIView.animate(withDuration: 0.3) {
             if self.segmentControl.backgroundColor == .white {
                 switch self.segmentControl.selectedSegmentIndex {
@@ -245,7 +245,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     print("")
                 }
 
-                self.recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow, renderingMode: .alwaysOriginal), for: .normal)
+                self.recommendButton.setImage(UIImage(named: "starImage")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow, renderingMode: .alwaysOriginal), for: .normal)
                 self.segmentControl.selectedSegmentTintColor = UIColor(named: "YellowColor")
                 self.segmentControl.backgroundColor = UIColor(named: "GreyColor")
                 self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "GreyColor") ?? .yellow], for: .selected)
@@ -265,7 +265,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     print("")
                 }
 
-                self.recomendButton.setImage(UIImage(named: "starImage")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+                self.recommendButton.setImage(UIImage(named: "starImage")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
                 self.segmentControl.selectedSegmentTintColor = UIColor(named: "LightGrayColor")
                 self.segmentControl.backgroundColor = .white
                 self.segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)

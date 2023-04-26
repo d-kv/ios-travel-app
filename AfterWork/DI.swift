@@ -10,7 +10,7 @@ import Swinject
 import TinkoffID
 
 protocol DIProtocol {
-    func getAuthSerivce() -> AuthService
+    func getAuthService() -> AuthService
     func getInterfaceExt() -> InterfaceExt
 
     func getMainViewController() -> MainViewController
@@ -31,7 +31,7 @@ protocol DIProtocol {
 
 class DI: DIProtocol {
 
-    func getAuthSerivce() -> AuthService { return container.resolve(AuthService.self)! }
+    func getAuthService() -> AuthService { return container.resolve(AuthService.self)! }
     func getInterfaceExt() -> InterfaceExt { return container.resolve(InterfaceExt.self)! }
 
     func getMapDescViewController() -> MapDescViewController { return container.resolve(MapDescViewController.self)! }

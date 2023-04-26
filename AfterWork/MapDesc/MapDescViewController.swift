@@ -47,7 +47,7 @@ class MapDescViewController: UIViewController {
 
     var artwork: Artwork?
     var currentCoordinate: CLLocationCoordinate2D?
-    var isRecomended: Bool = false
+    var isRecommended: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +76,7 @@ class MapDescViewController: UIViewController {
         urlText.backgroundColor = .clear
         urlText.titleLabel?.font = .systemFont(ofSize: 16)
 
-        if isRecomended {
+        if isRecommended {
             bigView.layer.shadowColor = UIColor(named: "YellowColor")?.cgColor
             view.layer.shadowOffset = CGSize(width: 0, height: 0)
             bigView.layer.shadowOpacity = 1

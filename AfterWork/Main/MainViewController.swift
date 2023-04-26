@@ -102,7 +102,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
         return (locationManager.location ?? CLLocation(latitude: 0, longitude: 0)).coordinate
     }
 
-    // MARK: - Contraints
+    // MARK: - Constraints
 
     func creation() {
         userImage.setImage(UIImage(named: "userImage"), for: .normal)
