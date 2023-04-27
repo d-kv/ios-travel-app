@@ -8,7 +8,7 @@
 import Foundation
 
 struct Category: Codable, Equatable {
-    enum Main: Int, Codable, Equatable{
+    enum Main: Int, Codable, Equatable {
         case unspecified
         case culture
         case entertainment
@@ -30,17 +30,16 @@ struct Category: Codable, Equatable {
         func encode(to encoder: Encoder) throws {
             var container = encoder.singleValueContainer()
             switch self {
-            case .unspecified:  try container.encode("MC_UNSPECIFIED")
-            case .culture:  try container.encode("MC_CULTURE")
-            case .entertainment:  try container.encode("MC_ENTERTAINMENT")
-            case .food:  try container.encode("MC_FOOD")
-            case .hospitality:  try container.encode("MC_HOSPITALITY")
+            case .unspecified: try container.encode("MC_UNSPECIFIED")
+            case .culture: try container.encode("MC_CULTURE")
+            case .entertainment: try container.encode("MC_ENTERTAINMENT")
+            case .food: try container.encode("MC_FOOD")
+            case .hospitality: try container.encode("MC_HOSPITALITY")
             }
         }
     }
 
-
-    enum Sub: Int, Codable, Equatable{
+    enum Sub: Int, Codable, Equatable {
         case unspecified
         case russian_cuisine
         case italian_cuisine
@@ -161,6 +160,20 @@ struct Category: Codable, Equatable {
         }
     }
 
-    let main: Array<Main>
-    let sub: Array<Sub>
+    var main: [Main]
+    var sub: [Sub]
+
+    init(main: [Category.Main], sub: [Category.Sub]) {
+        if main.count == 0 {
+            self.main = [Category.Main.unspecified]
+        } else {
+            self.main = main
+        }
+
+        if sub.count == 0 {
+            self.sub = [Category.Sub.unspecified]
+        } else {
+            self.sub = sub
+        }
+    }
 }
