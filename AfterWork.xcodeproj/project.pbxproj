@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03AE371F7C854A16BF987679 /* Pods_AfterWork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58DDDC07D83E5A03F9769AD /* Pods_AfterWork.framework */; };
+		4413991129FAB75B008CDC25 /* AchievementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4413991029FAB75B008CDC25 /* AchievementTests.swift */; };
 		4480DCD629F8C3BC008003C3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4480DCD529F8C3BC008003C3 /* Category.swift */; };
 		4480DCDE29F8C4AC008003C3 /* CategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4480DCDD29F8C4AC008003C3 /* CategoryTests.swift */; };
 		4480DCE529F8C64A008003C3 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4480DCE429F8C64A008003C3 /* Place.swift */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		04FCA0DBEA835D320963FF76 /* Pods-AfterWork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AfterWork.release.xcconfig"; path = "Target Support Files/Pods-AfterWork/Pods-AfterWork.release.xcconfig"; sourceTree = "<group>"; };
+		4413991029FAB75B008CDC25 /* AchievementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementTests.swift; sourceTree = "<group>"; };
 		4480DCD529F8C3BC008003C3 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		4480DCDB29F8C4AC008003C3 /* AfterWorkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AfterWorkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4480DCDD29F8C4AC008003C3 /* CategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTests.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				4480DCDD29F8C4AC008003C3 /* CategoryTests.swift */,
+				4413991029FAB75B008CDC25 /* AchievementTests.swift */,
 			);
 			path = AfterWorkTests;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4480DCDE29F8C4AC008003C3 /* CategoryTests.swift in Sources */,
+				4413991129FAB75B008CDC25 /* AchievementTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
