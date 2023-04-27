@@ -8,9 +8,9 @@
 import XCTest
 @testable import AfterWork
 
-class CategoryTest: XCTestCase {
+class CategorySerializationTest: XCTestCase {
 
-    let initialCategory = Category.init(
+    let initial_category = Category.init(
         main: [
             Category.Main.unspecified,
             Category.Main.culture,
@@ -57,13 +57,13 @@ class CategoryTest: XCTestCase {
         ]
     )
 
-    func testSerialization() throws {
+    func testDataImmutability() throws {
         let encoder = JSONEncoder()
         let decoder = JSONDecoder()
 
-        let encoded = try encoder.encode(initialCategory)
-        let gotCategory = try decoder.decode(Category.self, from: encoded)
-        XCTAssertEqual(initialCategory, gotCategory)
+        let encoded = try encoder.encode(initial_category)
+        let got_category = try decoder.decode(Category.self, from: encoded)
+        XCTAssertEqual(initial_category, got_category)
 
     }
 
@@ -71,7 +71,7 @@ class CategoryTest: XCTestCase {
         let encoder = JSONEncoder()
 
         self.measure {
-            _ = try? encoder.encode(initialCategory)
+            _ = try? encoder.encode(initial_category)
         }
     }
 
@@ -79,11 +79,11 @@ class CategoryTest: XCTestCase {
         let encoder = JSONEncoder()
         let decoder = JSONDecoder()
 
-        let JSONCategory = try encoder.encode(initialCategory)
+        let JSON_category = try encoder.encode(initial_category)
 
         self.measure {
             // Put the code you want to measure the time of here.
-            _ = try? decoder.decode(Category.self, from: JSONCategory)
+            _ = try? decoder.decode(Category.self, from: JSON_category)
         }
     }
 
