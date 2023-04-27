@@ -16,6 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        let cache = CacheImpl.shared
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
@@ -23,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .dark
 
-        if CacheImpl.shared.getSecret(key: "idToken") == "" {
+        if cache.getIdToken() == "" {
             let loginViewController = DI.shared.getLoginViewController()
             loginViewController.modalPresentationStyle = .fullScreen
 

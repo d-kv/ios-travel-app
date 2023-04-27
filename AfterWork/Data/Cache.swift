@@ -8,8 +8,16 @@
 import Foundation
 
 protocol Cache {
-    func getSecret(key: String) -> String
-    func setSecret(key: String, value: String)
+//    func getSecret(key: String) -> String
+//    func setSecret(key: String, value: String)
+    
+    func setAccessToken(value: String)
+    func setRefreshToken(value: String)
+    func setIdToken(value: String)
+    
+    func getAccessToken() -> String
+    func getRefreshToken() -> String
+    func getIdToken() -> String
 
     func parse(json: Data) -> Places
 
@@ -19,12 +27,25 @@ protocol Cache {
 }
 
 class CacheImpl: Cache {
+    
+    func setAccessToken(value: String) { setSecret(key: accessTokenKey, value: value) }
+    func setRefreshToken(value: String) { setSecret(key: refreshTokenKey, value: value) }
+    func setIdToken(value: String) { setSecret(key: idTokenKey, value: value) }
+    
+    func getAccessToken() -> String { return getSecret(key: accessTokenKey) }
+    func getRefreshToken() -> String { return getSecret(key: refreshTokenKey) }
+    func getIdToken() -> String { return getSecret(key: idTokenKey) }
+    
 
     static let shared = CacheImpl()
 
     private let preferences = UserDefaults.standard
 
-    func getSecret(key: String) -> String {
+    private let accessTokenKey = "accessToken"
+    private let refreshTokenKey = "refreshToken"
+    private let idTokenKey = "idToken"
+
+    private func getSecret(key: String) -> String {
         var secret = ""
 
         let keychainItemIdToken = [kSecClass: kSecClassGenericPassword, kSecReturnAttributes: true,
@@ -38,7 +59,7 @@ class CacheImpl: Cache {
         return secret
     }
 
-    func setSecret(key: String, value: String) {
+    private func setSecret(key: String, value: String) {
         SecItemDelete([kSecClass: kSecClassGenericPassword, kSecAttrAccount: key] as CFDictionary)
         SecItemAdd([kSecValueData: value.data(using: .utf8), kSecClass: kSecClassGenericPassword, kSecAttrAccount: key] as CFDictionary, nil)
     }

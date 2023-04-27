@@ -60,9 +60,9 @@ class DataLoaderImpl: DataLoader {
             let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
             host = keys["HOST"] as? String ?? ""
         }
-
-        var idToken = CacheImpl.shared.getSecret(key: "idToken")
-        var accessToken = CacheImpl.shared.getSecret(key: "accessToken")
+        let cache = CacheImpl.shared
+        var idToken = cache.getIdToken()
+        var accessToken = cache.getAccessToken()
 
         let url = URL(string: host + "/api/getlocation?tid_id=" + idToken + "&tid_accessToken=" + accessToken + "&lat=" + lat + "&lng=" + lng)!
         var request = URLRequest(url: url)
@@ -77,7 +77,6 @@ class DataLoaderImpl: DataLoader {
                 DispatchQueue.main.async {
                     let loginViewController = DI.shared.getLoginViewController()
                     loginViewController.modalPresentationStyle = .fullScreen
-
                     let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
                     sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
                 }
@@ -102,7 +101,6 @@ class DataLoaderImpl: DataLoader {
                     DispatchQueue.main.async {
                         let loginViewController = DI.shared.getLoginViewController()
                         loginViewController.modalPresentationStyle = .fullScreen
-
                         let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
                         sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
                     }
@@ -112,7 +110,6 @@ class DataLoaderImpl: DataLoader {
                 DispatchQueue.main.async {
                     let loginViewController = DI.shared.getLoginViewController()
                     loginViewController.modalPresentationStyle = .fullScreen
-
                     let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
                     sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
                 }
