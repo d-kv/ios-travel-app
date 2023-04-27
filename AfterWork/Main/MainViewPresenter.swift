@@ -133,8 +133,8 @@ final class MainViewPresenter: MainViewPresenterProtocol {
 
         let authService = DI.shared.getAuthService()
 
-        var idToken = cache.getSecret(key: "idToken")
-        var refreshToken = cache.getSecret(key: "refreshToken")
+        var idToken = cache.getIdToken()
+        var refreshToken = cache.getRefreshToken()
 
         if idToken == "ID" {
             authService.setIsAuthDebug(newValue: true)
@@ -146,7 +146,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         } else if authService.getIsAuthDebug() {
             DataLoaderImpl.shared.loadData()
         } else {
-
             if idToken != "" {
                 DI.tinkoffId.obtainTokenPayload(using: refreshToken, handleRefreshToken)
             } else {
@@ -161,10 +160,10 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         do {
             let credentials = try result.get()
             let cache = CacheImpl.shared
-
-            cache.setSecret(key: "idToken", value: credentials.idToken)
-            cache.setSecret(key: "accessToken", value: credentials.accessToken)
-            cache.setSecret(key: "refreshToken", value: credentials.refreshToken ?? "")
+                
+            cache.setAccessToken(value: credentials.accessToken)
+            cache.setRefreshToken(value: credentials.refreshToken ?? "")
+            cache.setIdToken(value: credentials.idToken)
 
             var host = ""
             if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
@@ -189,7 +188,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                     }
                     return
                 }
-
                 switch response.statusCode {
                 case 200: // success
 
@@ -197,8 +195,8 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                         .data(using: .utf8) ?? Data(), options: .allowFragments) as? [Dictionary<String, Any>] {
 
                         if jsonArray.count > 0 {
-                            cache.setSecret(key: "idToken", value: jsonArray[0]["TID_ID"] as? String ?? "")
-                            cache.setSecret(key: "accessToken", value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
+                            cache.setIdToken(value: jsonArray[0]["TID_ID"] as? String ?? "")
+                            cache.setAccessToken(value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
                             cache.setPreferences(data: jsonArray[0]["firstName"] as? String ?? "", forKey: "firstName")
                             cache.setPreferences(data: jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                             cache.setPreferences(data: jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")

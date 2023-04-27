@@ -16,15 +16,17 @@ protocol SettingsViewPresenterDelegate: AnyObject {
 
 final class SettingsViewPresenter {
 
+    let cache = CacheImpl.shared
+    
     func signOut() {
 
-        DI.shared.getAuthService().logOut(accessToken: CacheImpl.shared.getSecret(key: "accessToken"), handler: handleSignOut)
+        DI.shared.getAuthService().logOut(accessToken: cache.getAccessToken(), handler: handleSignOut)
     }
 
     private func handleSignOut(_ result: Result<Void, Error>) {
-        CacheImpl.shared.setSecret(key: "accessToken", value: "")
-        CacheImpl.shared.setSecret(key: "refreshToken", value: "")
-        CacheImpl.shared.setSecret(key: "idToken", value: "")
+        cache.setAccessToken(value: "")
+        cache.setRefreshToken(value: "")
+        cache.setIdToken(value: "")
 
         let loginViewController = DI.shared.getLoginViewController()
         loginViewController.modalPresentationStyle = .fullScreen
