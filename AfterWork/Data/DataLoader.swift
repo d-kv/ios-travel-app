@@ -50,11 +50,15 @@ class DataLoaderImpl: DataLoader {
                 isRecommended: false, phone: "", availability: ""
             )
         )
-
-        let location = DI.shared.getMainViewController().getLocation()
+        
+        while currentLocation.coordinate.latitude == 0 {
+            sleep(1)
+        }
+        
+        let location = currentLocation.coordinate
         let lat = String(location.latitude)
         let lng = String(location.longitude)
-
+        
         var host = ""
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()

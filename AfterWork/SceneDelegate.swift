@@ -8,12 +8,39 @@
 import UIKit
 import TinkoffID
 import Swinject
+import CoreLocation
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private let notificationCenter = NotificationCenter.default
+    private var observer: NSObjectProtocol?
+    
+    func observerNotification() {
+        notificationCenter.addObserver(forName: .sharedLocation, object: nil, queue: .main) { notification in
+            
+            guard let object = notification.object as? [String: Any] else { return }
+            guard let error = object["error"] as? Bool else { return }
+            
+            if error {
+                print("error to access location service.")
+            } else {
+                guard let location = object["location"] as? CLLocation else { return }
+                currentLocation = location
+                print("location: \(location.coordinate.latitude)")
+            }
+        }
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        LocationManager.shared.checkLocationService()
+        observerNotification()
+        
+        observer = notificationCenter.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main, using: { notification in
+            print("willEnterForegroundNotification")
+            //LocationManager.shared.checkLocationService()
+        })
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
