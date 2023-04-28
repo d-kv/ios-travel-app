@@ -143,8 +143,7 @@ class InterfaceExt: InterfaceExtProtocol {
         return preCreatinonBasicCard(view: view, typeText: typeText, nameText: nameText, descriptionText: descriptionText, viewRectangle: viewRectangle, hideRectangle: hideRectangle, workHouseTitle: workHouseTitle, workHouseText: workHouseText, urlTitle: urlTitle, urlText: urlText)
     }
     
-    private func preCreatinonBasicCard(view: UIView, typeText: UITextView, nameText: UITextView, descriptionText: UITextView, viewRectangle: UIView, hideRectangle: UIView, workHouseTitle: UITextView, workHouseText: UITextView, urlTitle: UITextView, urlText: UIButton) -> UIView {
-
+    private func prepareConstraints(view: UIView, typeText: UITextView, nameText: UITextView, descriptionText: UITextView, viewRectangle: UIView, hideRectangle: UIView, workHouseTitle: UITextView, workHouseText: UITextView, urlTitle: UITextView, urlText: UIButton) -> [[NSLayoutConstraint]] {
         typeText.translatesAutoresizingMaskIntoConstraints = false
         let typeTextConstraints = [
             typeText.topAnchor.constraint(equalTo: view.topAnchor, constant: 25),
@@ -192,7 +191,11 @@ class InterfaceExt: InterfaceExtProtocol {
             workHouseTitle.widthAnchor.constraint(equalToConstant: 200),
             workHouseTitle.heightAnchor.constraint(equalToConstant: 30)
         ]
-
+        return [typeTextConstraints, nameTextConstraints, viewRectangleConstraints, hideRectangleConstraints, descriptionTextConstraints, workHouseTitleConstraints]
+    }
+    
+    private func preCreatinonBasicCard(view: UIView, typeText: UITextView, nameText: UITextView, descriptionText: UITextView, viewRectangle: UIView, hideRectangle: UIView, workHouseTitle: UITextView, workHouseText: UITextView, urlTitle: UITextView, urlText: UIButton) -> UIView {
+        
         workHouseText.translatesAutoresizingMaskIntoConstraints = false
         let workHouseTextConstraints = [
             workHouseText.topAnchor.constraint(equalTo: workHouseTitle.bottomAnchor, constant: 5),
@@ -225,9 +228,9 @@ class InterfaceExt: InterfaceExtProtocol {
         view.addSubview(workHouseText)
         view.addSubview(urlTitle)
         view.addSubview(urlText)
-
-        let constraintsArray = [typeTextConstraints, nameTextConstraints, viewRectangleConstraints, hideRectangleConstraints, descriptionTextConstraints, workHouseTitleConstraints, workHouseTextConstraints, urlTitleConstraints, urlTextConstraints].flatMap {$0}
+        let constraintsArray = [workHouseTextConstraints, urlTitleConstraints, urlTextConstraints].flatMap {$0}
         NSLayoutConstraint.activate(constraintsArray)
+        NSLayoutConstraint.activate(prepareConstraints(view: view, typeText: typeText, nameText: nameText, descriptionText: descriptionText, viewRectangle: viewRectangle, hideRectangle: hideRectangle, workHouseTitle: workHouseTitle, workHouseText: workHouseText, urlTitle: urlTitle, urlText: urlText).flatMap {$0})
 
         if typeText.text == "Инструкция" {
             workHouseTitle.isHidden = true
@@ -235,7 +238,6 @@ class InterfaceExt: InterfaceExtProtocol {
             urlTitle.isHidden = true
             urlText.isHidden = true
         }
-
         view.backgroundColor = UIColor(named: "GreyColor")
         view.layer.cornerRadius = 23
         

@@ -95,8 +95,5 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     func setupNotificationCenter(object: Any? = nil) {
         notificationCenter.post(name: .sharedLocation, object: object)
     }
-    
-    
-    
-    
+
 }
