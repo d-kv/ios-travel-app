@@ -11,7 +11,6 @@ import MapKit
 
 protocol CardsViewPresenterProtocol {
     func goToMain()
-    func setUpLocation(locationManager: CLLocationManager)
     static func getCards() -> [Places]?
 }
 
@@ -26,17 +25,6 @@ class CardsViewPresenter: CardsViewPresenterProtocol {
         self.controller.dismiss(animated: true)
     }
 
-    func setUpLocation(locationManager: CLLocationManager) {
-
-        DispatchQueue.background(background: {
-            if CLLocationManager.locationServicesEnabled() {
-
-                locationManager.requestAlwaysAuthorization()
-                locationManager.startUpdatingLocation()
-            }
-        })
-
-    }
     static var isSearching: Bool = false
     static func getCards() -> [Places]? {
         if isSearching {

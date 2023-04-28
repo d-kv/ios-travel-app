@@ -7,9 +7,8 @@
 
 import Foundation
 import UIKit
-import CoreLocation
 
-class MainViewController: UIViewController, CLLocationManagerDelegate {
+class MainViewController: UIViewController {
 
     let userImage = UIButton()
     let userName = UITextView()
@@ -25,7 +24,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
 
     let mainViewPresenter = DI.shared.getMainViewPresenter()
 
-    let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +37,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
 
         mainViewPresenter.enteredApp()
 
-        setUpLocation(locationManager: locationManager)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -80,26 +77,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
     @objc private func personalRecommendTap() {
         self.personalRecommend.showAnimation {}
         mainViewPresenter.goToCards(type: .all)
-    }
-
-    private func setUpLocation(locationManager: CLLocationManager) {
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-
-        // For use in foreground
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-
-        DispatchQueue.background(background: {
-            if CLLocationManager.locationServicesEnabled() {
-                locationManager.startUpdatingLocation()
-            }
-        })
-
-    }
-
-    func getLocation() -> CLLocationCoordinate2D {
-        return (locationManager.location ?? CLLocation(latitude: 0, longitude: 0)).coordinate
     }
 
     // MARK: - Constraints

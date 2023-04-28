@@ -10,10 +10,13 @@ import TinkoffID
 import Swinject
 import FirebaseCore
 import FirebaseMessaging
+import CoreLocation
+
+var currentLocation: CLLocation = CLLocation(latitude: 0, longitude: 0)
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
-
+    
 }
 
 extension AppDelegate {

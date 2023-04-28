@@ -10,7 +10,7 @@ import UIKit
 import Shuffle_iOS
 import MapKit
 
-class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCardStackDelegate, CLLocationManagerDelegate {
+class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCardStackDelegate {
 
     let cardStack = SwipeCardStack()
     let backButton = UIButton()
@@ -65,7 +65,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
         mapView.addAnnotation(artwork)
 
         let a = artwork.coordinate
-        let b = mapView.userLocation.coordinate
+        let b = currentLocation.coordinate
         let apoint = MKMapPoint(a)
         let bpoint = MKMapPoint(b)
 
@@ -74,7 +74,7 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
                 x: min(apoint.x, bpoint.x), y: min(apoint.y, bpoint.y),
                 width: abs(apoint.x - bpoint.x),
                 height: abs(apoint.y - bpoint.y)),
-                edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20),
+                edgePadding: UIEdgeInsets(top: 40, left: 20, bottom: 10, right: 20),
             animated: true)
 
         if direction == .right  && index != 0 {
@@ -154,9 +154,17 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
 
         create()
         setUpContstraints()
+        
+        let location = currentLocation
 
-        setUpLocationManager()
-        DI.shared.getCardsViewPresenter().setUpLocation(locationManager: locationManager)
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+
+        if setRegionFlag {
+            mapView.setRegion(region, animated: false)
+            setRegionFlag = !setRegionFlag
+        }
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -246,28 +254,5 @@ class CardsViewController: UIViewController, SwipeCardStackDataSource, SwipeCard
 
     // MARK: - Map and location
 
-    var locationManager: CLLocationManager!
-
     var setRegionFlag = true
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-        let location = (locations.last ?? CLLocation(latitude: 0, longitude: 0)) as CLLocation
-
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-
-        if setRegionFlag {
-            mapView.setRegion(region, animated: false)
-            setRegionFlag = !setRegionFlag
-        }
-    }
-
-    func setUpLocationManager() {
-        mapView.showsUserLocation = true
-
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-
 }
