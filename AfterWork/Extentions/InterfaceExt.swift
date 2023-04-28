@@ -16,7 +16,6 @@ protocol InterfaceExtProtocol {
     func frameTextView(text: String, font: UIFont, lineHeightMultiple: CGFloat) -> UITextView
     func card(fromData data: Places) -> SwipeCard
     func basicCard(type: String, title: String, description: String, workHours: String, url: String, isRecommended: Bool) -> UIView
-    func worstPrice(price: Int) -> UIView
 }
 
 class InterfaceExt: InterfaceExtProtocol {
@@ -140,6 +139,12 @@ class InterfaceExt: InterfaceExtProtocol {
         urlText.setTitle(url, for: .normal)
         urlText.setTitleColor(.tintColor, for: .normal)
 
+
+        return preCreatinonBasicCard(view: view, typeText: typeText, nameText: nameText, descriptionText: descriptionText, viewRectangle: viewRectangle, hideRectangle: hideRectangle, workHouseTitle: workHouseTitle, workHouseText: workHouseText, urlTitle: urlTitle, urlText: urlText)
+    }
+    
+    private func preCreatinonBasicCard(view: UIView, typeText: UITextView, nameText: UITextView, descriptionText: UITextView, viewRectangle: UIView, hideRectangle: UIView, workHouseTitle: UITextView, workHouseText: UITextView, urlTitle: UITextView, urlText: UIButton) -> UIView {
+
         typeText.translatesAutoresizingMaskIntoConstraints = false
         let typeTextConstraints = [
             typeText.topAnchor.constraint(equalTo: view.topAnchor, constant: 25),
@@ -233,50 +238,7 @@ class InterfaceExt: InterfaceExtProtocol {
 
         view.backgroundColor = UIColor(named: "GreyColor")
         view.layer.cornerRadius = 23
-
+        
         return view
-    }
-
-    func worstPrice(price: Int) -> UIView {
-        let view = UIView()
-
-        var counter: Int = 0
-
-        for _ in stride(from: 0, to: price, by: 1) {
-
-            let image = UIImageView(image: UIImage(named: "rubleImage"))
-            image.tintColor = UIColor(named: "YellowColor")
-
-            image.translatesAutoresizingMaskIntoConstraints = false
-            let imageConstraints = [
-                image.topAnchor.constraint(equalTo: view.topAnchor),
-                image.leftAnchor.constraint(equalTo: view.leftAnchor, constant: CGFloat(25 * counter)),
-                image.widthAnchor.constraint(equalToConstant: 20),
-                image.heightAnchor.constraint(equalToConstant: 20)
-            ]
-
-            view.addSubview(image)
-            NSLayoutConstraint.activate(imageConstraints)
-            counter += 1
-        }
-
-        for _ in stride(from: 0, to: 5 - price, by: 1) {
-            let image = UIImageView(image: UIImage(named: "rubleImage"))
-            image.tintColor = UIColor(named: "LightGrayColor")
-
-            image.translatesAutoresizingMaskIntoConstraints = false
-            let imageConstraints = [
-                image.topAnchor.constraint(equalTo: view.topAnchor),
-                image.leftAnchor.constraint(equalTo: view.leftAnchor, constant: CGFloat(25 * counter)),
-                image.widthAnchor.constraint(equalToConstant: 20),
-                image.heightAnchor.constraint(equalToConstant: 20)
-            ]
-
-            view.addSubview(image)
-            NSLayoutConstraint.activate(imageConstraints)
-            counter += 1
-        }
-        return view
-
     }
 }

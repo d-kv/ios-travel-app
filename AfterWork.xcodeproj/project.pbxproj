@@ -319,6 +319,7 @@
 				5C79C04729A2CC0E00106F20 /* Frameworks */,
 				5C79C04829A2CC0E00106F20 /* Resources */,
 				10F2A37BECAF3D1058AADAB3 /* [CP] Embed Pods Frameworks */,
+				5CC969D029FBB0DE00348550 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -407,6 +408,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AfterWork/Pods-AfterWork-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		5CC969D029FBB0DE00348550 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  #swiftlint\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		B91C9FE2037A5ADDAAAED19D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

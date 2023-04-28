@@ -86,14 +86,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
           forAnnotationViewWithReuseIdentifier:
             MKMapViewDefaultAnnotationViewReuseIdentifier)
 
-//        let artwork = Artwork(
-//            title: "King David Kalakaua",
-//            locationName: "Waikiki Gateway Park",
-//            discipline: "Sculpture",
-//            coordinate: CLLocationCoordinate2D(latitude: 56.2965039, longitude: 43.9360589),
-//            image: UIImage(named: "markerTop")
-//        )
-
         if targetPoint != nil {
 
             let a = targetPoint?.coordinate
