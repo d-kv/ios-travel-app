@@ -127,6 +127,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4457CCAC29FB80C90028997E /* ModelsTests */ = {
+			isa = PBXGroup;
+			children = (
+				4480DCDD29F8C4AC008003C3 /* CategoryTests.swift */,
+				4413991029FAB75B008CDC25 /* AchievementTests.swift */,
+				4413991229FAB7BC008CDC25 /* PlaceTests.swift */,
+				4413991429FAB801008CDC25 /* LocationTests.swift */,
+			);
+			path = ModelsTests;
+			sourceTree = "<group>";
+		};
 		4480DCD429F8C3B2008003C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,10 +152,7 @@
 		4480DCDC29F8C4AC008003C3 /* AfterWorkTests */ = {
 			isa = PBXGroup;
 			children = (
-				4480DCDD29F8C4AC008003C3 /* CategoryTests.swift */,
-				4413991029FAB75B008CDC25 /* AchievementTests.swift */,
-				4413991229FAB7BC008CDC25 /* PlaceTests.swift */,
-				4413991429FAB801008CDC25 /* LocationTests.swift */,
+				4457CCAC29FB80C90028997E /* ModelsTests */,
 			);
 			path = AfterWorkTests;
 			sourceTree = "<group>";
