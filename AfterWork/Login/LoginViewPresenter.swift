@@ -67,8 +67,7 @@ class LoginViewPresenter {
         }
     }
 
-    private func req() {
-
+    private func prepareReq() -> URLRequest {
         var idToken = cache.getIdToken()
         var accessToken = cache.getAccessToken()
 
@@ -82,8 +81,12 @@ class LoginViewPresenter {
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        
+        return request
+    }
+    
+    private func req() {
+        let task = URLSession.shared.dataTask(with: prepareReq()) { data, response, error in
             guard
                 let data = data,
                 let response = response as? HTTPURLResponse,
@@ -129,13 +132,10 @@ class LoginViewPresenter {
                 DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
             }
         }
-
         task.resume()
-
     }
 
     func debug_req(TIN_accessToken: String) {
-
         var host = ""
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
@@ -182,9 +182,7 @@ class LoginViewPresenter {
                 DispatchQueue.main.async { self.delegate?.TinkoffIDResolver(status: .someError) }
             }
         }
-
         task.resume()
-
     }
 }
 

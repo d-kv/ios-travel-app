@@ -90,114 +90,126 @@ class MapDescViewController: UIViewController {
 
     }
 
-    private func setUpConstraints() {
-
+    private func preConstraints() {
         bigView.translatesAutoresizingMaskIntoConstraints = false
+        titleText.translatesAutoresizingMaskIntoConstraints = false
+        nameText.translatesAutoresizingMaskIntoConstraints = false
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        descriptionText.translatesAutoresizingMaskIntoConstraints = false
+        workHoursTitle.translatesAutoresizingMaskIntoConstraints = false
+        workHoursText.translatesAutoresizingMaskIntoConstraints = false
+        lineViewSecond.translatesAutoresizingMaskIntoConstraints = false
+        contactsTitle.translatesAutoresizingMaskIntoConstraints = false
+        contactsText.translatesAutoresizingMaskIntoConstraints = false
+        lineViewThird.translatesAutoresizingMaskIntoConstraints = false
+        urlTitle.translatesAutoresizingMaskIntoConstraints = false
+        urlText.translatesAutoresizingMaskIntoConstraints = false
+        taxiButton.translatesAutoresizingMaskIntoConstraints = false
+        pathButton.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func viewAdding() {
+        view.addSubview(bigView)
+        view.addSubview(titleText)
+        view.addSubview(nameText)
+        view.addSubview(lineView)
+        view.addSubview(descriptionText)
+        view.addSubview(workHoursTitle)
+        view.addSubview(workHoursText)
+        view.addSubview(lineViewSecond)
+        view.addSubview(contactsTitle)
+        view.addSubview(contactsText)
+        view.addSubview(lineViewThird)
+        view.addSubview(urlTitle)
+        view.addSubview(urlText)
+        view.addSubview(taxiButton)
+        view.addSubview(pathButton)
+    }
+    
+    private func firstCreation() -> [[NSLayoutConstraint]] {
         let bigViewConstraints = [
             bigView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
             bigView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
             bigView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
             bigView.heightAnchor.constraint(equalToConstant: 240)
         ]
-
-        titleText.translatesAutoresizingMaskIntoConstraints = false
         let titleTextConstraints = [
             titleText.topAnchor.constraint(equalTo: bigView.topAnchor, constant: 15),
             titleText.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 15),
             titleText.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -15),
             titleText.heightAnchor.constraint(equalToConstant: 25)
         ]
-
-        nameText.translatesAutoresizingMaskIntoConstraints = false
         let nameTextConstraints = [
             nameText.topAnchor.constraint(equalTo: titleText.bottomAnchor),
             nameText.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 15),
             nameText.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -15),
             nameText.heightAnchor.constraint(equalToConstant: 30)
         ]
-
-        lineView.translatesAutoresizingMaskIntoConstraints = false
         let lineViewConstraints = [
             lineView.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 20),
             lineView.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 25),
             lineView.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -25),
             lineView.heightAnchor.constraint(equalToConstant: 3)
         ]
-
-        descriptionText.translatesAutoresizingMaskIntoConstraints = false
         let descriptionTextConstraints = [
             descriptionText.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 15),
             descriptionText.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 15),
             descriptionText.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -15),
             descriptionText.bottomAnchor.constraint(equalTo: bigView.bottomAnchor, constant: -15)
         ]
-
-        workHoursTitle.translatesAutoresizingMaskIntoConstraints = false
         let workHoursTitleConstraints = [
             workHoursTitle.topAnchor.constraint(equalTo: bigView.bottomAnchor, constant: 25),
             workHoursTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
             workHoursTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40)
         ]
-
-        workHoursText.translatesAutoresizingMaskIntoConstraints = false
         let workHoursTextConstraints = [
             workHoursText.topAnchor.constraint(equalTo: workHoursTitle.bottomAnchor, constant: 0),
             workHoursText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
             workHoursText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40)
         ]
-
-        lineViewSecond.translatesAutoresizingMaskIntoConstraints = false
         let lineViewSecondConstraints = [
             lineViewSecond.topAnchor.constraint(equalTo: workHoursText.bottomAnchor, constant: 20),
             lineViewSecond.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 5),
             lineViewSecond.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -5),
             lineViewSecond.heightAnchor.constraint(equalToConstant: 3)
         ]
-
-        contactsTitle.translatesAutoresizingMaskIntoConstraints = false
+        return [bigViewConstraints, titleTextConstraints, nameTextConstraints, lineViewConstraints, descriptionTextConstraints, workHoursTitleConstraints, workHoursTextConstraints, lineViewSecondConstraints]
+    }
+    
+    private func setUpConstraints() {
+        preConstraints()
+        
         let contactsTitleConstraints = [
             contactsTitle.topAnchor.constraint(equalTo: lineViewSecond.bottomAnchor, constant: 25),
             contactsTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
             contactsTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40)
         ]
-
-        contactsText.translatesAutoresizingMaskIntoConstraints = false
         let contactsTextConstraints = [
             contactsText.topAnchor.constraint(equalTo: contactsTitle.bottomAnchor, constant: 0),
             contactsText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40)
         ]
-
-        lineViewThird.translatesAutoresizingMaskIntoConstraints = false
         let lineViewThirdConstraints = [
             lineViewThird.topAnchor.constraint(equalTo: contactsText.bottomAnchor, constant: 20),
             lineViewThird.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 5),
             lineViewThird.rightAnchor.constraint(equalTo: bigView.rightAnchor, constant: -5),
             lineViewThird.heightAnchor.constraint(equalToConstant: 3)
         ]
-
-        urlTitle.translatesAutoresizingMaskIntoConstraints = false
         let urlTitleConstraints = [
             urlTitle.topAnchor.constraint(equalTo: lineViewThird.bottomAnchor, constant: 25),
             urlTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
             urlTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40)
         ]
-
-        urlText.translatesAutoresizingMaskIntoConstraints = false
         let urlTextConstraints = [
             urlText.topAnchor.constraint(equalTo: urlTitle.bottomAnchor, constant: 5),
             urlText.leftAnchor.constraint(equalTo: urlTitle.leftAnchor, constant: 5)
 
         ]
-
-        taxiButton.translatesAutoresizingMaskIntoConstraints = false
         let taxiButtonConstraints = [
             taxiButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             taxiButton.leftAnchor.constraint(equalTo: bigView.leftAnchor, constant: 15),
             taxiButton.rightAnchor.constraint(equalTo: view.centerXAnchor, constant: -10),
             taxiButton.heightAnchor.constraint(equalToConstant: 45)
         ]
-
-        pathButton.translatesAutoresizingMaskIntoConstraints = false
         let pathButtonConstraints = [
             pathButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             pathButton.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 10),
@@ -205,30 +217,10 @@ class MapDescViewController: UIViewController {
             pathButton.heightAnchor.constraint(equalToConstant: 45)
         ]
 
-        view.addSubview(bigView)
-
-        view.addSubview(titleText)
-        view.addSubview(nameText)
-        view.addSubview(lineView)
-        view.addSubview(descriptionText)
-
-        view.addSubview(workHoursTitle)
-        view.addSubview(workHoursText)
-        view.addSubview(lineViewSecond)
-
-        view.addSubview(contactsTitle)
-        view.addSubview(contactsText)
-        view.addSubview(lineViewThird)
-
-        view.addSubview(urlTitle)
-        view.addSubview(urlText)
-
-        view.addSubview(taxiButton)
-        view.addSubview(pathButton)
-
-        let constraintsArray = [bigViewConstraints, titleTextConstraints, nameTextConstraints, lineViewConstraints, descriptionTextConstraints, workHoursTitleConstraints, workHoursTextConstraints, lineViewSecondConstraints, contactsTitleConstraints, contactsTextConstraints, lineViewThirdConstraints, urlTitleConstraints, urlTextConstraints, taxiButtonConstraints, pathButtonConstraints].flatMap {$0}
+        viewAdding()
+        let constraintsArray = [contactsTitleConstraints, contactsTextConstraints, lineViewThirdConstraints, urlTitleConstraints, urlTextConstraints, taxiButtonConstraints, pathButtonConstraints].flatMap {$0}
         NSLayoutConstraint.activate(constraintsArray)
-
+        NSLayoutConstraint.activate(firstCreation().flatMap {$0})
     }
 
     @objc private func taxiButtonTap() {

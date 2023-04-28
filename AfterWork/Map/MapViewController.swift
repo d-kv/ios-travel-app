@@ -95,9 +95,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     // MARK: - Constraints
-
-    func setUpConstraints() {
-
+    
+    private func prepareConstraints() -> [[NSLayoutConstraint]] {
         mapView.translatesAutoresizingMaskIntoConstraints = false
         let mapViewConstraints = [
             mapView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -145,15 +144,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             segmentControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             segmentControl.heightAnchor.constraint(equalToConstant: 50)
         ]
+        
+        return [mapViewConstraints, backButtonConstraints, taxiButtonConstraints, wayButtonConstraints, recommendButtonConstraints, segmentControlConstraints]
+    }
 
+    func setUpConstraints() {
         view.addSubview(mapView)
         view.addSubview(backButton)
         view.addSubview(taxiButton)
         view.addSubview(wayButton)
         view.addSubview(recommendButton)
         view.addSubview(segmentControl)
-
-        let constraintsArray = [mapViewConstraints, backButtonConstraints, taxiButtonConstraints, wayButtonConstraints, recommendButtonConstraints, segmentControlConstraints].flatMap {$0}
+        let constraintsArray = prepareConstraints().flatMap {$0}
         NSLayoutConstraint.activate(constraintsArray)
     }
 

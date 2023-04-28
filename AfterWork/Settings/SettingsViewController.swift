@@ -154,20 +154,19 @@ class SettingsViewController: UIViewController {
     }
 
     // MARK: - Custom Views
-
-    func addTo_achievementsView() {
-        let textView = UITextView()
-        let zeroImage = UIButton()
-        let firstImage = UIButton()
-        let secondImage = UIButton()
-        let thirdImage = UIButton()
-        let fourthImage = UIButton()
-        let fivthImage = UIButton()
-        let sixthImage = UIButton()
-        let seventhImage = UIButton()
-        let eightthImage = UIButton()
-        let ninthImage = UIButton()
-
+    let textView = UITextView()
+    let zeroImage = UIButton()
+    let firstImage = UIButton()
+    let secondImage = UIButton()
+    let thirdImage = UIButton()
+    let fourthImage = UIButton()
+    let fivthImage = UIButton()
+    let sixthImage = UIButton()
+    let seventhImage = UIButton()
+    let eightthImage = UIButton()
+    let ninthImage = UIButton()
+    
+    private func preCreation() {
         zeroImage.setImage(UIImage(named: "bottleImage0")?.withTintColor(UIColor(named: "YellowColor") ?? .yellow), for: .normal)
         zeroImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         zeroImage.tag = 0
@@ -217,7 +216,9 @@ class SettingsViewController: UIViewController {
         ninthImage.addTarget(self, action: #selector(achievementTap), for: .touchUpInside)
         ninthImage.tag = 9
         ninthImage.isHidden = true
-
+    }
+    
+    private func textViewPreCreation() {
         textView.text = String(localized: "settings_achievements")
         textView.contentInsetAdjustmentBehavior = .automatic
         textView.center = self.view.center
@@ -230,7 +231,9 @@ class SettingsViewController: UIViewController {
         textView.sizeToFit()
         textView.isScrollEnabled = false
         textView.isSelectable = false
-
+    }
+    
+    private func getFirstConstraints() -> [[NSLayoutConstraint]] {
         textView.translatesAutoresizingMaskIntoConstraints = false
         let textViewConstraints = [
             textView.topAnchor.constraint(equalTo: achievementsView.topAnchor, constant: 5),
@@ -276,7 +279,11 @@ class SettingsViewController: UIViewController {
             fourthImage.widthAnchor.constraint(equalToConstant: 50),
             fourthImage.leftAnchor.constraint(equalTo: thirdImage.rightAnchor, constant: 15)
         ]
-
+        
+        return [textViewConstraints, zeroImageConstraints, firstImageConstraints, secondImageConstraints, thirdImageConstraints, fourthImageConstraints]
+    }
+    
+    private func getSecondConstraints() -> [[NSLayoutConstraint]] {
         fivthImage.translatesAutoresizingMaskIntoConstraints = false
         let fivthImageConstraints = [
             fivthImage.bottomAnchor.constraint(equalTo: achievementsView.bottomAnchor, constant: -10),
@@ -316,6 +323,13 @@ class SettingsViewController: UIViewController {
             ninthImage.widthAnchor.constraint(equalToConstant: 50),
             ninthImage.leftAnchor.constraint(equalTo: eightthImage.rightAnchor, constant: 15)
         ]
+        
+        return [fivthImageConstraints, sixthImageConstraints, seventhImageConstraints, eightthImageConstraints, ninthImageConstraints]
+    }
+
+    func addTo_achievementsView() {
+        preCreation()
+        textViewPreCreation()
 
         achievementsView.addSubview(textView)
         achievementsView.addSubview(zeroImage)
@@ -329,8 +343,8 @@ class SettingsViewController: UIViewController {
         achievementsView.addSubview(eightthImage)
         achievementsView.addSubview(ninthImage)
 
-        let constraintsArray = [textViewConstraints, zeroImageConstraints, firstImageConstraints, secondImageConstraints, thirdImageConstraints, fourthImageConstraints, fivthImageConstraints, sixthImageConstraints, seventhImageConstraints, eightthImageConstraints, ninthImageConstraints].flatMap {$0}
-        NSLayoutConstraint.activate(constraintsArray)
+        NSLayoutConstraint.activate(getFirstConstraints().flatMap {$0})
+        NSLayoutConstraint.activate(getSecondConstraints().flatMap {$0})
 
         let userA = UserDefaults.standard.string(forKey: "achievements") ?? ""
         for i in userA {

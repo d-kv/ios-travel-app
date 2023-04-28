@@ -55,8 +55,8 @@ class DataLoaderImpl: DataLoader {
     }
     
     private let location = currentLocation.coordinate
-
-    func loadData() -> Bool {
+    
+    private func prepareLoad() -> URLRequest {
         let lat = String(location.latitude)
         let lng = String(location.longitude)
         preLoad()
@@ -73,7 +73,12 @@ class DataLoaderImpl: DataLoader {
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        return request
+    }
+
+    func loadData() -> Bool {
+        
+        let task = URLSession.shared.dataTask(with: prepareLoad()) { data, response, error in
             guard
                 let data = data,
                 let response = response as? HTTPURLResponse,

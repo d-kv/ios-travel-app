@@ -155,26 +155,30 @@ final class MainViewPresenter: MainViewPresenterProtocol {
 
         }
     }
+    
+    private func prepareRequest(credentials: TinkoffTokenPayload) -> URLRequest {
+        let cache = CacheImpl.shared
+        cache.setAccessToken(value: credentials.accessToken)
+        cache.setRefreshToken(value: credentials.refreshToken ?? "")
+        cache.setIdToken(value: credentials.idToken)
+        var host = ""
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
+            host = keys["HOST"] as? String ?? ""
+        }
+        let url = URL(string: host + "/api/auth?tid_id=" + credentials.idToken + "&tid_accessToken=" + credentials.accessToken)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpMethod = "POST"
+        return request
+    }
 
     private func handleRefreshToken(_ result: Result<TinkoffTokenPayload, TinkoffAuthError>) {
         do {
             let credentials = try result.get()
             let cache = CacheImpl.shared
-            cache.setAccessToken(value: credentials.accessToken)
-            cache.setRefreshToken(value: credentials.refreshToken ?? "")
-            cache.setIdToken(value: credentials.idToken)
 
-            var host = ""
-            if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
-                let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
-                host = keys["HOST"] as? String ?? ""
-            }
-            let url = URL(string: host + "/api/auth?tid_id=" + credentials.idToken + "&tid_accessToken=" + credentials.accessToken)!
-            var request = URLRequest(url: url)
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.httpMethod = "POST"
-
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            let task = URLSession.shared.dataTask(with: prepareRequest(credentials: credentials)) { data, response, error in
                 guard
                     let data = data,
                     let response = response as? HTTPURLResponse,

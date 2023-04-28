@@ -164,8 +164,8 @@ class MainViewController: UIViewController {
     @objc private func searchBarHandler() {
         mainViewPresenter.search(req: searchBar.text ?? "")
     }
-
-    func setUpConstraints() {
+    
+    private func prepareConstraints() -> [[NSLayoutConstraint]] {
         userImage.translatesAutoresizingMaskIntoConstraints = false
         let userImageConstraints = [
             userImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
@@ -205,6 +205,11 @@ class MainViewController: UIViewController {
             centerRecommend.heightAnchor.constraint(equalToConstant: 110),
             centerRecommend.widthAnchor.constraint(equalToConstant: 110)
         ]
+        
+        return [userImageConstraints, userNameConstraints, searchBarConstraints, bigRecommendConstraints, centerRecommendConstraints]
+    }
+
+    func setUpConstraints() {
 
         leftRecommend.translatesAutoresizingMaskIntoConstraints = false
         let leftRecommendConstraints = [
@@ -241,8 +246,9 @@ class MainViewController: UIViewController {
         ]
         addSubViews()
 
-        let constraintsArray = [userImageConstraints, userNameConstraints, searchBarConstraints, bigRecommendConstraints, centerRecommendConstraints, leftRecommendConstraints, rightRecommendConstraints, personalRecommendConstraints, checkAllButtonConstraints].flatMap {$0}
+        let constraintsArray = [leftRecommendConstraints, rightRecommendConstraints, personalRecommendConstraints, checkAllButtonConstraints].flatMap {$0}
         NSLayoutConstraint.activate(constraintsArray)
+        NSLayoutConstraint.activate(prepareConstraints().flatMap {$0})
 
     }
     
