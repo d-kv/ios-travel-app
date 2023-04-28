@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
 
     // MARK: - Main
 
@@ -44,35 +44,23 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     static var isSearching: Bool = false
 
     var setRegionFlag = true
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-        let location = (locations.last ?? CLLocation(latitude: 0, longitude: 0)) as CLLocation
-
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.11, longitudeDelta: 0.11))
-
-        if setRegionFlag && targetPoint == nil {
-            mapView.setRegion(region, animated: false)
-            setRegionFlag = !setRegionFlag
-        }
-
-    }
+    
+    
 
     // MARK: - ViewDidLoad
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.mapViewPresenter.delegate = self
-
         mapView.delegate = self
-
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-
-        MapViewPresenter.setUpLocation(locationManager: locationManager ?? CLLocationManager())
-
+        
+        let location = currentLocation
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.11, longitudeDelta: 0.11))
+        if setRegionFlag && targetPoint == nil {
+            mapView.setRegion(region, animated: false)
+            setRegionFlag = !setRegionFlag
+        }
         backButton.setImage(UIImage(named: "backArrow"), for: .normal)
 
         backButton.addTarget(self, action: #selector(backButtonTap), for: .touchUpInside)

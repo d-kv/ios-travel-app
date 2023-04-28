@@ -60,16 +60,6 @@ final class MapViewPresenter {
         }
     }
 
-    static func setUpLocation(locationManager: CLLocationManager) {
-        DispatchQueue.background(background: {
-            if CLLocationManager.locationServicesEnabled() {
-
-                locationManager.requestAlwaysAuthorization()
-                locationManager.startUpdatingLocation()
-            }
-        })
-    }
-
     enum categories {
         case all
         case food
