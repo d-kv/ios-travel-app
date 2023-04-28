@@ -39,9 +39,8 @@ class DataLoaderImpl: DataLoader {
 
     var places = [Places]()
     var placesSearch = [Places]()
-
-    func loadData() -> Bool {
-
+    
+    private func preLoad() {
         places.append(
             Places(
                 id: 0, yaid: 0, category: String(localized: "instruction_title"),
@@ -50,15 +49,17 @@ class DataLoaderImpl: DataLoader {
                 isRecommended: false, phone: "", availability: ""
             )
         )
-        
         while currentLocation.coordinate.latitude == 0 {
             sleep(1)
         }
-        
-        let location = currentLocation.coordinate
+    }
+    
+    private let location = currentLocation.coordinate
+
+    func loadData() -> Bool {
         let lat = String(location.latitude)
         let lng = String(location.longitude)
-        
+        preLoad()
         var host = ""
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
@@ -86,7 +87,6 @@ class DataLoaderImpl: DataLoader {
                 }
                 return
             }
-
             switch response.statusCode {
             case 200: // success
                 if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?
@@ -100,7 +100,6 @@ class DataLoaderImpl: DataLoader {
                             topVC.view.removeBluerLoader()
                         }
                     }
-
                 } else {
                     DispatchQueue.main.async {
                         let loginViewController = DI.shared.getLoginViewController()
@@ -109,7 +108,6 @@ class DataLoaderImpl: DataLoader {
                         sceneDelegate.window!.rootViewController?.present(loginViewController, animated: true)
                     }
                 }
-
             default:
                 DispatchQueue.main.async {
                     let loginViewController = DI.shared.getLoginViewController()
@@ -119,7 +117,6 @@ class DataLoaderImpl: DataLoader {
                 }
             }
         }
-
         task.resume()
         return true
     }

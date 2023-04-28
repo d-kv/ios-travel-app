@@ -160,7 +160,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         do {
             let credentials = try result.get()
             let cache = CacheImpl.shared
-                
             cache.setAccessToken(value: credentials.accessToken)
             cache.setRefreshToken(value: credentials.refreshToken ?? "")
             cache.setIdToken(value: credentials.idToken)
@@ -170,7 +169,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                 let keys = NSDictionary(contentsOfFile: path) ?? NSDictionary()
                 host = keys["HOST"] as? String ?? ""
             }
-
             let url = URL(string: host + "/api/auth?tid_id=" + credentials.idToken + "&tid_accessToken=" + credentials.accessToken)!
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -190,10 +188,8 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                 }
                 switch response.statusCode {
                 case 200: // success
-
                     if let jsonArray = try? JSONSerialization.jsonObject(with: String(data: data, encoding: .utf8)?
                         .data(using: .utf8) ?? Data(), options: .allowFragments) as? [Dictionary<String, Any>] {
-
                         if jsonArray.count > 0 {
                             cache.setIdToken(value: jsonArray[0]["TID_ID"] as? String ?? "")
                             cache.setAccessToken(value: jsonArray[0]["TID_AccessToken"] as? String ?? "")
@@ -201,18 +197,14 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                             cache.setPreferences(data: jsonArray[0]["lastName"] as? String ?? "", forKey: "lastName")
                             cache.setPreferences(data: jsonArray[0]["isAdmin"] as? Bool ?? false, forKey: "isAdmin")
                             cache.setPreferences(data: jsonArray[0]["achievements"] as? String ?? "", forKey: "achievements")
-                            if !DataLoaderImpl.shared.loadData() {
-                                self.goToLogin()
-                            }
+                            if !DataLoaderImpl.shared.loadData() { self.goToLogin() }
                         }
-
                     } else {
                         DispatchQueue.main.async {
                             self.delegate?.mainViewPresenter(self, isLoading: false)
                             self.goToLogin()
                         }
                     }
-
                 default:
                     DispatchQueue.main.async {
                         self.delegate?.mainViewPresenter(self, isLoading: false)
@@ -220,9 +212,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                     }
                 }
             }
-
             task.resume()
-
         } catch {
             self.delegate?.mainViewPresenter(self, isLoading: false)
             goToLogin()

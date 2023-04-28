@@ -80,11 +80,8 @@ class MainViewController: UIViewController {
     }
 
     // MARK: - Constraints
-
-    func creation() {
-        userImage.setImage(UIImage(named: "userImage"), for: .normal)
-        userImage.addTarget(self, action: #selector(userImageTap), for: .touchUpInside)
-
+    
+    private func preCreateUserName() {
         userName.text = "Евгений,\n" + String(localized: "main_top")
         userName.contentInsetAdjustmentBehavior = .automatic
         userName.center = self.view.center
@@ -97,6 +94,13 @@ class MainViewController: UIViewController {
         userName.sizeToFit()
         userName.isScrollEnabled = false
         userName.isSelectable = false
+    }
+
+    func creation() {
+        userImage.setImage(UIImage(named: "userImage"), for: .normal)
+        userImage.addTarget(self, action: #selector(userImageTap), for: .touchUpInside)
+
+        preCreateUserName()
 
         searchBar.placeholder = String(localized: "main_search")
         searchBar.barTintColor = .clear
@@ -127,22 +131,7 @@ class MainViewController: UIViewController {
         centerRecommend.isUserInteractionEnabled = true
         rightRecommend.isUserInteractionEnabled = true
 
-        let gesturePersonal: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(personalRecommendTap))
-        gesturePersonal.numberOfTapsRequired = 1
-        let gestureBig: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bigRecommendTap))
-        gestureBig.numberOfTapsRequired = 1
-        let gestureLeft: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(leftRecommendTap))
-        gestureLeft.numberOfTapsRequired = 1
-        let gestureCenter: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(centerRecommendTap))
-        gestureCenter.numberOfTapsRequired = 1
-        let gestureRight: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightRecommendTap))
-        gestureRight.numberOfTapsRequired = 1
-
-        personalRecommend.addGestureRecognizer(gesturePersonal)
-        bigRecommend.addGestureRecognizer(gestureBig)
-        leftRecommend.addGestureRecognizer(gestureLeft)
-        centerRecommend.addGestureRecognizer(gestureCenter)
-        rightRecommend.addGestureRecognizer(gestureRight)
+        addGesture()
 
         checkAllButton.setTitle(String(localized: "main_all"), for: .normal)
         checkAllButton.backgroundColor = UIColor(named: "YellowColor")
@@ -153,13 +142,30 @@ class MainViewController: UIViewController {
 
         searchBar.searchTextField.addTarget(self, action: #selector(searchBarHandler), for: .editingDidEndOnExit)
     }
+    
+    private func addGesture() {
+        let gesturePersonal: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(personalRecommendTap))
+        gesturePersonal.numberOfTapsRequired = 1
+        let gestureBig: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(bigRecommendTap))
+        gestureBig.numberOfTapsRequired = 1
+        let gestureLeft: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(leftRecommendTap))
+        gestureLeft.numberOfTapsRequired = 1
+        let gestureCenter: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(centerRecommendTap))
+        gestureCenter.numberOfTapsRequired = 1
+        let gestureRight: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightRecommendTap))
+        gestureRight.numberOfTapsRequired = 1
+        personalRecommend.addGestureRecognizer(gesturePersonal)
+        bigRecommend.addGestureRecognizer(gestureBig)
+        leftRecommend.addGestureRecognizer(gestureLeft)
+        centerRecommend.addGestureRecognizer(gestureCenter)
+        rightRecommend.addGestureRecognizer(gestureRight)
+    }
 
     @objc private func searchBarHandler() {
         mainViewPresenter.search(req: searchBar.text ?? "")
     }
 
     func setUpConstraints() {
-
         userImage.translatesAutoresizingMaskIntoConstraints = false
         let userImageConstraints = [
             userImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
@@ -233,22 +239,23 @@ class MainViewController: UIViewController {
             checkAllButton.rightAnchor.constraint(equalTo: searchBar.rightAnchor, constant: -10),
             checkAllButton.heightAnchor.constraint(equalToConstant: 70)
         ]
+        addSubViews()
 
+        let constraintsArray = [userImageConstraints, userNameConstraints, searchBarConstraints, bigRecommendConstraints, centerRecommendConstraints, leftRecommendConstraints, rightRecommendConstraints, personalRecommendConstraints, checkAllButtonConstraints].flatMap {$0}
+        NSLayoutConstraint.activate(constraintsArray)
+
+    }
+    
+    private func addSubViews() {
         view.addSubview(userImage)
         view.addSubview(userName)
         view.addSubview(searchBar)
-
         view.addSubview(bigRecommend)
         view.addSubview(centerRecommend)
         view.addSubview(leftRecommend)
         view.addSubview(rightRecommend)
         view.addSubview(personalRecommend)
-
         view.addSubview(checkAllButton)
-
-        let constraintsArray = [userImageConstraints, userNameConstraints, searchBarConstraints, bigRecommendConstraints, centerRecommendConstraints, leftRecommendConstraints, rightRecommendConstraints, personalRecommendConstraints, checkAllButtonConstraints].flatMap {$0}
-        NSLayoutConstraint.activate(constraintsArray)
-
     }
 
     // MARK: - Content on Custom Views
